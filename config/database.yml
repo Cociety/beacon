@@ -33,5 +33,6 @@ production:
     <<: *default
     database: beacon_prod
   cociety:
+    <<: *default
     database: cociety_prod
     url: <%= ENV['HEROKU_POSTGRESQL_PUCE_URL'] %>
