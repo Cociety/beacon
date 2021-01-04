@@ -1,5 +1,7 @@
 require 'active_support/core_ext/integer/time'
 
+beacon_cociety_local = 'beacon.cociety.local'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -13,6 +15,8 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
+
+  config.hosts << ENV.fetch('HOST', beacon_cociety_local)
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.

@@ -1,0 +1,8 @@
+<h1>
+  <% if customer_signed_in? %>
+    <%= "Hi #{current_customer.first_name} #{current_customer.last_name}" %>
+  <% else %>
+    <%= 'Try signing in at https://www.cociety.org' %>
+    <iframe src="http://cociety.local" width="700px" height="1000px">
+  <% end %>
+</h1>
