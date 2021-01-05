@@ -2,6 +2,8 @@
   <% if customer_signed_in? %>
     <%= "Hi #{current_customer.first_name} #{current_customer.last_name}" %>
   <% else %>
-    <%= 'Try signing in at https://www.cociety.org' %>
+    <a href="<%= sign_in_url %>" >
+      Sign in
+    </a>
   <% end %>
 </h1>
