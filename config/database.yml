@@ -49,4 +49,4 @@ production:
   cociety:
     <<: *default
     database: cociety_prod
-    url: <%= ENV['HEROKU_POSTGRESQL_PUCE_URL'] %>
+    url: <%= ENV['HEROKU_POSTGRESQL_BLACK_URL'] %>
