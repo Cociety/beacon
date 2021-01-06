@@ -4,7 +4,17 @@
   ],
   "environments": {
     "test": {
-      "addons": ["heroku-postgresql:in-dyno", "heroku-redis:in-dyno"],
+      "addons": [
+        {
+          "plan": "heroku-postgresql",
+          "as": "BEACON_TEST_DB"
+        },
+        {
+          "plan": "heroku-postgresql",
+          "as": "COCIETY_TEST_DB"
+        },
+        "heroku-redis:in-dyno"
+      ],
       "scripts": {
         "test-setup": "bin/rails assets:precompile"
       }

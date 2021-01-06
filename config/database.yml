@@ -20,6 +20,19 @@ development:
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
+
+# heroku
+<% if ENV['CI'] == 'true' %>
+test:
+  primary:
+    <<: *default
+    database: beacon_test
+    url: <%= ENV['BEACON_TEST_DB_URL'] %>
+  cociety:
+    <<: *default
+    database: cociety_test
+    url: <%= ENV['COCIETY_TEST_DB_URL'] %>
+<% else %>
 test:
   primary:
     <<: *default
@@ -27,6 +40,7 @@ test:
   cociety:
     <<: *default
     database: cociety_test
+<% end %>
 
 production:
   primary:
