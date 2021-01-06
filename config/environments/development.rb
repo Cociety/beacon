@@ -16,10 +16,11 @@ Rails.application.configure do
 
   config.host = ENV.fetch('HOST', 'beacon.cociety.local')
   config.cociety = {
-    host:         ENV.fetch('COCIETY_HOST', 'cociety.local'),
-    port:         ENV.fetch('COCIETY_PORT', 3000),
-    protocol:     :http,
-    sign_in_path: '/customer/sign_in'
+    host:          ENV.fetch('COCIETY_HOST', 'cociety.local'),
+    port:          ENV.fetch('COCIETY_PORT', 3000),
+    protocol:      :http,
+    sign_in_path:  '/customer/sign_in',
+    sign_out_path: '/customer/sign_out'
   }
   config.hosts << config.host
 

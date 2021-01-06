@@ -17,9 +17,10 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   config.cociety = {
-    host:         ENV.fetch('COCIETY_HOST', 'www.cociety.org'),
-    port:         ENV.fetch('COCIETY_PORT', 443),
-    sign_in_path: '/customer/sign_in'
+    host:          ENV.fetch('COCIETY_HOST', 'www.cociety.org'),
+    port:          ENV.fetch('COCIETY_PORT', 443),
+    sign_in_path:  '/customer/sign_in',
+    sign_out_path: '/customer/sign_out'
   }
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
