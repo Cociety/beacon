@@ -5,8 +5,8 @@
       <%= t 'auth.sign_out' %>
     <% end %>
   <% else %>
-    <a href="<%= sign_in_url %>" >
-      Sign in
-    </a>
+    <%= link_to sign_in_url do %>
+      <%= t 'auth.sign_in' %>
+    <% end %>
   <% end %>
 </h1>
