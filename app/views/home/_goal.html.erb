@@ -1,0 +1,8 @@
+<li>
+  <%= goal.name %>
+  <%- unless goal.children.empty? -%>
+  <ul>
+    <%= render partial: 'goal', collection: goal.children %>
+  </ul>
+  <%- end -%>
+</li>

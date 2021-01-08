@@ -4,6 +4,9 @@
     <%= link_to sign_out_url, method: :delete do %>
       <%= t 'auth.sign_out' %>
     <% end %>
+    <div style="width: 100%; font-size: 1.3rem;">
+      <%= render 'home/goals' %>
+    </div>
   <% else %>
     <%= link_to sign_in_url do %>
       <%= t 'auth.sign_in' %>
