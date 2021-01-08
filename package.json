@@ -6,7 +6,12 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
-    "turbolinks": "^5.2.0"
+    "autoprefixer": "^10.2.1",
+    "postcss": "^8.2.3",
+    "postcss-loader": "^4.1.0",
+    "tailwindcss": "^2.0.2",
+    "turbolinks": "^5.2.0",
+    "webpack": "^4.44.2"
   },
   "version": "0.1.0",
   "devDependencies": {
