@@ -9,4 +9,8 @@ class Goal < ApplicationRecord
 
   has_many :child_relationships, foreign_key: :parent_id, class_name: :Relationship, inverse_of: :parent
   has_many :children, through: :child_relationships, inverse_of: :parents, dependent: :destroy
+
+  def child?
+    parents.count.positive?
+  end
 end
