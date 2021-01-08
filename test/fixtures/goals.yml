@@ -1,0 +1,17 @@
+parent1:
+  name: parent1
+
+child1:
+  name: child1
+  parents: [parent1]
+
+child2:
+  name: child1
+  parents: [parent1]
+  
+child3:
+  name: child1
+  parents: [parent1]
+
+parent2:
+  name: parent2
