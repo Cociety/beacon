@@ -10,6 +10,7 @@
     "postcss": "^8.2.3",
     "postcss-loader": "^4.1.0",
     "tailwindcss": "^2.0.2",
+    "treeflex": "^2.0.1",
     "turbolinks": "^5.2.0",
     "webpack": "^4.44.2"
   },

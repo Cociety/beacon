@@ -1,5 +1,9 @@
 <li>
-  <%= goal.name %>
+  <span class="tf-nc">
+    <div class="flex justify-center items-center w-full h-full overflow-hidden">
+      <span class="text-xs"><%= goal.name %></span>
+    </div>
+  </span>
   <%- unless goal.children.empty? -%>
   <ul>
     <%= render partial: 'goal', collection: goal.children %>

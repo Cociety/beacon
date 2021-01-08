@@ -1,0 +1,14 @@
+.tf-custom .tf-nc {
+  @apply w-24 h-24 bg-gray-200 border-gray-800 p-0 rounded-full;
+}
+
+/* make the horizontal and vertical connectors thick and change their color */
+
+.tf-custom .tf-nc:before,
+.tf-custom .tf-nc:after {
+  @apply border-blue-500 border-l-2 !important;
+}
+
+.tf-custom li li:before {
+  @apply border-blue-500 border-t-2 !important;
+}
