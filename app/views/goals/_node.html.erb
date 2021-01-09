@@ -1,0 +1,12 @@
+<li>
+  <span class="tree-node">
+    <div class="flex justify-center items-center w-full h-full overflow-hidden">
+      <span class="text-xs break-words clamp-3"><%= goal.name %></span>
+    </div>
+  </span>
+  <%- unless goal.children.empty? -%>
+    <ul>
+      <%= render goal.children %>
+    </ul>
+  <%- end -%>
+</li>
