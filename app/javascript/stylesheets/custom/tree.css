@@ -4,8 +4,6 @@
   --connector-width: .125em;
   --connector-stye: solid;
   --vertex-length: 1em; /* setting a size in em makes sure that the gap scales too with the scaling factor */
-  --scaling-factor: 1;
-  font-size: 16px * var(--scaling-factor);
   
   * {
     @apply box-border p-0 m-0;
@@ -40,19 +38,18 @@
       right: calc(50% - var(--connector-width) / 2);
       max-width: calc(100% - 50% + var(--connector-width));
     }
-    li:only-child:before { @apply hidden }
+    li:only-child:before { @apply hidden; }
 
-    li:only-child > .tree-node:before {
+    li:only-child > .node:before {
       height: calc(var(--vertex-length) + var(--connector-width));
       top: calc((var(--vertex-length) * -1) - (var(--connector-width) * 2));
     }
   }
 
-  .tree-node {
-    @apply relative inline-block border-solid w-24 h-24 bg-gray-200 border-gray-800 rounded-full;
+  .node {
+    @apply relative inline-block border-solid w-28 h-28 bg-gray-200 border-gray-800 rounded-full;
     border-width: var(--connector-width);
     border-color: var(--color);
-    padding: calc(var(--vertex-length) / 2) var(--vertex-length);
 
     &:before {
       @apply absolute block border-blue-500;
@@ -73,8 +70,56 @@
       width: var(--connector-width);
       border-left-width: var(--connector-width);
     }
-    &:only-child:after { @apply hidden }
+    &:only-child:after { @apply hidden; }
+
+    .text {
+      @apply h-full w-full relative m-0;
+
+      p {
+        @apply text-xs h-full overflow-hidden p-0 text-center;
+
+        [aria-hidden='true'] {
+          @apply contents;
+
+          &:before, &:after {
+            @apply float-left w-1/2 h-full;
+            shape-outside: polygon(
+              0 0,
+              98% 0,
+              50% 6%,
+              23.4% 17.3%,
+              6% 32.6%,
+              0 50%,
+              6% 65.6%,
+              23.4% 82.7%,
+              50% 94%,
+              98% 100%,
+              0 100%
+            );
+            shape-margin: 7%;
+            content: '';
+          }
+
+          &:after {
+            @apply float-right;
+            shape-outside: polygon(
+            2% 0%,
+            100% 0%,
+            100% 100%,
+            2% 100%,
+            50% 94%,
+            76.6% 82.7%,
+            94% 65.6%,
+            100% 50%,
+            94% 32.6%,
+            76.6% 17.3%,
+            50% 6%
+            );
+          }
+        }
+      }
+    }
   }
   
-  >ul>li>.tree-node:before { @apply hidden }
+  >ul>li>.node:before { @apply hidden; }
 }
