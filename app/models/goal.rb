@@ -26,4 +26,12 @@ class Goal < ApplicationRecord
     return parents.first.top_level_parent if child?
     self
   end
+
+  def make_child_of(new_parent)
+    transaction do
+      parent_relationships.each &:destroy!
+      parents << new_parent
+      save!
+    end
+  end
 end

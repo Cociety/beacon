@@ -4,6 +4,15 @@ class GoalTest < ActiveSupport::TestCase
     @parent = goals(:parent1)
   end
 
+  test 'should move a goal to a new parent' do
+    c1 = goals(:child1)
+    assert_equal @parent.id, c1.parents.first.id
+    c2 = goals(:child2)
+    c1.make_child_of(c2)
+    assert_equal 1, c1.parents.count
+    assert_equal c2.id, c1.parents.first.id
+  end
+
   test 'should save a goal' do
     assert_changes -> { Goal.count } do
       Goal.new.save
