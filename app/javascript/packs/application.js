@@ -57,13 +57,27 @@ class DragAndDrop {
 
   dropHandler = function(event) {
     event.preventDefault();
-    const newParentId = event.dataTransfer.getData("text/plain");
+    const childId = event.dataTransfer.getData("text/plain");
     if (this.dragging) {
-      event.currentTarget.querySelector('ul').appendChild(document.getElementById(newParentId));
+      const child = document.getElementById(childId);
+      const newParent = event.currentTarget;
+      newParent.querySelector('ul').appendChild(child);
       this.dragging = false;
+      app.moveTo(child.dataset.id, newParent.dataset.id);
     }
     return false;
   }
 }
+
+class App {
+  moveTo = async function(goal_id, new_parent_id) {
+    Rails.ajax({
+      url: `/goals/${encodeURIComponent(goal_id)}/move_to/${encodeURIComponent(new_parent_id)}`,
+      type: 'PUT'
+    });
+  }
+}
+window.app = new App();
+
 
 window.DaD = new DragAndDrop();
