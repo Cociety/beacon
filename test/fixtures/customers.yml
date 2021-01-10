@@ -1,0 +1,7 @@
+one:
+  encrypted_password: <%= Devise::Encryptor.digest(Customer, 'password') %>
+  first_name: Customer
+  last_name: One
+  email: customer_one@cociety.org
+  confirmed_at: <%= Time.zone.now %>
+  confirmation_sent_at: <%= Time.zone.now %>
