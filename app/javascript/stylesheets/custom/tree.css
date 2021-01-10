@@ -12,6 +12,10 @@
     @apply inline-flex;
   }
 
+  ul:empty {
+    @apply hidden;
+  }
+
   li {
     @apply relative flex flex-col flex-wrap items-center;
     padding: 0 var(--vertex-length);
@@ -70,6 +74,7 @@
       width: var(--connector-width);
       border-left-width: var(--connector-width);
     }
+    &:after:empty,
     &:only-child:after { @apply hidden; }
 
     .text {

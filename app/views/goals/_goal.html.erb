@@ -2,8 +2,8 @@
   <%= render partial: '/goals/node', locals: {goal: goal} %>
 <%- else %>
   <%= turbo_frame_tag goal do %>
-    <ul class="asfsaf">
-      <%= render partial: '/goals/node', locals: { goal: goal } %>
+    <ul>
+      <%= render partial: '/goals/node', locals: { goal: goal } -%>
     </ul>
   <%- end %>
 <%- end %>

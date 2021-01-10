@@ -40,3 +40,30 @@ Rails.isCrossDomain = function (url) {
     return true;
   }
 }
+
+class DragAndDrop {
+  dragging = false;
+
+  dragStartHandler = function(event) {
+    event.dataTransfer.setData("text/plain", event.target.id);
+    event.dataTransfer.dropEffect = "move";
+    this.dragging = true;
+  }
+
+  dragOverHandler = function(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }
+
+  dropHandler = function(event) {
+    event.preventDefault();
+    const newParentId = event.dataTransfer.getData("text/plain");
+    if (this.dragging) {
+      event.currentTarget.querySelector('ul').appendChild(document.getElementById(newParentId));
+      this.dragging = false;
+    }
+    return false;
+  }
+}
+
+window.DaD = new DragAndDrop();

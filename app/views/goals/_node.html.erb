@@ -1,4 +1,9 @@
-<li>
+<%= content_tag :li,
+  draggable: true,
+  ondragstart: 'DaD.dragStartHandler(event)',
+  ondragover: 'DaD.dragOverHandler(event)',
+  ondrop: 'DaD.dropHandler(event)',
+  id: dom_id(goal) do -%>
   <span class="node">
     <span class="text">
       <p>
@@ -7,9 +12,7 @@
       </p>
     </span>
   </span>
-  <%- unless goal.children.empty? -%>
-    <ul>
-      <%= render goal.children %>
-    </ul>
-  <%- end -%>
-</li>
+  <ul>
+    <%= render goal.children unless goal.children.empty? -%>
+  </ul>
+<%- end -%>
