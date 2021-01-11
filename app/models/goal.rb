@@ -32,7 +32,7 @@ class Goal < ApplicationRecord
 
   def make_child_of(new_parent)
     transaction do
-      parent_relationships.each(&:destroy!)
+      parent_relationships.destroy_all
       parents << new_parent
       save!
     end
