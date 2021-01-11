@@ -3,7 +3,7 @@
   --color: #000;
   --connector-width: .125em;
   --connector-stye: solid;
-  --vertex-length: 1em; /* setting a size in em makes sure that the gap scales too with the scaling factor */
+  --vertex-length: 0.3em; /* setting a size in em makes sure that the gap scales too with the scaling factor */
   
   * {
     @apply box-border p-0 m-0;
@@ -51,7 +51,7 @@
   }
 
   .node {
-    @apply relative inline-block border-solid w-28 h-28 bg-gray-200 border-gray-800 rounded-full;
+    @apply relative inline-block border-solid w-24 h-24 bg-gray-200 border-gray-800 rounded-full;
     border-width: var(--connector-width);
     border-color: var(--color);
 
