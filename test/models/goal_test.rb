@@ -1,5 +1,4 @@
 class GoalTest < ActiveSupport::TestCase
-
   def setup
     @parent = goals(:parent1)
   end
@@ -46,7 +45,7 @@ class GoalTest < ActiveSupport::TestCase
 
   test 'should get child goals' do
     assert_changes -> { Goal.children.count } do
-      @parent.children.new.save!  
+      @parent.children.new.save!
     end
     assert_no_changes -> { Goal.children.count } do
       Goal.new.save

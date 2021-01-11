@@ -5,12 +5,12 @@ class Goal < ApplicationRecord
   after_update_commit { replace_parent }
   before_destroy { @parent = top_level_parent }
   after_destroy_commit { @parent.broadcast_replace_to 'goals' }
-  
-  scope :parents, -> { left_outer_joins(:parent_relationships).merge(Relationship.where child_id: nil) }
+
+  scope :parents, -> { left_outer_joins(:parent_relationships).merge(Relationship.where(child_id: nil)) }
   has_many :parent_relationships, foreign_key: :child_id, class_name: :Relationship, inverse_of: :child
   has_many :parents, through: :parent_relationships, inverse_of: :children, dependent: :destroy
-  
-  scope :children, -> { left_outer_joins(:parent_relationships).merge(Relationship.where.not child_id: nil) }
+
+  scope :children, -> { left_outer_joins(:parent_relationships).merge(Relationship.where.not(child_id: nil)) }
   has_many :child_relationships, foreign_key: :parent_id, class_name: :Relationship, inverse_of: :parent
   has_many :children, through: :child_relationships, inverse_of: :parents, dependent: :destroy
 
@@ -24,12 +24,13 @@ class Goal < ApplicationRecord
 
   def top_level_parent
     return parents.first.top_level_parent if child?
+
     self
   end
 
   def make_child_of(new_parent)
     transaction do
-      parent_relationships.each &:destroy!
+      parent_relationships.each(&:destroy!)
       parents << new_parent
       save!
     end
