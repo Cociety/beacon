@@ -69,4 +69,10 @@ class GoalTest < ActiveSupport::TestCase
       g.destroy
     end
   end
+
+  test 'defaults new goals to \"assigned\"' do
+    g = Goal.new
+    g.save
+    assert_equal 'assigned', g.state
+  end
 end

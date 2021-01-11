@@ -14,6 +14,8 @@ class Goal < ApplicationRecord
   has_many :child_relationships, foreign_key: :parent_id, class_name: :Relationship, inverse_of: :parent
   has_many :children, through: :child_relationships, inverse_of: :parents, dependent: :destroy
 
+  enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
+
   def child?
     parents.count.positive?
   end
