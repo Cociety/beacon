@@ -4,8 +4,9 @@
   ondragover: 'DaD.dragOverHandler(event)',
   ondrop: 'DaD.dropHandler(event)',
   'data-id': goal.id,
-  id: dom_id(goal) do -%>
-  <span class="node">
+  id: dom_id(goal),
+  class: goal.state do -%>
+  <span class="node node-<%= goal.state %>">
     <span class="text">
       <p>
         <span aria-hidden='true'></span>
