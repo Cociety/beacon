@@ -5,6 +5,4 @@ class Customer < CocietyRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable,
          timeout_in: 2.weeks
-
-  default_scope { order(created_at: :asc) }
 end

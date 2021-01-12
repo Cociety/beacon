@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_11_085414) do
+ActiveRecord::Schema.define(version: 2021_01_12_102854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -28,8 +28,16 @@ ActiveRecord::Schema.define(version: 2021_01_11_085414) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "state", default: 0, null: false
+    t.uuid "tree_id", null: false
+    t.index ["tree_id"], name: "index_goals_on_tree_id"
+  end
+
+  create_table "trees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "goal_relationships", "goals", column: "child_id"
   add_foreign_key "goal_relationships", "goals", column: "parent_id"
+  add_foreign_key "goals", "trees"
 end

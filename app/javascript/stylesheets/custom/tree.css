@@ -1,62 +1,12 @@
 .tree {
-  @apply overflow-auto;
-  --connector-width: .125em;
-  --connector-stye: solid;
-  --vertex-length: 0.3em; /* setting a size in em makes sure that the gap scales too with the scaling factor */
-  
-  * {
-    @apply box-border p-0 m-0;
-  }
-  ul {
-    @apply inline-flex;
-  }
-
-  ul:empty {
-    @apply hidden;
-  }
-
-  li {
-    @apply relative flex flex-col flex-wrap items-center;
-    padding: 0 var(--vertex-length);
-
-    ul {
-      margin: calc(var(--vertex-length) * 2) 0;
-    }
-
-    &.assigned:before { @apply border-gray-800; }
-    &.in_progress:before { @apply border-green-500; }
-    &.testing:before { @apply border-indigo-500; }
-    &.done:before { @apply border-gray-500; }
-    &.blocked:before { @apply border-red-500; }
-
-    li:before {
-      @apply block absolute w-full;
-      left: calc(0% - var(--connector-width) / 2);
-      top: calc((var(--vertex-length) * -1) - (var(--connector-width) / 2));
-      content: '';
-      border-top-width: var(--connector-width);
-      border-style: var(--connector-stye);
-      height: var(--connector-width);
-    }
-    
-    li:first-child:before {
-      left: calc(50% - var(--connector-width) / 2);
-      max-width: calc(100% - 50% + var(--connector-width));
-    }
-    li:last-child:before {
-      right: calc(50% - var(--connector-width) / 2);
-      max-width: calc(100% - 50% + var(--connector-width));
-    }
-    li:only-child:before { @apply hidden; }
-
-    li:only-child > .node:before {
-      height: calc(var(--vertex-length) + var(--connector-width));
-      top: calc((var(--vertex-length) * -1) - (var(--connector-width) * 2));
-    }
+  .label {
+    text-anchor: middle;
+    pointer-events : none;
+    color: white;
   }
 
   .node {
-    @apply relative inline-block border-solid w-24 h-24 rounded-full;
+    @apply border-solid w-24 h-24 rounded-full;
     border-width: var(--connector-width);
 
     &-assigned {
@@ -88,77 +38,5 @@
       &:before { @apply border-red-500; }
       &:after { @apply border-red-500; }
     }
-
-    &:before {
-      @apply absolute block;
-      height: var(--vertex-length);
-      left: calc(50% - var(--connector-width) / 2);
-      top: calc(calc(var(--vertex-length) * -1) - var(--connector-width));
-      content: '';
-      width: var(--connector-width);
-      border-left-width: var(--connector-width);
-    }
-
-    &:after {
-      @apply absolute block;
-      height: var(--vertex-length);
-      left: calc(50% - var(--connector-width) / 2);
-      top: calc(100% + var(--connector-width));
-      content: '';
-      width: var(--connector-width);
-      border-left-width: var(--connector-width);
-    }
-    &:after:empty,
-    &:only-child:after { @apply hidden; }
-
-    .text {
-      @apply h-full w-full relative m-0;
-
-      p {
-        @apply text-xs h-full overflow-hidden p-0 text-center;
-
-        [aria-hidden='true'] {
-          @apply contents;
-
-          &:before, &:after {
-            @apply float-left w-1/2 h-full;
-            shape-outside: polygon(
-              0 0,
-              98% 0,
-              50% 6%,
-              23.4% 17.3%,
-              6% 32.6%,
-              0 50%,
-              6% 65.6%,
-              23.4% 82.7%,
-              50% 94%,
-              98% 100%,
-              0 100%
-            );
-            shape-margin: 7%;
-            content: '';
-          }
-
-          &:after {
-            @apply float-right;
-            shape-outside: polygon(
-            2% 0%,
-            100% 0%,
-            100% 100%,
-            2% 100%,
-            50% 94%,
-            76.6% 82.7%,
-            94% 65.6%,
-            100% 50%,
-            94% 32.6%,
-            76.6% 17.3%,
-            50% 6%
-            );
-          }
-        }
-      }
-    }
   }
-  
-  >ul>li>.node:before { @apply hidden; }
 }

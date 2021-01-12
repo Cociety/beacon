@@ -8,6 +8,7 @@ import Rails from "@rails/ujs"
 import "@hotwired/turbo-rails"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import Tree from "./tree"
 
 Rails.start()
 ActiveStorage.start()
@@ -81,3 +82,9 @@ window.app = new App();
 
 
 window.DaD = new DragAndDrop();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const content = document.getElementById("content");
+  const tree = new Tree(JSON.parse(content.dataset.goal));
+  tree.draw();
+})

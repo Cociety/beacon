@@ -1,4 +1,5 @@
 class Goal < ApplicationRecord
+  belongs_to :tree
   default_scope { order(created_at: :asc) }
 
   after_create_commit { replace_parent }

@@ -4,13 +4,18 @@
     <%= link_to sign_out_url, method: :delete do %>
       <%= t 'auth.sign_out' %>
     <% end %>
-    <div style="width: 100%; font-size: 1.3rem;">
-      <div class="tree">
-        <%= turbo_stream_from 'goals' %>
-        <%= turbo_frame_tag 'goals' do %>
-          <%= render @parent_goal %>
-        <% end %>
-      </div>
+    <div class="w-full">
+      <%= content_tag :div,
+        id: 'content',
+        class: 'w-full h-full',
+        'data-goal': render(partial: 'goals/goal', formats: [:json], locals: { goal: @goals.first}) do -%>
+        <svg id="tree">
+          <g transform="translate(0, 45)">
+            <g class="links"></g>
+            <g class="nodes"></g>
+          </g>
+        </svg>
+      <%- end -%>
     </div>
   <% else %>
     <%= link_to sign_in_url do %>
