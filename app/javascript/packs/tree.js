@@ -6,6 +6,7 @@ export default class Tree {
     this.options = {
       width: 400,
       height: 200,
+      nodeRadius: 14,
       ...options
     };
   }
@@ -17,9 +18,14 @@ export default class Tree {
     treeLayout.size([this.options.width, this.options.height]);
     treeLayout(this.root);
 
-    this.tree = d3.select('#tree')
-      .attr('width', 500)
-      .attr('height', 500);
+    const {width, height, nodeRadius} = this.options;
+
+    this.tree = d3.select('.tree')
+      .attr('width', width + nodeRadius*2)
+      .attr('height', height + nodeRadius*2)
+      .attr('viewBox', `0 0 ${width + nodeRadius*2 + 6} ${height}`);
+    // this.tree.select('g.transform')
+    //   .attr('transform', `translate(0, ${nodeRadius*5})`);
     this.nodes = this.uniqueNodes();
     this.drawNodes();
     this.drawVertices();
@@ -32,32 +38,36 @@ export default class Tree {
       .data(this.nodes)
       .enter()
       .append("g")
-      .classed("node", true);
+      .classed("node", true)
+      // .attr("requiredFeatures", "http://www.w3.org/Graphics/SVG/feature/1.2/#TextFlow");
     // .call(handleEvents)
 
     treeNodes
       .append("circle")
-      .classed("the-node solid", true)
+      .classed("circle", true)
       .attr("cx", d => d.x)
       .attr("cy", d => d.y)
-      .attr("r", () => 14)
-      .style("fill", "#696969");
+      .attr("r", () => this.options.nodeRadius)
+      .each(function() {
+        const node = d3.select(this);
+        const state = node.datum().data.state;
+        node.classed(state, true);
+      });
 
     treeNodes
-      .append("text")
-      .attr("class", "label")
-      .attr("dx", (d) => d.x)
-      .attr("dy", (d) => d.y + 4)
-      .text((d) => d.data.name);
+      .append("foreignObject")
+      .attr("x", d => d.x - this.options.nodeRadius)
+      .attr("y", d => d.y - this.options.nodeRadius)
+      .attr('height', this.options.nodeRadius*2)
+      .attr('width', this.options.nodeRadius*2)
+      .append("xhtml:p")
+      .classed("label", true)
+      .html(d => `<span aria-hidden="true"></span>${d.data.name}`);
   }
 
   drawVertices() {
-    
     this.tree.select('g.links')
-      .attr("fill", "none")
-      .attr("stroke", "#555")
-      .attr("stroke-opacity", 0.4)
-      .attr("stroke-width", 1.5)
+      .classed("link", true)
       .selectAll("path")
       .data(this.links())
       .enter()

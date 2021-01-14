@@ -1,25 +1,26 @@
-<h1>
-  <% if customer_signed_in? %>
-    <%= "Hi #{current_customer.first_name} #{current_customer.last_name}" %>
-    <%= link_to sign_out_url, method: :delete do %>
-      <%= t 'auth.sign_out' %>
-    <% end %>
-    <div class="w-full">
-      <%= content_tag :div,
-        id: 'content',
-        class: 'w-full h-full',
-        'data-goal': render(partial: 'goals/goal', formats: [:json], locals: { goal: @goals.first}) do -%>
-        <svg id="tree">
-          <g transform="translate(0, 45)">
-            <g class="links"></g>
-            <g class="nodes"></g>
-          </g>
-        </svg>
-      <%- end -%>
-    </div>
-  <% else %>
+<% if customer_signed_in? %>
+  <%= content_tag :h1, "Hi #{current_customer.first_name} #{current_customer.last_name}" %>
+  <%= link_to sign_out_url, method: :delete do %>
+    <%= t 'auth.sign_out' %>
+  <% end %>
+  <div class="w-full">
+    <%= content_tag :div,
+      id: 'content',
+      class: 'w-full h-full',
+      'data-goal': render(partial: 'goals/goal', formats: [:json], locals: { goal: @goals.first}) do -%>
+      <svg class="tree"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1">
+          <g class="links"></g>
+          <g class="nodes"></g>
+      </svg>
+    <%- end -%>
+  </div>
+<% else %>
+  <%= content_tag :h1 do -%>
     <%= link_to sign_in_url do %>
       <%= t 'auth.sign_in' %>
     <% end %>
-  <% end %>
-</h1>
+  <%- end -%>
+<% end %>

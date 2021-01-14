@@ -1,42 +1,77 @@
 .tree {
-  .label {
-    text-anchor: middle;
-    pointer-events : none;
-    color: white;
+  .node {
+    @apply border border-solid w-24 h-24 rounded-full;
+
+    .circle {
+      @apply stroke-2;
+      &.assigned {
+        @apply fill-gray-50 stroke-gray-800;
+      }
+
+      &.in_progress {
+        @apply fill-green-200 stroke-green-800;
+      }
+
+      &.testing {
+        @apply fill-indigo-200 stroke-indigo-600;
+      }
+
+      &.done {
+        @apply fill-gray-100 stroke-gray-400;
+      }
+
+      &.blocked {
+        @apply fill-red-300 stroke-red-600;
+      }
+    }
+
+    .label {
+      @apply text-xs fill-current text-gray-800 pointer-events-none h-full; 
+      text-anchor: middle;
+    }
+
+    [aria-hidden='true'] {
+          @apply contents;
+
+          &:before, &:after {
+            @apply float-left w-1/2 h-full;
+            shape-outside: polygon(
+              0 0,
+              98% 0,
+              50% 6%,
+              23.4% 17.3%,
+              6% 32.6%,
+              0 50%,
+              6% 65.6%,
+              23.4% 82.7%,
+              50% 94%,
+              98% 100%,
+              0 100%
+            );
+            shape-margin: 7%;
+            content: '';
+          }
+
+          &:after {
+            @apply float-right;
+            shape-outside: polygon(
+            2% 0%,
+            100% 0%,
+            100% 100%,
+            2% 100%,
+            50% 94%,
+            76.6% 82.7%,
+            94% 65.6%,
+            100% 50%,
+            94% 32.6%,
+            76.6% 17.3%,
+            50% 6%
+            );
+          }
+        }
   }
 
-  .node {
-    @apply border-solid w-24 h-24 rounded-full;
-    border-width: var(--connector-width);
-
-    &-assigned {
-      @apply bg-gray-50 border-gray-800;
-      &:before { @apply border-gray-800; }
-      &:after { @apply border-gray-800; }
-    }
-
-    &-in_progress {
-      @apply bg-green-200 border-green-800;
-      &:before { @apply border-green-500; }
-      &:after { @apply border-green-500; }
-    }
-
-    &-testing {
-      @apply bg-indigo-200 border-indigo-600;
-      &:before { @apply border-indigo-500; }
-      &:after { @apply border-indigo-500; }
-    }
-
-    &-done {
-      @apply bg-gray-100 border-gray-400 text-gray-400;
-      &:before { @apply border-gray-500; }
-      &:after { @apply border-gray-500; }
-    }
-
-    &-blocked {
-      @apply bg-red-300 border-red-600;
-      &:before { @apply border-red-500; }
-      &:after { @apply border-red-500; }
-    }
+  .link {
+    @apply stroke-black stroke-1 fill-none;
   }
 }
