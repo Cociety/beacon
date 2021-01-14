@@ -1,9 +1,14 @@
 .tree {
   .node {
-    @apply border border-solid w-24 h-24 rounded-full;
+    @apply cursor-pointer;
+
+    &.dragging {
+      @apply opacity-75 pointer-events-none;
+    }
 
     .circle {
       @apply stroke-2;
+
       &.assigned {
         @apply fill-gray-50 stroke-gray-800;
       }
@@ -26,8 +31,7 @@
     }
 
     .label {
-      @apply text-xs fill-current text-gray-800 pointer-events-none h-full; 
-      text-anchor: middle;
+      @apply text-xs fill-current text-gray-800 h-full;
     }
 
     [aria-hidden='true'] {

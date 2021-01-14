@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-
+import { ajax } from "@rails/ujs";
 export default class Tree {
   constructor(data, options = {}) {
     this.data = data;
@@ -9,6 +9,8 @@ export default class Tree {
       nodeRadius: 14,
       ...options
     };
+    this.dragging = false;
+    this.newParent = null;
   }
 
   draw() {
@@ -20,29 +22,33 @@ export default class Tree {
 
     const {width, height, nodeRadius} = this.options;
 
-    this.tree = d3.select('.tree')
+    this.treeSvg = d3.select('.tree')
       .attr('width', width + nodeRadius*2)
       .attr('height', height + nodeRadius*2)
       .attr('viewBox', `0 0 ${width + nodeRadius*2 + 6} ${height}`);
-    // this.tree.select('g.transform')
-    //   .attr('transform', `translate(0, ${nodeRadius*5})`);
     this.nodes = this.uniqueNodes();
     this.drawNodes();
     this.drawVertices();
   }
 
   drawNodes() {
-    const treeNodes = this.tree
+    const self = this;
+    this.nodeElements = this.treeSvg
       .select('g.nodes')
       .selectAll("g.node")
       .data(this.nodes)
       .enter()
       .append("g")
       .classed("node", true)
-      // .attr("requiredFeatures", "http://www.w3.org/Graphics/SVG/feature/1.2/#TextFlow");
-    // .call(handleEvents)
+      .call(d3.drag()
+        .on("start", function(event) { self.dragStarted(event, this); })
+        .on("drag", function(event) { self.dragged(event, this); })
+        .on("end", function(event) { self.dragEnd(event, this); })
+      )
+      .on('mouseenter', function(event) { self.mouseEnter(event, this); })
+      .on('mouseleave', function(event) { self.mouseLeave(event, this); });
 
-    treeNodes
+    this.nodeElements
       .append("circle")
       .classed("circle", true)
       .attr("cx", d => d.x)
@@ -54,7 +60,7 @@ export default class Tree {
         node.classed(state, true);
       });
 
-    treeNodes
+    this.nodeElements
       .append("foreignObject")
       .attr("x", d => d.x - this.options.nodeRadius)
       .attr("y", d => d.y - this.options.nodeRadius)
@@ -62,17 +68,17 @@ export default class Tree {
       .attr('width', this.options.nodeRadius*2)
       .append("xhtml:p")
       .classed("label", true)
+      .attr('draggable', true)
       .html(d => `<span aria-hidden="true"></span>${d.data.name}`);
   }
 
   drawVertices() {
-    this.tree.select('g.links')
+    this.treeSvg.select('g.links')
       .classed("link", true)
       .selectAll("path")
       .data(this.links())
       .enter()
       .append("path")
-      // .classed("link", true)
       .join("path")
       .attr("d", d3.linkVertical()
           .x(d => d.x)
@@ -80,30 +86,102 @@ export default class Tree {
   }
 
   uniqueNodes() {
-    const uniqueNodes = Object.values(
+    return Object.values(
       this.root.descendants().reduce((uniques, node) => {
         uniques[node.data.id] = node;
         return uniques;
       }, {})
     );
-
-    return uniqueNodes;
-
-    // recalculate the x poition of each of then node after the removal
-    return uniqueNodes.map(n => {
-      const nodesOfSameDepth = uniqueNodes.filter(un => un.depth === n.depth);
-      const indexOfCurrent = nodesOfSameDepth.indexOf(n);
-      const intervalPerDepth = this.options.height / nodesOfSameDepth.length;
-      n.x = intervalPerDepth/2 + (intervalPerDepth * indexOfCurrent);
-      return n;
-    });
   }
 
   links() {
     return this.root.links(this.nodes).map(l => {
-      console.log(this.nodes);
       l.target = this.nodes.find(n => n.data.id === l.target.data.id );
       return l;
+    });
+  }
+
+  dragStarted(_, g) {
+    this.dragging = true;
+    d3.select(g)
+      .classed("dragging", true)
+      .raise();
+  }
+  
+  dragged(event, g) {
+    const svg = d3.select(g);
+    const circle = svg.select('.circle');
+    const text = svg.select('foreignObject');
+    circle.attr("cx", event.x)
+          .attr("cy", event.y);
+    text.attr("x", event.x - this.options.nodeRadius)
+        .attr("y", event.y - this.options.nodeRadius);
+  }
+
+  dragEnd(_, g) {
+    this.dragging = false;
+    const svg = d3.select(g);
+    const circle = svg.select('.circle');
+    const text = svg.select('foreignObject');
+    if (this.newParent) {
+      this.reparent(svg.datum(), this.newParent.datum());
+    } else {
+      const datum = svg.datum();
+      circle.attr("cx", datum.x)
+            .attr("cy", datum.y);
+
+      text.attr("x", datum.x - this.options.nodeRadius)
+          .attr("y", datum.y - this.options.nodeRadius);
+    }
+
+    svg.classed("dragging", false);
+    this.resetNewParent();
+  }
+
+  mouseEnter(_, g) {
+    if (this.dragging) {
+      this.newParent = d3.select(g);
+      const t = this.newParent.transition().duration(150);
+      this.newParent
+        .select('.circle')
+        .transition(t)
+        .attr("r", this.options.nodeRadius*1.1);
+    }
+  }
+
+  mouseLeave() {
+    if (this.dragging) {
+      this.resetNewParent();
+    }
+  }
+
+  resetNewParent() {
+    if (this.newParent) {
+      this.newParent
+        .select('.circle')
+        .attr("r", this.options.nodeRadius);
+      this.newParent = null;
+    }
+  }
+
+  reparent(draggingDatum, newParentDatum) {
+    this.reparentServerSide(draggingDatum.data.id, newParentDatum.data.id);
+    this.repartClientSide(draggingDatum, newParentDatum);
+  }
+
+  repartClientSide(draggingDatum, newParentDatum) {
+    draggingDatum.parent = [newParentDatum];
+    if (!newParentDatum.children) {
+      newParentDatum.children = [];
+    }
+    newParentDatum.children.push(draggingDatum);
+    this.draw();
+  }
+
+  async reparentServerSide(goal_id, new_parent_id) {
+    ajax({
+      url: `/goals/${encodeURIComponent(goal_id)}/move_to/${encodeURIComponent(new_parent_id)}`,
+      type: 'PUT'
     });
   }
 }
