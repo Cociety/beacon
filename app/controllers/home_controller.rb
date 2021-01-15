@@ -3,5 +3,6 @@ class HomeController < ApplicationController
 
   def set_goals
     @goals = Tree.first.goals
+    @goal = @goals.first
   end
 end

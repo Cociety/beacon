@@ -1,6 +1,7 @@
 class GoalTest < ActiveSupport::TestCase
   def setup
     @parent = goals(:parent1)
+    @tree = @parent.tree
   end
 
   test 'should move a goal to a new parent' do
@@ -14,47 +15,44 @@ class GoalTest < ActiveSupport::TestCase
 
   test 'should save a goal' do
     assert_changes -> { Goal.count } do
-      Goal.new.save
+      Goal.create tree: @tree
     end
   end
 
   test 'should save child goals' do
     assert_changes -> { Goal.count } do
-      c = @parent.children.new
-      c.save!
+      c = @parent.children.create! tree: @tree
       assert c.parents.first.id, @parent.id
     end
   end
 
   test 'should save parent goals' do
     assert_changes -> { Goal.count } do
-      p = @parent.parents.new
-      p.save!
+      p = @parent.parents.create! tree: @tree
       assert p.children.first.id, @parent.id
     end
   end
 
   test 'should get parent goals' do
     assert_changes -> { Goal.parents.count } do
-      Goal.new.save
+      Goal.create tree: @tree
     end
     assert_no_changes -> { Goal.parents.count } do
-      @parent.children.new.save!
+      @parent.children.create! tree: @tree
     end
   end
 
   test 'should get child goals' do
     assert_changes -> { Goal.children.count } do
-      @parent.children.new.save!
+      @parent.children.create! tree: @tree
     end
     assert_no_changes -> { Goal.children.count } do
-      Goal.new.save
+      Goal.create! tree: @tree
     end
   end
 
   test 'should delete relationships when deleting a child goal' do
-    g = @parent.children.new
-    g.save
+    g = @parent.children.create! tree: @tree
 
     assert_difference -> { Goal::Relationship.count }, -1 do
       g.destroy
@@ -62,8 +60,7 @@ class GoalTest < ActiveSupport::TestCase
   end
 
   test 'should delete relationships when deleting a parent goal' do
-    g = @parent.parents.new
-    g.save
+    g = @parent.parents.create! tree: @tree
 
     assert_difference -> { Goal::Relationship.count }, -1 do
       g.destroy
@@ -71,8 +68,7 @@ class GoalTest < ActiveSupport::TestCase
   end
 
   test 'defaults new goals to \"assigned\"' do
-    g = Goal.new
-    g.save
+    g = Goal.create! tree: @tree
     assert_equal 'assigned', g.state
   end
 end

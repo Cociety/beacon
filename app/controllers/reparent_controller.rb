@@ -1,9 +1,10 @@
-class MoveToController < ApplicationController
+class ReparentController < ApplicationController
   before_action :set_goal, only: [:update]
 
   def update
     @goal.make_child_of(@new_parent)
-    render json: @goal.to_json
+    @goal = @goal.tree.goals.first
+    render template: 'reparent/update.json'
   end
 
   def set_goal

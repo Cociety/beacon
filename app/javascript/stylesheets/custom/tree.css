@@ -38,7 +38,13 @@
           @apply contents;
 
           &:before, &:after {
-            @apply float-left w-1/2 h-full;
+            @apply w-1/2 h-full;
+            shape-margin: 7%;
+            content: '';
+          }
+
+          &:before {
+            @apply float-left;
             shape-outside: polygon(
               0 0,
               98% 0,
@@ -52,24 +58,22 @@
               98% 100%,
               0 100%
             );
-            shape-margin: 7%;
-            content: '';
           }
 
           &:after {
             @apply float-right;
             shape-outside: polygon(
-            2% 0%,
-            100% 0%,
-            100% 100%,
-            2% 100%,
-            50% 94%,
-            76.6% 82.7%,
-            94% 65.6%,
-            100% 50%,
-            94% 32.6%,
-            76.6% 17.3%,
-            50% 6%
+              2% 0%,
+              100% 0%,
+              100% 100%,
+              2% 100%,
+              50% 94%,
+              76.6% 82.7%,
+              94% 65.6%,
+              100% 50%,
+              94% 32.6%,
+              76.6% 17.3%,
+              50% 6%
             );
           }
         }

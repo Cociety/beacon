@@ -1,4 +1,4 @@
-class MoveToControllerTest < ActionDispatch::IntegrationTest
+class ReparentControllerTest < ActionDispatch::IntegrationTest
   setup do
     @parent = goals(:parent1)
     @goal = goals(:child2)
@@ -7,7 +7,7 @@ class MoveToControllerTest < ActionDispatch::IntegrationTest
 
   test 'should move a goal to a new parent' do
     assert_equal @parent.id, @goal.parents.first.id
-    put goal_move_to_url(@goal, @new_parent)
+    put goal_reparent_url(@goal, @new_parent)
     assert_equal 1, @goal.parents.count
     assert_equal @new_parent.id, @goal.parents.first.id
   end

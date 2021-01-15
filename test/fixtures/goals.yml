@@ -1,17 +1,22 @@
 parent1:
   name: parent1
+  tree: one
 
 child1:
   name: child1
+  tree: one
   parents: [parent1]
 
 child2:
   name: child1
+  tree: one
   parents: [parent1]
   
 child3:
   name: child1
+  tree: one
   parents: [parent1]
 
 parent2:
   name: parent2
+  tree: one

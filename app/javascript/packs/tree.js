@@ -15,7 +15,6 @@ export default class Tree {
 
   draw() {
     this.root = d3.hierarchy(this.data);
-
     const treeLayout = d3.tree();
     treeLayout.size([this.options.width, this.options.height]);
     treeLayout(this.root);
@@ -26,6 +25,9 @@ export default class Tree {
       .attr('width', width + nodeRadius*2)
       .attr('height', height + nodeRadius*2)
       .attr('viewBox', `0 0 ${width + nodeRadius*2 + 6} ${height}`);
+
+    this.treeSvg.selectAll("g.node").remove();
+    this.treeSvg.selectAll("path.link").remove();
     this.nodes = this.uniqueNodes();
     this.drawNodes();
     this.drawVertices();
@@ -34,19 +36,18 @@ export default class Tree {
   drawNodes() {
     const self = this;
     this.nodeElements = this.treeSvg
-      .select('g.nodes')
-      .selectAll("g.node")
+      .select("g.nodes")
+      .selectAll("g")
       .data(this.nodes)
-      .enter()
-      .append("g")
-      .classed("node", true)
-      .call(d3.drag()
-        .on("start", function(event) { self.dragStarted(event, this); })
-        .on("drag", function(event) { self.dragged(event, this); })
-        .on("end", function(event) { self.dragEnd(event, this); })
-      )
-      .on('mouseenter', function(event) { self.mouseEnter(event, this); })
-      .on('mouseleave', function(event) { self.mouseLeave(event, this); });
+      .join("g")
+        .classed("node", true)
+        .call(d3.drag()
+          .on("start", function(event) { self.dragStarted(event, this); })
+          .on("drag", function(event) { self.dragged(event, this); })
+          .on("end", function(event) { self.dragEnd(event, this); })
+        )
+        .on('mouseenter', function(event) { self.mouseEnter(event, this); })
+        .on('mouseleave', function(event) { self.mouseLeave(event, this); });
 
     this.nodeElements
       .append("circle")
@@ -74,15 +75,15 @@ export default class Tree {
 
   drawVertices() {
     this.treeSvg.select('g.links')
-      .classed("link", true)
       .selectAll("path")
       .data(this.links())
       .enter()
       .append("path")
+      .classed("link", true)
       .join("path")
-      .attr("d", d3.linkVertical()
-          .x(d => d.x)
-          .y(d => d.y));
+        .attr("d", d3.linkVertical()
+            .x(d => d.x)
+            .y(d => d.y));
   }
 
   uniqueNodes() {
@@ -164,24 +165,20 @@ export default class Tree {
     }
   }
 
-  reparent(draggingDatum, newParentDatum) {
-    this.reparentServerSide(draggingDatum.data.id, newParentDatum.data.id);
-    this.repartClientSide(draggingDatum, newParentDatum);
-  }
-
-  repartClientSide(draggingDatum, newParentDatum) {
-    draggingDatum.parent = [newParentDatum];
-    if (!newParentDatum.children) {
-      newParentDatum.children = [];
-    }
-    newParentDatum.children.push(draggingDatum);
+  async reparent(draggingDatum, newParentDatum) {
+    this.data = await this.reparentServerSide(draggingDatum.data.id, newParentDatum.data.id);
     this.draw();
   }
 
   async reparentServerSide(goal_id, new_parent_id) {
-    ajax({
-      url: `/goals/${encodeURIComponent(goal_id)}/move_to/${encodeURIComponent(new_parent_id)}`,
-      type: 'PUT'
+    return new Promise((fulfill, reject) => {
+      ajax({
+        url: `/goals/${encodeURIComponent(goal_id)}/reparent/${encodeURIComponent(new_parent_id)}`,
+        type: 'PUT',
+        success: data => {
+          fulfill(data);
+        }
+      });
     });
   }
 }
