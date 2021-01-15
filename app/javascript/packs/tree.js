@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import {drag, hierarchy, linkVertical, select, tree} from "d3";
 import { ajax } from "@rails/ujs";
 export default class Tree {
   constructor(data, options = {}) {
@@ -14,14 +14,14 @@ export default class Tree {
   }
 
   draw() {
-    this.root = d3.hierarchy(this.data);
-    const treeLayout = d3.tree();
+    this.root = hierarchy(this.data);
+    const treeLayout = tree();
     treeLayout.size([this.options.width, this.options.height]);
     treeLayout(this.root);
 
     const {width, height, nodeRadius} = this.options;
 
-    this.treeSvg = d3.select('.tree')
+    this.treeSvg = select('.tree')
       .attr('width', width + nodeRadius*2)
       .attr('height', height + nodeRadius*2)
       .attr('viewBox', `0 0 ${width + nodeRadius*2 + 6} ${height}`);
@@ -41,7 +41,7 @@ export default class Tree {
       .data(this.nodes)
       .join("g")
         .classed("node", true)
-        .call(d3.drag()
+        .call(drag()
           .on("start", function(event) { self.dragStarted(event, this); })
           .on("drag", function(event) { self.dragged(event, this); })
           .on("end", function(event) { self.dragEnd(event, this); })
@@ -56,7 +56,7 @@ export default class Tree {
       .attr("cy", d => d.y)
       .attr("r", () => this.options.nodeRadius)
       .each(function() {
-        const node = d3.select(this);
+        const node = select(this);
         const state = node.datum().data.state;
         node.classed(state, true);
       });
@@ -81,7 +81,7 @@ export default class Tree {
       .append("path")
       .classed("link", true)
       .join("path")
-        .attr("d", d3.linkVertical()
+        .attr("d", linkVertical()
             .x(d => d.x)
             .y(d => d.y));
   }
@@ -104,13 +104,13 @@ export default class Tree {
 
   dragStarted(_, g) {
     this.dragging = true;
-    d3.select(g)
+    select(g)
       .classed("dragging", true)
       .raise();
   }
   
   dragged(event, g) {
-    const svg = d3.select(g);
+    const svg = select(g);
     const circle = svg.select('.circle');
     const text = svg.select('foreignObject');
     circle.attr("cx", event.x)
@@ -121,7 +121,7 @@ export default class Tree {
 
   dragEnd(_, g) {
     this.dragging = false;
-    const svg = d3.select(g);
+    const svg = select(g);
     const circle = svg.select('.circle');
     const text = svg.select('foreignObject');
     if (this.newParent) {
@@ -141,7 +141,7 @@ export default class Tree {
 
   mouseEnter(_, g) {
     if (this.dragging) {
-      this.newParent = d3.select(g);
+      this.newParent = select(g);
       const t = this.newParent.transition().duration(150);
       this.newParent
         .select('.circle')
