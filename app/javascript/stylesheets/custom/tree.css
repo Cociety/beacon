@@ -11,7 +11,7 @@
     }
 
     .circle {
-      @apply cursor-pointer w-20 h-20 rounded-full border-2 flex items-center justify-center;
+      @apply cursor-pointer rounded-full border-2 flex items-center justify-center w-full h-full;
 
       &.assigned {
         @apply bg-gray-50 border-gray-800;
