@@ -3,7 +3,7 @@
     @apply cursor-pointer;
 
     &.dragging {
-      @apply opacity-75 pointer-events-none;
+      @apply pointer-events-none;
     }
 
     .circle {
@@ -31,7 +31,7 @@
     }
 
     .label {
-      @apply text-xs fill-current text-gray-800 h-full;
+      @apply text-xs fill-current text-gray-800 h-full shadow-md;
     }
 
     [aria-hidden='true'] {

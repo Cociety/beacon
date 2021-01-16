@@ -1,4 +1,4 @@
-import {drag, hierarchy, linkVertical, select, tree} from "d3";
+import {drag, hierarchy, linkVertical, select, selectAll, tree} from "d3";
 import { ajax } from "@rails/ujs";
 export default class Tree {
   constructor(data, options = {}) {
@@ -70,7 +70,6 @@ export default class Tree {
       .attr('width', this.options.nodeRadius*2)
       .append("xhtml:p")
       .classed("label", true)
-      .attr('draggable', true)
       .html(d => `<span aria-hidden="true"></span>${d.data.name}`);
   }
 
@@ -81,6 +80,7 @@ export default class Tree {
       .enter()
       .append("path")
       .classed("link", true)
+      .attr("id", d => `link_${d.source.data.id}_${d.target.data.id}`)
       .join("path")
         .attr("d", linkVertical()
             .x(d => d.x)
@@ -105,21 +105,16 @@ export default class Tree {
 
   dragStarted(event, g) {
     this.isDragging = true;
-    this.nodesBeingDrug = event.subject.descendants().map(c => select(`#goal_${c.data.id}`));
+    const descendants = event.subject.descendants();
+    this.nodesBeingDrug = [
+      ...descendants.map(d => select(`#goal_${d.data.id}`)),
+      ...descendants.map(d => selectAll(`[id^="link_${d.data.id}"]`))
+    ];
     this.nodesBeingDrug.forEach(n => n.classed("dragging", true).raise());
   }
   
   drag(event) {
-    this.nodesBeingDrug.forEach(n => {
-      const circle = n.select('.circle');
-      const text = n.select('foreignObject');
-      const xOffset = (event.subject.x - n.datum().x);
-      const yOffset = (event.subject.y - n.datum().y)
-      circle.attr("cx", event.x - xOffset)
-            .attr("cy", event.y - yOffset);
-      text.attr("x", event.x - this.options.nodeRadius - xOffset)
-          .attr("y", event.y - this.options.nodeRadius - yOffset);
-    });
+    this.nodesBeingDrug.forEach(n => n.attr("transform", `translate(${event.x - event.subject.x}, ${event.y - event.subject.y})`));
   }
 
   dragEnd(_, g) {
@@ -129,14 +124,7 @@ export default class Tree {
       this.reparent(svg.datum(), this.newParent.datum());
     } else {
       this.nodesBeingDrug.forEach(n => {
-        const circle = n.select('.circle');
-        const text = n.select('foreignObject');
-        const datum = n.datum();
-        circle.attr("cx", datum.x)
-              .attr("cy", datum.y);
-  
-        text.attr("x", datum.x - this.options.nodeRadius)
-            .attr("y", datum.y - this.options.nodeRadius);
+        n.attr("transform", null);
       });
     }
 
@@ -149,9 +137,8 @@ export default class Tree {
       this.newParent = select(g);
       const t = this.newParent.transition().duration(150);
       this.newParent
-        .select('.circle')
         .transition(t)
-        .attr("r", this.options.nodeRadius*1.1);
+        .attr("transform", d => `translate(${d.x}, ${d.y}) scale(1.1, 1.1) translate(${-d.x}, ${-d.y})`);
     }
   }
 
@@ -163,9 +150,10 @@ export default class Tree {
 
   resetNewParent() {
     if (this.newParent) {
+      const t = this.newParent.transition().duration(150);
       this.newParent
-        .select('.circle')
-        .attr("r", this.options.nodeRadius);
+        .transition(t)
+        .attr("transform", 'scale(1)');
       this.newParent = null;
     }
   }
