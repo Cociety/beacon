@@ -51,23 +51,18 @@ export default class Tree {
         .on('mouseleave', function(event) { self.mouseLeave(event, this); });
 
     this.nodes
-      .append("circle")
-      .classed("circle", true)
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y)
-      .attr("r", () => this.options.nodeRadius)
-      .each(function() {
-        const node = select(this);
-        const state = node.datum().data.state;
-        node.classed(state, true);
-      });
-
-    this.nodes
       .append("foreignObject")
       .attr("x", d => d.x - this.options.nodeRadius)
       .attr("y", d => d.y - this.options.nodeRadius)
       .attr('height', this.options.nodeRadius*2)
       .attr('width', this.options.nodeRadius*2)
+      .append('xhtml:div')
+      .classed('circle', true)
+      .each(function() {
+        const node = select(this);
+        const state = node.datum().data.state;
+        node.classed(state, true);
+      })
       .append("xhtml:p")
       .classed("label", true)
       .html(d => `<span aria-hidden="true"></span>${d.data.name}`);
@@ -135,6 +130,7 @@ export default class Tree {
   mouseEnter(_, g) {
     if (this.isDragging) {
       this.newParent = select(g);
+      this.newParent.classed('hovering', true);
       const t = this.newParent.transition().duration(150);
       this.newParent
         .transition(t)
@@ -151,6 +147,7 @@ export default class Tree {
   resetNewParent() {
     if (this.newParent) {
       const t = this.newParent.transition().duration(150);
+      // this.newParent.classed('hovering', false);
       this.newParent
         .transition(t)
         .attr("transform", 'scale(1)');

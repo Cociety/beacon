@@ -3,11 +3,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      fill: theme => ({
-        none: 'none',
-        ...theme('colors')
-      }),
-      stroke: theme => theme('colors')
+      fill: {
+        none: 'none'
+      },
+      stroke: theme => ({
+        black: theme('colors.black')
+      })
     },
     lineClamp: {
       1: 1,
@@ -18,7 +19,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    require('tailwindcss-line-clamp')
-  ]
+  plugins: []
 }
