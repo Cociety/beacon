@@ -9,7 +9,7 @@ export default class Tree {
       nodeRadius: 14,
       ...options
     };
-    this.dragging = false;
+    this.isDragging = false;
     this.newParent = null;
   }
 
@@ -28,28 +28,29 @@ export default class Tree {
 
     this.treeSvg.selectAll("g.node").remove();
     this.treeSvg.selectAll("path.link").remove();
-    this.nodes = this.uniqueNodes();
+    this.datums = this.uniqueDatums();
     this.drawNodes();
     this.drawVertices();
   }
 
   drawNodes() {
     const self = this;
-    this.nodeElements = this.treeSvg
+    this.nodes = this.treeSvg
       .select("g.nodes")
       .selectAll("g")
-      .data(this.nodes)
+      .data(this.datums)
       .join("g")
         .classed("node", true)
+        .attr("id", d => `goal_${d.data.id}`)
         .call(drag()
           .on("start", function(event) { self.dragStarted(event, this); })
-          .on("drag", function(event) { self.dragged(event, this); })
+          .on("drag", function(event) { self.drag(event, this); })
           .on("end", function(event) { self.dragEnd(event, this); })
         )
         .on('mouseenter', function(event) { self.mouseEnter(event, this); })
         .on('mouseleave', function(event) { self.mouseLeave(event, this); });
 
-    this.nodeElements
+    this.nodes
       .append("circle")
       .classed("circle", true)
       .attr("cx", d => d.x)
@@ -61,7 +62,7 @@ export default class Tree {
         node.classed(state, true);
       });
 
-    this.nodeElements
+    this.nodes
       .append("foreignObject")
       .attr("x", d => d.x - this.options.nodeRadius)
       .attr("y", d => d.y - this.options.nodeRadius)
@@ -86,7 +87,7 @@ export default class Tree {
             .y(d => d.y));
   }
 
-  uniqueNodes() {
+  uniqueDatums() {
     return Object.values(
       this.root.descendants().reduce((uniques, node) => {
         uniques[node.data.id] = node;
@@ -96,51 +97,55 @@ export default class Tree {
   }
 
   links() {
-    return this.root.links(this.nodes).map(l => {
-      l.target = this.nodes.find(n => n.data.id === l.target.data.id );
+    return this.root.links(this.datums).map(l => {
+      l.target = this.datums.find(n => n.data.id === l.target.data.id );
       return l;
     });
   }
 
-  dragStarted(_, g) {
-    this.dragging = true;
-    select(g)
-      .classed("dragging", true)
-      .raise();
+  dragStarted(event, g) {
+    this.isDragging = true;
+    this.nodesBeingDrug = event.subject.descendants().map(c => select(`#goal_${c.data.id}`));
+    this.nodesBeingDrug.forEach(n => n.classed("dragging", true).raise());
   }
   
-  dragged(event, g) {
-    const svg = select(g);
-    const circle = svg.select('.circle');
-    const text = svg.select('foreignObject');
-    circle.attr("cx", event.x)
-          .attr("cy", event.y);
-    text.attr("x", event.x - this.options.nodeRadius)
-        .attr("y", event.y - this.options.nodeRadius);
+  drag(event) {
+    this.nodesBeingDrug.forEach(n => {
+      const circle = n.select('.circle');
+      const text = n.select('foreignObject');
+      const xOffset = (event.subject.x - n.datum().x);
+      const yOffset = (event.subject.y - n.datum().y)
+      circle.attr("cx", event.x - xOffset)
+            .attr("cy", event.y - yOffset);
+      text.attr("x", event.x - this.options.nodeRadius - xOffset)
+          .attr("y", event.y - this.options.nodeRadius - yOffset);
+    });
   }
 
   dragEnd(_, g) {
-    this.dragging = false;
-    const svg = select(g);
-    const circle = svg.select('.circle');
-    const text = svg.select('foreignObject');
+    this.isDragging = false;
     if (this.newParent) {
+      const svg = select(g);
       this.reparent(svg.datum(), this.newParent.datum());
     } else {
-      const datum = svg.datum();
-      circle.attr("cx", datum.x)
-            .attr("cy", datum.y);
-
-      text.attr("x", datum.x - this.options.nodeRadius)
-          .attr("y", datum.y - this.options.nodeRadius);
+      this.nodesBeingDrug.forEach(n => {
+        const circle = n.select('.circle');
+        const text = n.select('foreignObject');
+        const datum = n.datum();
+        circle.attr("cx", datum.x)
+              .attr("cy", datum.y);
+  
+        text.attr("x", datum.x - this.options.nodeRadius)
+            .attr("y", datum.y - this.options.nodeRadius);
+      });
     }
 
-    svg.classed("dragging", false);
+    this.nodesBeingDrug.forEach(n => n.classed("dragging", false));
     this.resetNewParent();
   }
 
   mouseEnter(_, g) {
-    if (this.dragging) {
+    if (this.isDragging) {
       this.newParent = select(g);
       const t = this.newParent.transition().duration(150);
       this.newParent
@@ -151,7 +156,7 @@ export default class Tree {
   }
 
   mouseLeave() {
-    if (this.dragging) {
+    if (this.isDragging) {
       this.resetNewParent();
     }
   }
