@@ -1,4 +1,1 @@
-json.id @goal.id
-json.name @goal.name
-json.state @goal.state
-json.children @goal.children, partial: 'goals/goal', as: :@goal
+json.partial! '/goals/goal', goal: @top_level_goal

@@ -3,8 +3,7 @@ class ReparentController < ApplicationController
 
   def update
     @goal.make_child_of(@new_parent)
-    @goal = @goal.tree.goals.first
-    render template: 'reparent/update.json'
+    @top_level_goal = @goal.tree.top_level_goal
   end
 
   def set_goal

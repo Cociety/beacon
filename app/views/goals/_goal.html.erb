@@ -1,9 +1,0 @@
-<%- if goal.child? %>
-  <%= render partial: '/goals/node', locals: {goal: goal} %>
-<%- else %>
-  <%= turbo_frame_tag goal do %>
-    <ul>
-      <%= render partial: '/goals/node', locals: { goal: goal } -%>
-    </ul>
-  <%- end %>
-<%- end %>

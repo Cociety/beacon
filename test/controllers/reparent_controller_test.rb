@@ -7,7 +7,7 @@ class ReparentControllerTest < ActionDispatch::IntegrationTest
 
   test 'should move a goal to a new parent' do
     assert_equal @parent.id, @goal.parents.first.id
-    put goal_reparent_url(@goal, @new_parent)
+    put goal_reparent_url(@goal, @new_parent), as: :json
     assert_equal 1, @goal.parents.count
     assert_equal @new_parent.id, @goal.parents.first.id
   end

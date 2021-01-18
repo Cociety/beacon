@@ -7,7 +7,7 @@
     <%= content_tag :div,
       id: 'content',
       class: 'w-full h-full',
-      'data-goal': render(partial: 'goals/goal', formats: [:json]) do -%>
+      data: { goal: render(partial: 'goals/goal', locals: { goal: @top_level_goal }, formats: [:json]) } do -%>
       <svg class="tree"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         xmlns="http://www.w3.org/2000/svg"

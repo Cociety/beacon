@@ -1,8 +1,7 @@
 class HomeController < ApplicationController
-  before_action :set_goals, only: [:index]
+  before_action :set_top_level_goal, only: [:index]
 
-  def set_goals
-    @goals = Tree.first.goals
-    @goal = @goals.first
+  def set_top_level_goal
+    @top_level_goal = Tree.first.top_level_goal
   end
 end
