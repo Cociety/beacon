@@ -84,6 +84,6 @@
   }
 
   .link {
-    @apply stroke-black stroke-1 fill-none;
+    @apply stroke-black fill-none;
   }
 }
