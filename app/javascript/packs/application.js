@@ -42,47 +42,6 @@ Rails.isCrossDomain = function (url) {
   }
 }
 
-class DragAndDrop {
-  dragging = false;
-
-  dragStartHandler = function(event) {
-    event.dataTransfer.setData("text/plain", event.target.id);
-    event.dataTransfer.dropEffect = "move";
-    this.dragging = true;
-  }
-
-  dragOverHandler = function(event) {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  }
-
-  dropHandler = function(event) {
-    event.preventDefault();
-    const childId = event.dataTransfer.getData("text/plain");
-    if (this.dragging) {
-      const child = document.getElementById(childId);
-      const newParent = event.currentTarget;
-      newParent.querySelector('ul').appendChild(child);
-      this.dragging = false;
-      app.moveTo(child.dataset.id, newParent.dataset.id);
-    }
-    return false;
-  }
-}
-
-class App {
-  moveTo = async function(goal_id, new_parent_id) {
-    Rails.ajax({
-      url: `/goals/${encodeURIComponent(goal_id)}/move_to/${encodeURIComponent(new_parent_id)}`,
-      type: 'PUT'
-    });
-  }
-}
-window.app = new App();
-
-
-window.DaD = new DragAndDrop();
-
 document.addEventListener('DOMContentLoaded', () => {
   const content = document.getElementById("content");
   const tree = new Tree(JSON.parse(content.dataset.goal), { width: content.offsetWidth, height: 600, nodeRadius: 40 });
