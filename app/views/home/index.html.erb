@@ -3,6 +3,7 @@
   <%= link_to sign_out_url, method: :delete do %>
     <%= t 'auth.sign_out' %>
   <% end %>
+  <%= render partial: 'context-menu', collection: @top_level_goal.tree.goals, as: :goal %>
   <div class="w-full">
     <%= content_tag :div,
       id: 'content',

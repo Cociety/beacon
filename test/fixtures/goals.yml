@@ -17,6 +17,11 @@ child3:
   tree: one
   parents: [parent1]
 
+subchild2.1:
+  name: subchild2.1
+  tree: one
+  parents: [child2]
+
 parent2:
   name: parent2
-  tree: one
+  tree: two

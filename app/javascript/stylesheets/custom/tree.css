@@ -11,7 +11,7 @@
     }
 
     .circle {
-      @apply cursor-pointer rounded-full border-2 flex items-center justify-center w-full h-full;
+      @apply rounded-full border-2 flex items-center justify-center w-full h-full z-10 cursor-pointer;
 
       &.assigned {
         @apply bg-gray-50 border-gray-800;
@@ -35,7 +35,7 @@
     }
 
     .label {
-      @apply text-xs fill-current text-gray-800 h-full w-full overflow-hidden break-all;
+      @apply text-xs fill-current text-gray-800 h-full w-full overflow-hidden break-words;
     }
 
     [aria-hidden='true'] {

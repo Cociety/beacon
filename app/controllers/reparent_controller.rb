@@ -2,7 +2,7 @@ class ReparentController < ApplicationController
   before_action :set_goal, only: [:update]
 
   def update
-    @goal.make_child_of(@new_parent)
+    @goal.make_sole_parent(@new_parent)
     @top_level_goal = @goal.tree.top_level_goal
   end
 

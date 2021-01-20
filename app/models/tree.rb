@@ -1,6 +1,6 @@
 class Tree < ApplicationRecord
   default_scope { order(updated_at: :desc) }
-  has_many :goals, -> { joins(:children).eager_load(:children) }
+  has_many :goals, -> { includes(:children) }
 
   def top_level_goal
     possible_parents = goals.index_by(&:id)

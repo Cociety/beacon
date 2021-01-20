@@ -1,5 +1,5 @@
-import {drag, hierarchy, linkVertical, select, selectAll, tree} from "d3";
-import { ajax } from "@rails/ujs";
+import { drag, hierarchy, linkVertical, select, selectAll, tree } from "d3";
+import { ajax, delegate } from "@rails/ujs";
 export default class Tree {
   constructor(data, options = {}) {
     this.data = data;
@@ -11,9 +11,52 @@ export default class Tree {
     };
     this.isDragging = false;
     this.newParent = null;
+    this.isListeningForContextMenu = false;
+  }
+
+  getVisibleContextMenus() {
+    return document.querySelectorAll('[id^=context-menu-][class*="opacity-100"]');
+  }
+
+  isContextMenuVisible() {
+    return !!this.getVisibleContextMenus().length;
+  }
+
+  hideContextMenus() {
+    this.getVisibleContextMenus().forEach(menu => {
+      menu.classList.add('hidden');
+      setTimeout(() => {
+        menu.classList.remove('opacity-100');
+      });
+    });
+  }
+
+  showContextMenu(selector, x, y) {
+    this.hideContextMenus();
+    const element = document.querySelector(selector);
+    element.style.left = `${x}px`;
+    element.style.top = `${y}px`;
+    element.classList.remove('hidden');
+    setTimeout(() => {
+      element.classList.add('opacity-100');
+    });
   }
 
   draw() {
+    if (!this.isListeningForContextMenu) {
+      this.isListeningForContextMenu = true;
+      // delegate(document.body, { selector: '*', exclude: '[id^=context-menu-]' }, 'mousedown', (event) => {
+      //   if (this.isContextMenuVisible()) {
+      //     this.hideContextMenus();
+      //   }
+      // });
+      delegate(document.body, '*', 'keydown', (e) => {
+        if (this.isContextMenuVisible() && e.code === 'Escape' && !e.shiftKey && !e.ctrlKey) {
+          this.hideContextMenus();
+          return false;
+        }
+      });
+    }
     this.root = hierarchy(this.data);
     const treeLayout = tree();
     treeLayout.size([this.options.width, this.options.height]);
@@ -21,10 +64,11 @@ export default class Tree {
 
     const {width, height, nodeRadius} = this.options;
 
+    const viewBoxPadding = nodeRadius * 2;
     this.treeSvg = select('.tree')
-      .attr('width', width + nodeRadius*2)
-      .attr('height', height + nodeRadius*2)
-      .attr('viewBox', `0 0 ${width + nodeRadius*2 + 6} ${height}`);
+      .attr('width', width + viewBoxPadding)
+      .attr('height', height + viewBoxPadding)
+      .attr('viewBox', `0 0 ${width + viewBoxPadding} ${height}`);
 
     this.treeSvg.selectAll("g.node").remove();
     this.treeSvg.selectAll("path.link").remove();
@@ -48,7 +92,13 @@ export default class Tree {
           .on("end", function(event) { self.dragEnd(event, this); })
         )
         .on('mouseenter', function(event) { self.mouseEnter(event, this); })
-        .on('mouseleave', function(event) { self.mouseLeave(event, this); });
+        .on('mouseleave', function(event) { self.mouseLeave(event, this); })
+        .on('contextmenu', function(event) {
+          event.preventDefault();
+          const circle = select(this);
+          const goalId = circle.datum().data.id;
+          self.showContextMenu(`#context-menu-${goalId}`, event.offsetX, event.offsetY);
+        });
 
     this.nodes
       .append("foreignObject")
@@ -147,6 +197,7 @@ export default class Tree {
 
   resetNewParent() {
     if (this.newParent) {
+      this.newParent.classed('hovering', false);
       const t = this.newParent.transition().duration(150);
       // this.newParent.classed('hovering', false);
       this.newParent

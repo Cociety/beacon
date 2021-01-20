@@ -1,0 +1,7 @@
+<div id="context-menu-<%= goal.id %>" class="transition-opacity opacity-0 hidden fixed rounded-sm w-32 border border-indigo-600 shadow-md overflow-hidden">
+  <div class="flex flex-col">
+    <%= form_with url: goal_path(goal), method: :delete, remote: true do |f| %>
+      <%= f.submit "Delete", class: 'transition-colors duration-200 p-2 hover:bg-red-600 hover:text-white text-red-600 w-full h-full text-left bg-gray-100 cursor-pointer' %>
+    <% end %>
+  </div>
+</div>
