@@ -44,7 +44,7 @@ class Goal < ApplicationRecord
     end
   end
 
-  def make_sole_parent(new_parent)
+  def sole_parent=(new_parent)
     transaction do
       parent_relationships.destroy_all
       parents << new_parent

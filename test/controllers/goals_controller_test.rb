@@ -1,6 +1,8 @@
 class GoalsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @parent = goals(:parent1)
     @goal = goals(:child2)
+    @new_parent = goals(:child1)
   end
 
   test 'should delete a goal' do
@@ -14,5 +16,13 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
         assert Goal.find(p).children.include? Goal.find(c)
       end
     end
+  end
+
+  test 'should move a goal to a new parent' do
+    assert_equal @parent.id, @goal.parents.first.id
+    put "/goals/#{@goal.id}/sole_parent/#{@new_parent.id}", as: :json
+    assert_response :ok
+    assert_equal 1, @goal.parents.count
+    assert_equal @new_parent.id, @goal.parents.first.id
   end
 end

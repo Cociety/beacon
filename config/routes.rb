@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'home#index'
   resources :goals, only: [:destroy] do
-    resources :reparent, only: [:update]
+    match 'sole_parent/:new_parent_id', action: :sole_parent, via: %i[put patch]
   end
 end

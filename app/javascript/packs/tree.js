@@ -215,7 +215,7 @@ export default class Tree {
   async reparentServerSide(goal_id, new_parent_id) {
     return new Promise((fulfill, reject) => {
       ajax({
-        url: `/goals/${encodeURIComponent(goal_id)}/reparent/${encodeURIComponent(new_parent_id)}`,
+        url: `/goals/${encodeURIComponent(goal_id)}/sole_parent/${encodeURIComponent(new_parent_id)}`,
         type: 'PUT',
         success: data => {
           fulfill(data);
