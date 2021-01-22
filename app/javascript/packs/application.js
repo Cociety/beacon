@@ -43,7 +43,6 @@ Rails.isCrossDomain = function (url) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const content = document.getElementById("content");
-  const tree = new Tree(JSON.parse(content.dataset.goal), { width: content.offsetWidth, height: 600, nodeRadius: 40 });
+  const tree = new Tree({ width: content.offsetWidth, height: 600, nodeRadius: 40 });
   tree.draw();
 })

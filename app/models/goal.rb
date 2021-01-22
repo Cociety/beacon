@@ -4,6 +4,12 @@ class Goal < ApplicationRecord
   belongs_to :tree
   default_scope { order(created_at: :asc) }
 
+  # turbolinks
+  after_create_commit { top_level_parent.broadcast_replace_to 'goals' }
+  after_update_commit { top_level_parent.broadcast_replace_to 'goals' }
+  before_destroy { @parent = top_level_parent }
+  after_destroy_commit { @parent.broadcast_replace_to 'goals' }
+
   scope :parents, -> { left_outer_joins(:parent_relationships).merge(Relationship.where(child_id: nil)) }
   has_many :parent_relationships, foreign_key: :child_id, class_name: :Relationship, inverse_of: :child
   has_many :parents, through: :parent_relationships, inverse_of: :children, dependent: :destroy

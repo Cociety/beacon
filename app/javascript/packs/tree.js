@@ -1,8 +1,7 @@
 import { drag, hierarchy, linkVertical, select, selectAll, tree } from "d3";
 import { ajax, delegate } from "@rails/ujs";
 export default class Tree {
-  constructor(data, options = {}) {
-    this.data = data;
+  constructor(options = {}) {
     this.options = {
       width: 400,
       height: 200,
@@ -11,7 +10,8 @@ export default class Tree {
     };
     this.isDragging = false;
     this.newParent = null;
-    this.isListeningForContextMenu = false;
+    this.isInitialized = false;
+    this.turboFrame = document.querySelector('turbo-frame#goals');
   }
 
   getVisibleContextMenus() {
@@ -43,19 +43,32 @@ export default class Tree {
   }
 
   draw() {
-    if (!this.isListeningForContextMenu) {
-      this.isListeningForContextMenu = true;
-      // delegate(document.body, { selector: '*', exclude: '[id^=context-menu-]' }, 'mousedown', (event) => {
-      //   if (this.isContextMenuVisible()) {
-      //     this.hideContextMenus();
-      //   }
-      // });
+    const content = document.getElementById("content");
+    this.data = JSON.parse(content.dataset.goal)
+    if (!this.isInitialized) {
+      this.isInitialized = true;
+
+      // close context menu when clicking outside of it or pressing escape
+      delegate(document.body, { selector: '*', exclude: '[id^=context-menu-]' }, 'mousedown', () => {
+        if (this.isContextMenuVisible()) {
+          this.hideContextMenus();
+        }
+      });
       delegate(document.body, '*', 'keydown', (e) => {
         if (this.isContextMenuVisible() && e.code === 'Escape' && !e.shiftKey && !e.ctrlKey) {
           this.hideContextMenus();
           return false;
         }
       });
+
+      // re-render tree with new data after turbolinks updates the dom
+      (new MutationObserver((mutationList) => {
+        mutationList.forEach(m => {
+          if (m.type === "childList") {
+            this.draw();
+          }
+        })
+      })).observe(this.turboFrame, {attributes: false, childList: true});
     }
     this.root = hierarchy(this.data);
     const treeLayout = tree();
@@ -85,7 +98,7 @@ export default class Tree {
       .data(this.datums)
       .join("g")
         .classed("node", true)
-        .attr("id", d => `goal_${d.data.id}`)
+        .attr("id", d => `node_${d.data.id}`)
         .call(drag()
           .on("start", function(event) { self.dragStarted(event, this); })
           .on("drag", function(event) { self.drag(event, this); })
@@ -153,7 +166,7 @@ export default class Tree {
     this.isDragging = true;
     const descendants = event.subject.descendants();
     this.nodesBeingDrug = [
-      ...descendants.map(d => select(`#goal_${d.data.id}`)),
+      ...descendants.map(d => select(`#node_${d.data.id}`)),
       ...descendants.map(d => selectAll(`[id^="link_${d.data.id}"]`))
     ];
     this.nodesBeingDrug.forEach(n => n.classed("dragging", true).raise());
@@ -167,7 +180,7 @@ export default class Tree {
     this.isDragging = false;
     if (this.newParent) {
       const svg = select(g);
-      this.reparent(svg.datum(), this.newParent.datum());
+      this.soleParent(svg.datum().data.id, this.newParent.datum().data.id);
     } else {
       this.nodesBeingDrug.forEach(n => {
         n.attr("transform", null);
@@ -207,20 +220,13 @@ export default class Tree {
     }
   }
 
-  async reparent(draggingDatum, newParentDatum) {
-    this.data = await this.reparentServerSide(draggingDatum.data.id, newParentDatum.data.id);
-    this.draw();
-  }
-
-  async reparentServerSide(goal_id, new_parent_id) {
-    return new Promise((fulfill, reject) => {
-      ajax({
-        url: `/goals/${encodeURIComponent(goal_id)}/sole_parent/${encodeURIComponent(new_parent_id)}`,
-        type: 'PUT',
-        success: data => {
-          fulfill(data);
-        }
-      });
+  soleParent(goalId, newParentId) {
+    ajax({
+      url: `/goals/${encodeURIComponent(goalId)}/sole_parent/${encodeURIComponent(newParentId)}`,
+      type: 'PUT',
+      success: data => {
+        fulfill(data);
+      }
     });
   }
 }

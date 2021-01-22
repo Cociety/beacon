@@ -1,0 +1,17 @@
+<%= content_tag :div, id: dom_id(goal) do %>
+  <%= render partial: 'home/context-menu', collection: goal.tree.goals, as: :goal %>
+  <div class="w-full">
+    <%= content_tag :div,
+      id: 'content',
+      class: 'w-full h-full',
+      data: { goal: render(partial: 'goals/goal', locals: { goal: goal }, formats: [:json]) } do -%>
+      <svg class="tree"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1">
+          <g class="links"></g>
+          <g class="nodes"></g>
+      </svg>
+    <%- end -%>
+  </div>
+<%- end -%>

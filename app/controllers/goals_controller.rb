@@ -3,9 +3,8 @@ class GoalsController < ApplicationController
   before_action :set_new_parent_goal, only: [:sole_parent]
 
   def destroy
-    tree = @goal.tree
     @goal.destroy
-    @top_level_goal = tree.top_level_goal
+    render json: @goal
   end
 
   def sole_parent
