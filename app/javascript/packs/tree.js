@@ -12,10 +12,11 @@ export default class Tree {
     this.newParent = null;
     this.isInitialized = false;
     this.turboFrame = document.querySelector('turbo-frame#goals');
+    this.anyContextMenu = '[id^="context-menu-"]';
   }
 
   getVisibleContextMenus() {
-    return document.querySelectorAll('[id^=context-menu-][class*="opacity-100"]');
+    return document.querySelectorAll(`${this.anyContextMenu}[class*="opacity-100"]`);
   }
 
   isContextMenuVisible() {
@@ -47,11 +48,12 @@ export default class Tree {
     this.data = JSON.parse(content.dataset.goal)
     if (!this.isInitialized) {
       this.isInitialized = true;
-
+      const self = this;
       // close context menu when clicking outside of it or pressing escape
-      delegate(document.body, { selector: '*', exclude: '[id^=context-menu-]' }, 'mousedown', () => {
-        if (this.isContextMenuVisible()) {
-          this.hideContextMenus();
+      delegate(document.body, '*', 'mousedown', function () {
+        const menuClicked = this.matches(`${self.anyContextMenu} *, ${self.anyContextMenu}`);
+        if (self.isContextMenuVisible() && !menuClicked) {
+          self.hideContextMenus();
         }
       });
       delegate(document.body, '*', 'keydown', (e) => {
