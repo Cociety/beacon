@@ -3,17 +3,27 @@ import { ajax, delegate } from "@rails/ujs";
 
 export default class Tree {
   constructor(options = {}) {
+    if (!options.selector) {
+      throw new Error("selector option must be a string")
+    }
     this.options = {
-      width: 400,
       height: 200,
       nodeRadius: 14,
       ...options
     };
+    if ( !this.$el() ) {
+      throw new Error("can't find $el on page");
+    }
+    this.options.width = this.$el().offsetWidth;
     this.isDragging = false;
     this.newParent = null;
     this.isInitialized = false;
     this.turboFrame = document.querySelector('turbo-frame#goals');
     this.anyContextMenu = '[id^="context-menu-"]';
+  }
+
+  $el() {
+    return document.querySelector(this.options.selector);
   }
 
   getVisibleContextMenus() {
@@ -45,8 +55,7 @@ export default class Tree {
   }
 
   draw() {
-    const content = document.getElementById("content");
-    this.data = JSON.parse(content.dataset.goal)
+    this.data = JSON.parse(this.$el().dataset.goal)
     if (!this.isInitialized) {
       this.isInitialized = true;
       const self = this;
