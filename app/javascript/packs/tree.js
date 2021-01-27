@@ -14,7 +14,7 @@ export default class Tree {
     if ( !this.$el() ) {
       throw new Error("can't find $el on page");
     }
-    this.options.width = this.$el().offsetWidth;
+    
     this.isDragging = false;
     this.newParent = null;
     this.isInitialized = false;
@@ -55,6 +55,7 @@ export default class Tree {
   }
 
   draw() {
+    this.options.width = this.$el().offsetWidth;
     this.data = JSON.parse(this.$el().dataset.goal)
     if (!this.isInitialized) {
       this.isInitialized = true;
@@ -81,6 +82,9 @@ export default class Tree {
           }
         })
       })).observe(this.turboFrame, {attributes: false, childList: true});
+
+      // re-render on window resize
+      window.addEventListener("resize", () => this.draw());
     }
     this.root = hierarchy(this.data);
     const treeLayout = tree();
