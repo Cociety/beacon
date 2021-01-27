@@ -1,5 +1,6 @@
 import { drag, hierarchy, linkVertical, select, selectAll, tree } from "d3";
 import { ajax, delegate } from "@rails/ujs";
+
 export default class Tree {
   constructor(options = {}) {
     this.options = {
@@ -113,7 +114,11 @@ export default class Tree {
           const circle = select(this);
           const goalId = circle.datum().data.id;
           self.showContextMenu(`#context-menu-${goalId}`, event.clientX, event.clientY);
-        });
+        })
+        .each(function() {
+          const node = select(this);
+          node.datum().data.hasBlockedChildren = self.hasBlockedChildren(node.datum());
+        })
 
     this.nodes
       .append("foreignObject")
@@ -125,7 +130,8 @@ export default class Tree {
       .classed('circle', true)
       .each(function() {
         const node = select(this);
-        const state = node.datum().data.state;
+        const data = node.datum().data;
+        const state = data.hasBlockedChildren ? "blocked" : data.state;
         node.classed(state, true);
       })
       .append("xhtml:p")
@@ -141,9 +147,10 @@ export default class Tree {
       .append("path")
       .classed("link", true)
       .each(function() {
-        const node = select(this);
-        const state = node.datum().target.data.state;
-        node.classed(`link ${state}`, true);
+        const link = select(this);
+        const data = link.datum().target.data;
+        const state = data.hasBlockedChildren ? "blocked" : data.state;
+        link.classed(state, true);
       })
       .style("stroke-width", d => d.target.data.duration || 1)
       .attr("id", d => `link_${d.source.data.id}_${d.target.data.id}`)
@@ -151,6 +158,17 @@ export default class Tree {
         .attr("d", linkVertical()
             .x(d => d.x)
             .y(d => d.y));
+  }
+
+  hasBlockedChildren(datum) {
+    if (datum.data.state === "blocked") {
+      return true;
+    }
+
+    return (datum.children || []).reduce(
+      (isBlocked, child) => this.hasBlockedChildren(child) || isBlocked,
+      false
+    );
   }
 
   uniqueDatums() {
@@ -169,7 +187,7 @@ export default class Tree {
     });
   }
 
-  dragStarted(event, g) {
+  dragStarted(event) {
     this.isDragging = true;
     const descendants = event.subject.descendants();
     this.nodesBeingDrug = [
