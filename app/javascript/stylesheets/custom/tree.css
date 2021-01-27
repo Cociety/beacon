@@ -15,7 +15,7 @@
     }
 
     .label {
-      @apply text-xs fill-current h-full w-full overflow-hidden break-words;
+      @apply text-xs fill-current h-full w-full overflow-hidden break-words pointer-events-none;
     }
 
     [aria-hidden='true'] {

@@ -112,7 +112,7 @@ export default class Tree {
           event.preventDefault();
           const circle = select(this);
           const goalId = circle.datum().data.id;
-          self.showContextMenu(`#context-menu-${goalId}`, event.offsetX, event.offsetY);
+          self.showContextMenu(`#context-menu-${goalId}`, event.clientX, event.clientY);
         });
 
     this.nodes
