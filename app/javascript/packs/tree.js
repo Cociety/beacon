@@ -1,5 +1,6 @@
-import { drag, hierarchy, linkVertical, select, selectAll, tree } from "d3";
-import { ajax, delegate } from "@rails/ujs";
+import { hierarchy, linkVertical, select, tree } from "d3";
+import { delegate } from "@rails/ujs";
+import { dragHandler } from "./tree/drag";
 
 export default class Tree {
   constructor(options = {}) {
@@ -14,9 +15,7 @@ export default class Tree {
     if ( !this.$el() ) {
       throw new Error("can't find $el on page");
     }
-    
-    this.isDragging = false;
-    this.newParent = null;
+
     this.isInitialized = false;
     this.turboFrame = document.querySelector('turbo-frame#goals');
     this.anyContextMenu = '[id^="context-menu-"]';
@@ -115,13 +114,7 @@ export default class Tree {
       .join("g")
         .classed("node", true)
         .attr("id", d => `node_${d.data.id}`)
-        .call(drag()
-          .on("start", function(event) { self.dragStarted(event, this); })
-          .on("drag", function(event) { self.drag(event, this); })
-          .on("end", function(event) { self.dragEnd(event, this); })
-        )
-        .on('mouseenter', function(event) { self.mouseEnter(event, this); })
-        .on('mouseleave', function(event) { self.mouseLeave(event, this); })
+        .call(dragHandler)
         .on('contextmenu', function(event) {
           event.preventDefault();
           const circle = select(this);
@@ -197,74 +190,6 @@ export default class Tree {
     return this.root.links(this.datums).map(l => {
       l.target = this.datums.find(n => n.data.id === l.target.data.id );
       return l;
-    });
-  }
-
-  dragStarted(event) {
-    this.isDragging = true;
-    const descendants = event.subject.descendants();
-    this.nodesBeingDrug = [
-      ...descendants.map(d => select(`#node_${d.data.id}`)),
-      ...descendants.map(d => selectAll(`[id^="link_${d.data.id}"]`))
-    ];
-    this.nodesBeingDrug.forEach(n => n.classed("dragging", true).raise());
-  }
-  
-  drag(event) {
-    this.nodesBeingDrug.forEach(n => n.attr("transform", `translate(${event.x - event.subject.x}, ${event.y - event.subject.y})`));
-  }
-
-  dragEnd(_, g) {
-    this.isDragging = false;
-    if (this.newParent) {
-      const svg = select(g);
-      this.soleParent(svg.datum().data.id, this.newParent.datum().data.id);
-    } else {
-      this.nodesBeingDrug.forEach(n => {
-        n.attr("transform", null);
-      });
-    }
-
-    this.nodesBeingDrug.forEach(n => n.classed("dragging", false));
-    this.resetNewParent();
-  }
-
-  mouseEnter(_, g) {
-    if (this.isDragging) {
-      this.newParent = select(g);
-      this.newParent.classed('hovering', true);
-      const t = this.newParent.transition().duration(150);
-      this.newParent
-        .transition(t)
-        .attr("transform", d => `translate(${d.x}, ${d.y}) scale(1.1, 1.1) translate(${-d.x}, ${-d.y})`);
-    }
-  }
-
-  mouseLeave() {
-    if (this.isDragging) {
-      this.resetNewParent();
-    }
-  }
-
-  resetNewParent() {
-    if (this.newParent) {
-      this.newParent.classed('hovering', false);
-      const t = this.newParent.transition().duration(150);
-      // this.newParent.classed('hovering', false);
-      this.newParent
-        .transition(t)
-        .attr("transform", 'scale(1)');
-      this.newParent = null;
-    }
-  }
-
-  soleParent(goalId, newParentId) {
-    ajax({
-      url: `/goals/${encodeURIComponent(goalId)}/sole_parent/${encodeURIComponent(newParentId)}`,
-      type: 'PUT',
-      success: data => {
-        fulfill(data);
-      }
     });
   }
 }
