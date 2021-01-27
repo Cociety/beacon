@@ -8,12 +8,12 @@ child1:
   parents: [parent1]
 
 child2:
-  name: child1
+  name: child2
   tree: one
   parents: [parent1]
   
 child3:
-  name: child1
+  name: child3
   tree: one
   parents: [parent1]
 

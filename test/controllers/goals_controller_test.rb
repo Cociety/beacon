@@ -25,4 +25,11 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, @goal.parents.count
     assert_equal @new_parent.id, @goal.parents.first.id
   end
+
+  test 'should update a goal' do
+    assert_changes -> { @goal.state }, from: 'assigned', to: 'blocked' do
+      put goal_url(@goal), params: { goal: { state: :blocked } }
+      @goal.reload
+    end
+  end
 end
