@@ -5,4 +5,6 @@
 
 @import "tailwindcss/utilities";
 
+@import "custom/components.css";
+
 @import "custom/tree.css";

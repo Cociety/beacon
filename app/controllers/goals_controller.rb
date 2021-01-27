@@ -2,6 +2,10 @@ class GoalsController < ApplicationController
   before_action :set_goal
   before_action :set_new_parent_goal, only: [:sole_parent]
 
+  def update
+    @goal.update goal_params
+  end
+
   def destroy
     @goal.destroy
     render json: @goal
@@ -15,7 +19,15 @@ class GoalsController < ApplicationController
   private
 
   def set_goal
-    @goal = Goal.find(params[:id] || params[:goal_id])
+    @goal = Goal.find(goal_id)
+  end
+
+  def goal_id
+    params[:id] || params[:goal_id]
+  end
+
+  def goal_params
+    params.require(:goal).permit :state
   end
 
   def set_new_parent_goal

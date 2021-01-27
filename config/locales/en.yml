@@ -30,4 +30,12 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  home:
+    context-menu:
+      delete: Delete
+      status: Status
+  blocked: Blocked
+  assigned: Assigned
+  in_progress: In Progress
+  testing: Testing
+  done: Done
