@@ -1,6 +1,7 @@
 import { hierarchy, linkVertical, select, tree } from "d3";
 import { delegate } from "@rails/ujs";
 import { dragHandler } from "./tree/drag";
+import QuickView from "./tree/quickView";
 
 export default class Tree {
   constructor(options = {}) {
@@ -57,6 +58,7 @@ export default class Tree {
     this.options.width = this.$el().offsetWidth;
     this.data = JSON.parse(this.$el().dataset.goal)
     if (!this.isInitialized) {
+      QuickView.init();
       this.isInitialized = true;
       const self = this;
       // close context menu when clicking outside of it or pressing escape
@@ -114,6 +116,7 @@ export default class Tree {
       .join("g")
         .classed("node", true)
         .attr("id", d => `node_${d.data.id}`)
+        .on('click', function(event) { QuickView.clicked(event, this); })
         .call(dragHandler)
         .on('contextmenu', function(event) {
           event.preventDefault();

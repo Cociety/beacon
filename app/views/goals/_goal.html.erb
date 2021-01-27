@@ -1,5 +1,6 @@
 <%= content_tag :div, id: dom_id(goal) do %>
   <%= render partial: 'home/context-menu', collection: goal.tree.goals, as: :goal %>
+  <%= render partial: 'home/quick-view', collection: goal.tree.goals, as: :goal %>
   <div class="w-full">
     <%= content_tag :div,
       id: 'content',
