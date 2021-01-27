@@ -140,6 +140,11 @@ export default class Tree {
       .enter()
       .append("path")
       .classed("link", true)
+      .each(function() {
+        const node = select(this);
+        const state = node.datum().target.data.state;
+        node.classed(`link ${state}`, true);
+      })
       .style("stroke-width", d => d.target.data.duration || 1)
       .attr("id", d => `link_${d.source.data.id}_${d.target.data.id}`)
       .join("path")

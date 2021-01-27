@@ -6,9 +6,7 @@ module.exports = {
       fill: {
         none: 'none'
       },
-      stroke: theme => ({
-        black: theme('colors.black')
-      })
+      stroke: theme => theme('colors')
     },
     lineClamp: {
       1: 1,

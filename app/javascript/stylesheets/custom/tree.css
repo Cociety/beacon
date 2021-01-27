@@ -65,5 +65,25 @@
 
   .link {
     @apply stroke-black fill-none;
+
+    &.assigned {
+      @apply stroke-gray-800;
+    }
+
+    &.in_progress {
+      @apply stroke-green-800;
+    }
+
+    &.testing {
+      @apply stroke-indigo-600;
+    }
+
+    &.done {
+      @apply stroke-gray-400;
+    }
+
+    &.blocked {
+      @apply stroke-red-600;
+    }
   }
 }
