@@ -25,7 +25,7 @@ export default class Tree {
 
   hideContextMenus() {
     this.getVisibleContextMenus().forEach(menu => {
-      menu.classList.add('hidden');
+      menu.classList.add('hidden', 'opacity-0');
       setTimeout(() => {
         menu.classList.remove('opacity-100');
       });
@@ -37,7 +37,7 @@ export default class Tree {
     const element = document.querySelector(selector);
     element.style.left = `${x}px`;
     element.style.top = `${y}px`;
-    element.classList.remove('hidden');
+    element.classList.remove('hidden', 'opacity-0');
     setTimeout(() => {
       element.classList.add('opacity-100');
     });
