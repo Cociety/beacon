@@ -36,8 +36,8 @@ en:
       status: Status
     quick-view:
       progress: "%{spent} out of %{duration} points completed"
-  goals:
-    goal:
+  trees:
+    tree:
       progress: "%{spent} out of %{duration} points completed"
   blocked: Blocked
   assigned: Assigned

@@ -3,9 +3,9 @@
   <%= link_to sign_out_url, method: :delete do %>
     <%= t 'auth.sign_out' %>
   <% end %>
-  <%= turbo_stream_from 'goals' %>
-  <%= turbo_frame_tag 'goals' do %>
-    <%= render @top_level_goal %>
+  <%= turbo_stream_from 'tree' %>
+  <%= turbo_frame_tag 'tree' do %>
+    <%= render @tree %>
   <%- end -%>
 <% else %>
   <%= content_tag :h1 do -%>

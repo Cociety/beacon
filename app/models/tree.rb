@@ -1,16 +1,14 @@
 class Tree < ApplicationRecord
   default_scope { order(updated_at: :desc) }
-  has_many :goals, -> { includes(:children) }
+  has_many :goals, -> { includes(:children, :parents) }
+
+  after_create_commit { broadcast_replace_to 'tree' }
+  after_update_commit { broadcast_replace_to 'tree' }
+  after_destroy_commit { broadcast_replace_to 'tree' }
 
   def top_level_goal
-    possible_parents = goals.index_by(&:id)
-    goals.each { |g| g.children.each { |c| possible_parents.delete c.id } }
-
-    raise 'Found multiple top level parents' if possible_parents.size > 1
-
-    raise 'Possible infinite loop detected' if possible_parents.empty?
-
-    _, goal = possible_parents.first
+    goal = top_level_goal_without_tree_ref
+    # to help views avoid hitting the db for the tree
     goal.tree = self
     goal
   end
@@ -29,5 +27,22 @@ class Tree < ApplicationRecord
 
   def percent
     (spent * 100) / duration
+  end
+
+  private
+
+  def top_level_goal_without_tree_ref
+    # edge case with only one goal since it won't have parents or children
+    return goals.first if goals.size == 1
+
+    # goals without parents and with children
+    tlgs = goals.select { |g| g.parents.empty? and g.children.any? }
+
+    raise 'Found multiple top level parents' if tlgs.size > 1
+
+    raise 'Possible infinite loop detected' if tlgs.empty?
+
+    # only one at this point
+    tlgs.first
   end
 end

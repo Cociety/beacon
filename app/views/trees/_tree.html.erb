@@ -1,0 +1,24 @@
+<%= content_tag :div, id: dom_id(tree) do %>
+  <%= render partial: 'home/context-menu', collection: tree.goals, as: :goal %>
+  <%= render partial: 'home/quick-view', collection: tree.goals, as: :goal %>
+  <div class="w-full">
+    <div class="w-full my-2 px-2">
+      <span class="text-sm">
+        <%= t '.progress', spent: tree.spent, duration: tree.duration %>
+      </span>
+      <%= render 'components/progress', percent: tree.percent %>
+    </div>
+    <%= content_tag :div,
+      id: 'content',
+      class: 'w-full h-full',
+      data: { goal: render(partial: 'goals/goal', locals: { goal: tree.top_level_goal }, formats: [:json]) } do -%>
+      <svg class="tree"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1">
+          <g class="links"></g>
+          <g class="nodes"></g>
+      </svg>
+    <%- end -%>
+  </div>
+<%- end -%>

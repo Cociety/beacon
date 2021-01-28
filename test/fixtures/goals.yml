@@ -22,9 +22,9 @@ subchild_2.1:
   tree: one
   parents: [child_2]
 
-parent_2:
-  name: parent_2
-  tree: two
+only_one:
+  name: only_one
+  tree: with_one_goal
 
 parent_3:
   name: parent_3

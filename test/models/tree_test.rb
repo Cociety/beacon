@@ -14,4 +14,8 @@ class TreeTest < ActiveSupport::TestCase
       trees(:no_parents).top_level_goal
     end
   end
+
+  test 'loads if only one goal exists' do
+    assert_equal goals(:only_one), trees(:with_one_goal).top_level_goal
+  end
 end

@@ -18,7 +18,7 @@ export default class Tree {
     }
 
     this.isInitialized = false;
-    this.turboFrame = document.querySelector('turbo-frame#goals');
+    this.turboFrame = document.querySelector('turbo-frame#tree');
     this.anyContextMenu = '[id^="context-menu-"]';
   }
 
