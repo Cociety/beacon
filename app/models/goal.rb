@@ -20,6 +20,17 @@ class Goal < ApplicationRecord
 
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 
+  validates_numericality_of :duration, greater_than_or_equal_to: 1
+  validates_numericality_of :remaining, greater_than_or_equal_to: 1, less_than_or_equal_to: ->(goal) { goal.duration }
+
+  def spent
+    duration - remaining
+  end
+
+  def percent
+    (spent * 100) / duration
+  end
+
   def child?
     parents.count.positive?
   end

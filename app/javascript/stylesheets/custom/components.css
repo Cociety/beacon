@@ -25,3 +25,11 @@
 .blocked {
   @apply bg-red-300 border-red-600 text-red-600;
 }
+
+.progress-bar {
+  @apply rounded relative block bg-gray-400 overflow-hidden;
+
+  & > .inner {
+    @apply bg-green-600 block h-full;
+  }
+}

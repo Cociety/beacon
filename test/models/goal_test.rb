@@ -67,8 +67,29 @@ class GoalTest < ActiveSupport::TestCase
     end
   end
 
-  test 'defaults new goals to \"assigned\"' do
+  test 'defaults new goals to "assigned"' do
     g = Goal.create! tree: @tree
     assert_equal 'assigned', g.state
+  end
+
+  test 'minimum duration is 1' do
+    assert_raise ActiveRecord::RecordInvalid do
+      Goal.create! tree: @tree, duration: 0
+    end
+    Goal.create! tree: @tree, duration: 1
+  end
+
+  test 'minimum remaining is 1' do
+    assert_raise ActiveRecord::RecordInvalid do
+      Goal.create! tree: @tree, remaining: 0
+    end
+    Goal.create! tree: @tree, remaining: 1
+  end
+
+  test "remaining can't be greater than duration" do
+    assert_raise ActiveRecord::RecordInvalid do
+      Goal.create! tree: @tree, remaining: 2, duration: 1
+    end
+    Goal.create! tree: @tree, remaining: 1, duration: 1
   end
 end
