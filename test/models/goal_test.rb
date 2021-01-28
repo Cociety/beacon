@@ -1,13 +1,13 @@
 class GoalTest < ActiveSupport::TestCase
   def setup
-    @parent = goals(:parent1)
+    @parent = goals(:parent_1)
     @tree = @parent.tree
   end
 
   test 'should move a goal to a new parent' do
-    c1 = goals(:child1)
+    c1 = goals(:child_1)
     assert_equal @parent.id, c1.parents.first.id
-    c2 = goals(:child2)
+    c2 = goals(:child_2)
     c1.sole_parent = c2
     assert_equal 1, c1.parents.count
     assert_equal c2.id, c1.parents.first.id

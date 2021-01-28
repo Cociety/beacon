@@ -14,4 +14,20 @@ class Tree < ApplicationRecord
     goal.tree = self
     goal
   end
+
+  def spent
+    goals.map(&:spent).sum
+  end
+
+  def duration
+    goals.map(&:duration).sum
+  end
+
+  def remaining
+    goals.map(&:remaining).sum
+  end
+
+  def percent
+    (spent * 100) / duration
+  end
 end

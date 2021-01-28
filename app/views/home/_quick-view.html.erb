@@ -9,9 +9,7 @@
       <span class="text-sm">
         <%= t '.progress', remaining: goal.remaining, duration: goal.duration %>
       </span>
-      <div class="w-full h-8 progress-bar">
-        <span class="inner" style="width: <%= goal.percent %>%"></span>
-      </div>
+      <%= render 'components/progress', percent: goal.percent %>
     </div>
   </div>
 </div>

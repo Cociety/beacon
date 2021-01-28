@@ -1,7 +1,13 @@
 <%= content_tag :div, id: dom_id(goal) do %>
   <%= render partial: 'home/context-menu', collection: goal.tree.goals, as: :goal %>
   <%= render partial: 'home/quick-view', collection: goal.tree.goals, as: :goal %>
-  <div class="w-full">
+  <div class="w-full p-2">
+    <div class="w-full my-2">
+      <span class="text-sm">
+        <%= t '.progress', remaining: goal.tree.remaining, duration: goal.tree.duration %>
+      </span>
+      <%= render 'components/progress', percent: goal.tree.percent %>
+    </div>
     <%= content_tag :div,
       id: 'content',
       class: 'w-full h-full',

@@ -36,6 +36,9 @@ en:
       status: Status
     quick-view:
       progress: "%{remaining} out of %{duration} points left"
+  goals:
+    goal:
+      progress: "%{remaining} out of %{duration} points left"
   blocked: Blocked
   assigned: Assigned
   in_progress: In Progress

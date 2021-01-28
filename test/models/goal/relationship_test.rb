@@ -1,6 +1,6 @@
 class Goal::RelationshipTest < ActiveSupport::TestCase
   setup do
-    @parent = goals(:parent1)
+    @parent = goals(:parent_1)
   end
 
   test 'should delete a relationship' do

@@ -1,8 +1,8 @@
 class GoalsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @parent = goals(:parent1)
-    @goal = goals(:child2)
-    @new_parent = goals(:child1)
+    @parent = goals(:parent_1)
+    @goal = goals(:child_2)
+    @new_parent = goals(:child_1)
   end
 
   test 'should delete a goal' do
