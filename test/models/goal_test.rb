@@ -92,4 +92,10 @@ class GoalTest < ActiveSupport::TestCase
     end
     Goal.create! tree: @tree, remaining: 1, duration: 1
   end
+
+  test 'should set remaining to zero when done' do
+    assert_changes -> { @parent.remaining } do
+      @parent.update state: Goal.states[:done]
+    end
+  end
 end

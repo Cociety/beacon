@@ -1,8 +1,11 @@
 class Goal < ApplicationRecord
-  before_destroy :prepare_for_reparenting
-  after_destroy :reparent_children
   belongs_to :tree
   default_scope { order(created_at: :asc) }
+
+  before_destroy :prepare_for_reparenting
+  after_destroy :reparent_children
+
+  before_save :check_for_done
 
   # turbolinks
   after_create_commit { top_level_parent.broadcast_replace_to 'goals' }
@@ -29,6 +32,10 @@ class Goal < ApplicationRecord
 
   def percent
     (spent * 100) / duration
+  end
+
+  def check_for_done
+    self.remaining = 0 if state_changed? && state == 'done'
   end
 
   def child?
