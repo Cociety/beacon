@@ -4,7 +4,7 @@
   <div class="w-full p-2">
     <div class="w-full my-2">
       <span class="text-sm">
-        <%= t '.progress', remaining: goal.tree.remaining, duration: goal.tree.duration %>
+        <%= t '.progress', spent: goal.tree.spent, duration: goal.tree.duration %>
       </span>
       <%= render 'components/progress', percent: goal.tree.percent %>
     </div>

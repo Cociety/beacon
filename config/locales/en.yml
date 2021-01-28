@@ -35,10 +35,10 @@ en:
       delete: Delete
       status: Status
     quick-view:
-      progress: "%{remaining} out of %{duration} points left"
+      progress: "%{spent} out of %{duration} points completed"
   goals:
     goal:
-      progress: "%{remaining} out of %{duration} points left"
+      progress: "%{spent} out of %{duration} points completed"
   blocked: Blocked
   assigned: Assigned
   in_progress: In Progress
