@@ -1,6 +1,6 @@
 import { hierarchy, linkVertical, select, tree } from "d3";
-import { delegate } from "@rails/ujs";
 import { dragHandler } from "./tree/drag";
+import ContextMenu from "./tree/contextMenu";
 import QuickView from "./tree/quickView";
 
 export default class Tree {
@@ -19,61 +19,19 @@ export default class Tree {
 
     this.isInitialized = false;
     this.turboFrame = document.querySelector('turbo-frame#tree');
-    this.anyContextMenu = '[id^="context-menu-"]';
   }
 
   $el() {
     return document.querySelector(this.options.selector);
   }
 
-  getVisibleContextMenus() {
-    return document.querySelectorAll(`${this.anyContextMenu}[class*="opacity-100"]`);
-  }
-
-  isContextMenuVisible() {
-    return !!this.getVisibleContextMenus().length;
-  }
-
-  hideContextMenus() {
-    this.getVisibleContextMenus().forEach(menu => {
-      menu.classList.add('hidden', 'opacity-0');
-      setTimeout(() => {
-        menu.classList.remove('opacity-100');
-      });
-    });
-  }
-
-  showContextMenu(selector, x, y) {
-    this.hideContextMenus();
-    const element = document.querySelector(selector);
-    element.style.left = `${x}px`;
-    element.style.top = `${y}px`;
-    element.classList.remove('hidden', 'opacity-0');
-    setTimeout(() => {
-      element.classList.add('opacity-100');
-    });
-  }
-
   draw() {
     this.options.width = this.$el().offsetWidth;
     this.data = JSON.parse(this.$el().dataset.goal)
     if (!this.isInitialized) {
+      ContextMenu.init();
       QuickView.init();
       this.isInitialized = true;
-      const self = this;
-      // close context menu when clicking outside of it or pressing escape
-      delegate(document.body, '*', 'mousedown', function () {
-        const menuClicked = this.matches(`${self.anyContextMenu} *, ${self.anyContextMenu}`);
-        if (self.isContextMenuVisible() && !menuClicked) {
-          self.hideContextMenus();
-        }
-      });
-      delegate(document.body, '*', 'keydown', (e) => {
-        if (this.isContextMenuVisible() && e.code === 'Escape' && !e.shiftKey && !e.ctrlKey) {
-          this.hideContextMenus();
-          return false;
-        }
-      });
 
       // re-render tree with new data after turbolinks updates the dom
       (new MutationObserver((mutationList) => {
@@ -118,12 +76,7 @@ export default class Tree {
         .attr("id", d => `node_${d.data.id}`)
         .on('click', function(event) { QuickView.clicked(event, this); })
         .call(dragHandler)
-        .on('contextmenu', function(event) {
-          event.preventDefault();
-          const circle = select(this);
-          const goalId = circle.datum().data.id;
-          self.showContextMenu(`#context-menu-${goalId}`, event.clientX, event.clientY);
-        })
+        .on('contextmenu', ContextMenu.handler)
         .each(function() {
           const node = select(this);
           node.datum().data.hasBlockedChildren = self.hasBlockedChildren(node.datum());
