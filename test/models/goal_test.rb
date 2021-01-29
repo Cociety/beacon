@@ -8,7 +8,7 @@ class GoalTest < ActiveSupport::TestCase
     c1 = goals(:child_1)
     assert_equal @parent.id, c1.parents.first.id
     c2 = goals(:child_2)
-    c1.sole_parent = c2
+    c2.adopt c1
     assert_equal 1, c1.parents.count
     assert_equal c2.id, c1.parents.first.id
   end

@@ -27,7 +27,7 @@ function dragEnd(_, g) {
   isDragging = false;
   if (newParent) {
     const svg = select(g);
-    soleParent(svg.datum().data.id, newParent.datum().data.id);
+    adopt(newParent.datum().data.id, svg.datum().data.id);
   } else {
     nodesBeingDrug.forEach(n => {
       n.attr("transform", null);
@@ -67,9 +67,9 @@ function resetNewParent() {
   }
 }
 
-function soleParent(goalId, newParentId) {
+function adopt(goalId, newChildId) {
   ajax({
-    url: `/goals/${encodeURIComponent(goalId)}/sole_parent/${encodeURIComponent(newParentId)}`,
+    url: `/goals/${encodeURIComponent(goalId)}/adopt/${encodeURIComponent(newChildId)}`,
     type: 'PUT'
   });
 }

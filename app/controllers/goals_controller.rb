@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
   before_action :set_goal
-  before_action :set_new_parent_goal, only: [:sole_parent]
+  before_action :set_new_child_goal, only: [:adopt]
 
   def update
     @goal.update! goal_params
@@ -12,8 +12,8 @@ class GoalsController < ApplicationController
     render json: @goal
   end
 
-  def sole_parent
-    @goal.sole_parent = @new_parent
+  def adopt
+    @goal.adopt @new_child
     @top_level_goal = @goal.tree.top_level_goal
   end
 
@@ -31,7 +31,7 @@ class GoalsController < ApplicationController
     params.require(:goal).permit :state
   end
 
-  def set_new_parent_goal
-    @new_parent = Goal.find(params[:new_parent_id])
+  def set_new_child_goal
+    @new_child = Goal.find(params[:new_child_id])
   end
 end

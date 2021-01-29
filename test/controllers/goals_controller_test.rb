@@ -20,7 +20,7 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should move a goal to a new parent' do
     assert_equal @parent.id, @goal.parents.first.id
-    put "/goals/#{@goal.id}/sole_parent/#{@new_parent.id}", as: :json
+    put "/goals/#{@new_parent.id}/adopt/#{@goal.id}", as: :json
     assert_response :ok
     assert_equal 1, @goal.parents.count
     assert_equal @new_parent.id, @goal.parents.first.id

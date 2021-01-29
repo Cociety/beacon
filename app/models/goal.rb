@@ -5,7 +5,7 @@ class Goal < ApplicationRecord
   before_destroy :prepare_for_reparenting
   after_destroy :reparent_children
 
-  before_save :check_for_done
+  before_save :set_spent_based_on_done_state
 
   scope :parents, -> { left_outer_joins(:parent_relationships).merge(Relationship.where(child_id: nil)) }
   has_many :parent_relationships, foreign_key: :child_id, class_name: :Relationship, inverse_of: :child
@@ -28,21 +28,15 @@ class Goal < ApplicationRecord
     (spent * 100) / duration
   end
 
-  def check_for_done
+  def set_spent_based_on_done_state
     return unless state_changed?
 
-    self.spent = duration if state == 'done'
-    self.spent = 0 if state_in_database == 'done'
+    self.spent = duration if state_changed_to_done?
+    self.spent = 0 if state_changed_from_done?
   end
 
   def child?
     parents.count.positive?
-  end
-
-  def top_level_parent
-    return parents.first.top_level_parent if child?
-
-    self
   end
 
   def prepare_for_reparenting
@@ -65,11 +59,21 @@ class Goal < ApplicationRecord
     end
   end
 
-  def sole_parent=(new_parent)
+  def adopt(new_child)
     transaction do
-      parent_relationships.destroy_all
-      parents << new_parent
+      new_child.parent_relationships.destroy_all
+      children << new_child
       save!
     end
+  end
+
+  private
+
+  def state_changed_from_done?
+    state_changed? && state_in_database == 'done'
+  end
+
+  def state_changed_to_done?
+    state_changed? && state == 'done'
   end
 end
