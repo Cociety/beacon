@@ -3,7 +3,8 @@ class GoalsController < ApplicationController
   before_action :set_new_parent_goal, only: [:sole_parent]
 
   def update
-    @goal.update goal_params
+    @goal.update! goal_params
+    render json: @goal
   end
 
   def destroy
