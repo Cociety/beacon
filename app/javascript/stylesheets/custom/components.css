@@ -6,6 +6,14 @@
   }
 }
 
+.btn-pill-group {
+  @apply relative z-0 inline-flex shadow-sm flex-shrink-0;
+
+  & .btn {
+    @apply bg-white text-sm font-medium text-gray-500 hover:bg-gray-200 p-2 cursor-pointer focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-8 h-8 flex-shrink-0 border-t border-b border-l first:rounded-l-md last:rounded-r-md last:border-r border-gray-500;
+  }
+}
+
 .assigned {
   @apply bg-gray-50 border-gray-800 text-gray-800;
 }

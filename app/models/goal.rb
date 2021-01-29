@@ -6,6 +6,7 @@ class Goal < ApplicationRecord
   after_destroy :reparent_children
 
   before_save :set_spent_based_on_done_state
+  before_save :set_state_based_on_spent_and_duration
 
   scope :parents, -> { left_outer_joins(:parent_relationships).merge(Relationship.where(child_id: nil)) }
   has_many :parent_relationships, foreign_key: :child_id, class_name: :Relationship, inverse_of: :child
@@ -17,8 +18,12 @@ class Goal < ApplicationRecord
 
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 
-  validates_numericality_of :duration, greater_than_or_equal_to: 1
-  validates_numericality_of :spent, greater_than_or_equal_to: 0, less_than_or_equal_to: ->(goal) { goal.duration }
+  DURATION_MIN = 1
+  validates_numericality_of :duration, greater_than_or_equal_to: DURATION_MIN
+  SPENT_MIN = 0
+  validates_numericality_of :spent,
+                            greater_than_or_equal_to: SPENT_MIN,
+                            less_than_or_equal_to:    ->(goal) { goal.duration }
 
   def remaining
     duration - spent
@@ -33,6 +38,14 @@ class Goal < ApplicationRecord
 
     self.spent = duration if state_changed_to_done?
     self.spent = 0 if state_changed_from_done?
+  end
+
+  def set_state_based_on_spent_and_duration
+    if spent == duration
+      self.state = Goal.states[:done] unless done?
+    elsif done?
+      self.state = Goal.states[:assigned]
+    end
   end
 
   def child?
@@ -74,6 +87,6 @@ class Goal < ApplicationRecord
   end
 
   def state_changed_to_done?
-    state_changed? && state == 'done'
+    state_changed? && done?
   end
 end

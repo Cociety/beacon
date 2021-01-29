@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class GoalTest < ActiveSupport::TestCase
   def setup
     @parent = goals(:parent_1)
@@ -105,4 +106,18 @@ class GoalTest < ActiveSupport::TestCase
       @parent.update state: Goal.states[:assigned]
     end
   end
+
+  test 'sets state to done when spent and duration are equal' do
+    assert_changes -> { @parent.done? }, from: false, to: true do
+      @parent.update spent: 2, duration: 2
+    end
+  end
+
+  test 'sets state to assigned when spent and duration are no longer equal' do
+    @parent.update spent: 2, duration: 2
+    assert_changes -> { @parent.assigned? }, from: false, to: true do
+      @parent.update duration: 3
+    end
+  end
 end
+# rubocop:enable Metrics/ClassLength
