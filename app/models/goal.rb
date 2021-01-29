@@ -18,10 +18,10 @@ class Goal < ApplicationRecord
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 
   validates_numericality_of :duration, greater_than_or_equal_to: 1
-  validates_numericality_of :remaining, greater_than_or_equal_to: 0, less_than_or_equal_to: ->(goal) { goal.duration }
+  validates_numericality_of :spent, greater_than_or_equal_to: 0, less_than_or_equal_to: ->(goal) { goal.duration }
 
-  def spent
-    duration - remaining
+  def remaining
+    duration - spent
   end
 
   def percent
@@ -31,8 +31,8 @@ class Goal < ApplicationRecord
   def check_for_done
     return unless state_changed?
 
-    self.remaining = 0 if state == 'done'
-    self.remaining = duration if state_in_database == 'done'
+    self.spent = duration if state == 'done'
+    self.spent = 0 if state_in_database == 'done'
   end
 
   def child?

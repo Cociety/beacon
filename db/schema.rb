@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_232303) do
+ActiveRecord::Schema.define(version: 2021_01_29_021350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_232303) do
     t.integer "state", default: 0, null: false
     t.uuid "tree_id", null: false
     t.integer "duration", default: 1
-    t.integer "remaining", default: 1
+    t.integer "spent", default: 0
     t.index ["tree_id"], name: "index_goals_on_tree_id"
   end
 

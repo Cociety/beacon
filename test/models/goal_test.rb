@@ -79,23 +79,30 @@ class GoalTest < ActiveSupport::TestCase
     Goal.create! tree: @tree, duration: 1
   end
 
-  test 'minimum remaining is 1' do
+  test 'minimum spent is 0' do
     assert_raise ActiveRecord::RecordInvalid do
-      Goal.create! tree: @tree, remaining: 0
+      Goal.create! tree: @tree, spent: -1
     end
-    Goal.create! tree: @tree, remaining: 1
+    Goal.create! tree: @tree, spent: 0
   end
 
-  test "remaining can't be greater than duration" do
+  test "spent can't be greater than duration" do
     assert_raise ActiveRecord::RecordInvalid do
-      Goal.create! tree: @tree, remaining: 2, duration: 1
+      Goal.create! tree: @tree, spent: 2, duration: 1
     end
-    Goal.create! tree: @tree, remaining: 1, duration: 1
+    Goal.create! tree: @tree, spent: 1, duration: 1
   end
 
-  test 'should set remaining to zero when done' do
-    assert_changes -> { @parent.remaining } do
+  test 'should set spent to duration when changing to done' do
+    assert_changes -> { @parent.spent }, to: @parent.duration do
       @parent.update state: Goal.states[:done]
+    end
+  end
+
+  test 'should set spent to zero when changing from done' do
+    @parent.update state: Goal.states[:done]
+    assert_changes -> { @parent.spent }, to: 0 do
+      @parent.update state: Goal.states[:assigned]
     end
   end
 end
