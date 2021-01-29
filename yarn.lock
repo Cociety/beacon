@@ -7528,6 +7528,13 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
+tailwindcss-line-clamp@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/tailwindcss-line-clamp/-/tailwindcss-line-clamp-1.0.5.tgz#67053ede8e14f4065e920c7afcaf5d9377d91b11"
+  integrity sha512-tLqJAarIrz9Hgs3P3d98i329PN3vEYADabONPUJ1lccoJz/47Z8Vfhol9XfgjB1sQRZ+A4kdWIfwNJDHdnN1DQ==
+  dependencies:
+    lodash "^4.17.15"
+
 tailwindcss@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-2.0.2.tgz#28e1573d29dd4547b26782facb05bcfaa92be366"

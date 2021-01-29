@@ -89,7 +89,7 @@ export default class Tree {
       .attr('height', this.options.nodeRadius*2)
       .attr('width', this.options.nodeRadius*2)
       .append('xhtml:div')
-      .classed('circle', true)
+      .classed('goal', true)
       .each(function() {
         const node = select(this);
         const data = node.datum().data;
@@ -98,7 +98,7 @@ export default class Tree {
       })
       .append("xhtml:p")
       .classed("label", true)
-      .html(d => `<span aria-hidden="true"></span>${d.data.name}`);
+      .text(d => d.data.name);
   }
 
   drawVertices() {

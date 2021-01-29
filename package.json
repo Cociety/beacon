@@ -13,6 +13,7 @@
     "postcss-loader": "^4.1.0",
     "postcss-nested": "^5.0.3",
     "tailwindcss": "^2.0.2",
+    "tailwindcss-line-clamp": "^1.0.5",
     "webpack": "^4.44.2"
   },
   "version": "0.1.0",

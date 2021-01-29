@@ -5,62 +5,18 @@
     }
 
     &.hovering {
-      .circle {
+      .goal {
         @apply shadow-md;
       }
     }
 
-    .circle {
-      @apply rounded-full border-2 flex items-center justify-center w-full h-full z-10 cursor-pointer;
+    .goal {
+      @apply rounded border-2 flex items-center justify-center w-full h-full z-10 cursor-pointer;
     }
 
     .label {
-      @apply text-xs fill-current h-full w-full overflow-hidden break-words pointer-events-none;
+      @apply m-1 text-xs break-all pointer-events-none clamp-4;
     }
-
-    [aria-hidden='true'] {
-          @apply contents;
-
-          &:before, &:after {
-            @apply w-1/2 h-full;
-            shape-margin: 7%;
-            content: '';
-          }
-
-          &:before {
-            @apply float-left;
-            shape-outside: polygon(
-              0 0,
-              98% 0,
-              50% 6%,
-              23.4% 17.3%,
-              6% 32.6%,
-              0 50%,
-              6% 65.6%,
-              23.4% 82.7%,
-              50% 94%,
-              98% 100%,
-              0 100%
-            );
-          }
-
-          &:after {
-            @apply float-right;
-            shape-outside: polygon(
-              2% 0%,
-              100% 0%,
-              100% 100%,
-              2% 100%,
-              50% 94%,
-              76.6% 82.7%,
-              94% 65.6%,
-              100% 50%,
-              94% 32.6%,
-              76.6% 17.3%,
-              50% 6%
-            );
-          }
-        }
   }
 
   .link {
