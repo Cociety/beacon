@@ -1,7 +1,6 @@
 import { hierarchy, linkVertical, select, tree } from "d3";
 import { dragHandler } from "./tree/drag";
 import ContextMenu from "./tree/contextMenu";
-import QuickView from "./tree/quickView";
 
 export default class Tree {
   constructor(options = {}) {
@@ -30,7 +29,6 @@ export default class Tree {
     this.data = JSON.parse(this.$el().dataset.goal)
     if (!this.isInitialized) {
       ContextMenu.init();
-      QuickView.init();
       this.isInitialized = true;
 
       // re-render tree with new data after turbolinks updates the dom
@@ -74,7 +72,6 @@ export default class Tree {
       .join("g")
         .classed("node", true)
         .attr("id", d => `node_${d.data.id}`)
-        .on('click', function(event) { QuickView.clicked(event, this); })
         .call(dragHandler)
         .on('contextmenu', ContextMenu.handler)
         .each(function() {
@@ -88,7 +85,10 @@ export default class Tree {
       .attr("y", d => d.y - this.options.nodeRadius)
       .attr('height', this.options.nodeRadius*2)
       .attr('width', this.options.nodeRadius*2)
+      .attr('data-controller', 'quick-view')
+      .attr('data-quick-view-id-value', d => d.data.id)
       .append('xhtml:div')
+      .attr('data-action', 'click->quick-view#show')
       .classed('goal', true)
       .each(function() {
         const node = select(this);

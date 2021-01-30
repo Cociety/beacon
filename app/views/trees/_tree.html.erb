@@ -1,6 +1,6 @@
 <%= content_tag :div, id: dom_id(tree) do %>
   <%= render partial: 'home/context-menu', collection: tree.goals, as: :goal %>
-  <%= render partial: 'home/quick-view', collection: tree.goals, as: :goal %>
+  <%= turbo_frame_tag "quick_view", loading: :eager, class: "fixed" %>
   <div class="w-full">
     <div class="w-full my-2 px-2">
       <span class="text-sm">
