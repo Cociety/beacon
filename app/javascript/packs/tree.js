@@ -11,7 +11,7 @@ export default class Tree {
       nodeRadius: 14,
       ...options
     };
-    if ( !this.$el() ) {
+    if ( !this.$el ) {
       throw new Error("can't find $el on page");
     }
 
@@ -19,13 +19,13 @@ export default class Tree {
     this.turboFrame = document.querySelector('turbo-frame#tree');
   }
 
-  $el() {
+  get $el() {
     return document.querySelector(this.options.selector);
   }
 
   draw() {
-    this.options.width = this.$el().offsetWidth;
-    this.data = JSON.parse(this.$el().dataset.goal)
+    this.options.width = this.$el.offsetWidth;
+    this.data = JSON.parse(this.$el.dataset.goal)
     if (!this.isInitialized) {
       this.isInitialized = true;
 
