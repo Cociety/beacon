@@ -4,9 +4,9 @@ export default class AbstractPopoverController extends Controller {
 
   constructor() {
     super(...arguments);
-    this.newTarget = new.target;
+    this.subClass = new.target;
     if (new.target === AbstractPopoverController) {
-      throw new TypeError("Cannot construct Abstract instances directly");
+      throw new TypeError("Cannot construct AbstractPopoverController instances directly");
     }
   }
 
@@ -19,14 +19,43 @@ export default class AbstractPopoverController extends Controller {
   }
 
   initialize() {
-    if (this.newTarget.initialized) {
+    if (this.subClass.initialized) {
       return;
     }
-    this.newTarget.initialized = true;
+    this.subClass.initialized = true;
 
     document.addEventListener('click', this.hideIfClickedOutside.bind(this));
     document.addEventListener('mousedown', this.hideIfClickedOutside.bind(this));
     document.addEventListener('keydown', this.hideIfEscapeKeyPressed.bind(this));
+    window.addEventListener("resize", this.moveToClickLocationKeepingItOnScreen.bind(this));
+    (new MutationObserver((mutationList) => {
+      if(!this.isVisible()){
+        return;
+      }
+      mutationList.forEach(m => {
+        if(this.isTurboLinksInjection(m)) {
+          this.moveToClickLocationKeepingItOnScreen();
+        }
+      })
+    })).observe(document, {attributes: false, childList: true, subtree: true});
+  }
+
+  isTurboLinksInjection(mutation) {
+    return mutation.type === "childList" && mutation.target.matches(this.selector)
+  }
+
+  moveToClickLocationKeepingItOnScreen() {
+    if (!this.subClass.currentClickLocation) {
+      return;
+    }
+    const popoverContent = this.$el.querySelector('*');
+    if (!popoverContent) {
+      return;
+    }
+    const x = Math.min(window.innerWidth - popoverContent.offsetWidth, this.subClass.currentClickLocation.x);
+    const y = Math.min(window.innerHeight - popoverContent.offsetHeight, this.subClass.currentClickLocation.y);
+    this.$el.style.left = `${x}px`;
+    this.$el.style.top = `${y}px`;
   }
 
   hideIfClickedOutside(event) {
@@ -57,8 +86,7 @@ export default class AbstractPopoverController extends Controller {
 
   show(event) {
     event.preventDefault();
+    this.subClass.currentClickLocation = {x: event.clientX, y: event.clientY };
     this.$el.setAttribute('src', this.srcUrl);
-    this.$el.style.left = `${event.clientX}px`;
-    this.$el.style.top = `${event.clientY}px`;
   }
 }
