@@ -1,38 +1,10 @@
-import { Controller } from "stimulus";
-import { delegate } from "@rails/ujs";
-export default class QuickViewController extends Controller {
-  static values = { id: String };
-
-  initialize() {
-    if (QuickViewController.initialized) {
-      return;
-    }
-    QuickViewController.initialized = true;
-
-    const self = this;
-    delegate(document.body, '*', 'mousedown', function () {
-      const quickViewClicked = this.matches(`#quick_view *, #quick_view`);
-      if (self.isVisible() && !quickViewClicked) {
-        self.hide();
-      }
-    });
+import AbstractPopoverController from "./abstract_popover_controller";
+export default class QuickViewController extends AbstractPopoverController {
+  get selector() {
+    return '#quick_view';
   }
 
-  quickView() {
-    return document.getElementById('quick_view');
-  }
-
-  isVisible() {
-    return !!this.quickView().innerHTML.length;
-  }
-
-  hide() {
-    this.quickView().innerHTML = "";
-  }
-
-  show(event) {
-    this.quickView().setAttribute('src', `/goals/${encodeURIComponent(this.idValue)}/quick_view`);
-    this.quickView().style.left = `${event.clientX}px`;
-    this.quickView().style.top = `${event.clientY}px`;
+  get srcUrl() {
+    return `/goals/${encodeURIComponent(this.idValue)}/quick_view`;
   }
 }
