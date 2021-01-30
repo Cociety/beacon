@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import { delegate } from "@rails/ujs";
 export default class AbstractPopoverController extends Controller {
   static values = { id: String };
 
@@ -25,20 +24,23 @@ export default class AbstractPopoverController extends Controller {
     }
     this.newTarget.initialized = true;
 
-    const self = this;
-    delegate(document.body, '*', 'mousedown', function () {
-      const $elClicked = this.matches(`${self.selector} *, ${self.selector}`);
-      if (self.isVisible() && !$elClicked) {
-        self.hide();
-      }
-    });
+    document.addEventListener('click', this.hideIfClickedOutside.bind(this));
+    document.addEventListener('mousedown', this.hideIfClickedOutside.bind(this));
+    document.addEventListener('keydown', this.hideIfEscapeKeyPressed.bind(this));
+  }
 
-    delegate(document.body, '*', 'keydown', (e) => {
-      if (self.isVisible() && e.code === 'Escape' && !e.shiftKey && !e.ctrlKey) {
-        self.hide();
-        return false;
-      }
-    });
+  hideIfClickedOutside(event) {
+    const $elClicked = event.target.matches(`${this.selector} *, ${this.selector}`);
+    if (this.isVisible() && !$elClicked) {
+      this.hide();
+    }
+  }
+
+  hideIfEscapeKeyPressed(event) {
+    if (this.isVisible() && event.code === 'Escape' && !event.shiftKey && !event.ctrlKey) {
+      this.hide();
+      event.preventDefault();
+    }
   }
 
   get $el() {
