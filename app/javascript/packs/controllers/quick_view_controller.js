@@ -1,6 +1,5 @@
 import { Controller } from "stimulus";
 import { delegate } from "@rails/ujs";
-
 export default class QuickViewController extends Controller {
   static values = { id: String };
 
