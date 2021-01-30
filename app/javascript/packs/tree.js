@@ -1,6 +1,5 @@
 import { hierarchy, linkVertical, select, tree } from "d3";
 import { dragHandler } from "./tree/drag";
-import ContextMenu from "./tree/contextMenu";
 
 export default class Tree {
   constructor(options = {}) {
@@ -28,7 +27,6 @@ export default class Tree {
     this.options.width = this.$el().offsetWidth;
     this.data = JSON.parse(this.$el().dataset.goal)
     if (!this.isInitialized) {
-      ContextMenu.init();
       this.isInitialized = true;
 
       // re-render tree with new data after turbolinks updates the dom
@@ -73,7 +71,6 @@ export default class Tree {
         .classed("node", true)
         .attr("id", d => `node_${d.data.id}`)
         .call(dragHandler)
-        .on('contextmenu', ContextMenu.handler)
         .each(function() {
           const node = select(this);
           node.datum().data.hasBlockedChildren = self.hasBlockedChildren(node.datum());
@@ -85,10 +82,11 @@ export default class Tree {
       .attr("y", d => d.y - this.options.nodeRadius)
       .attr('height', this.options.nodeRadius*2)
       .attr('width', this.options.nodeRadius*2)
-      .attr('data-controller', 'quick-view')
+      .attr('data-controller', 'quick-view context-menu')
       .attr('data-quick-view-id-value', d => d.data.id)
+      .attr('data-context-menu-id-value', d => d.data.id)
       .append('xhtml:div')
-      .attr('data-action', 'click->quick-view#show')
+      .attr('data-action', 'click->quick-view#show contextmenu->context-menu#show')
       .classed('goal', true)
       .each(function() {
         const node = select(this);

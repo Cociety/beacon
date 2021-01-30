@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'home#index'
   resources :goals, only: %i[update destroy] do
     resources :quick_view, only: %i[index]
+    resources :context_menu, only: %i[index]
     match 'adopt/:new_child_id', action: :adopt, via: %i[put patch]
   end
 end

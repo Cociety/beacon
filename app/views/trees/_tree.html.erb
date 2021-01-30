@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(tree) do %>
-  <%= render partial: 'home/context-menu', collection: tree.goals, as: :goal %>
+  <%= turbo_frame_tag "context_menu", loading: :eager, class: "fixed" %>
   <%= turbo_frame_tag "quick_view", loading: :eager, class: "fixed" %>
   <div class="w-full">
     <div class="w-full my-2 px-2">
