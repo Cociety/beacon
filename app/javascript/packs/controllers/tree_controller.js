@@ -66,7 +66,7 @@ export default class TreeController extends Controller {
       .attr('width', this.options.nodeRadius*2)
       .append('xhtml:turbo-frame')
       .append('xhtml:a')
-      .attr('href', d => `/goals/${encodeURIComponent(d.data.id)}/quick_view`)
+      .attr('href', d => `/goals/${encodeURIComponent(d.data.id)}/popover`)
       .attr('data-turbo-frame', 'popover')
       .classed('goal', true)
       .each(function() {

@@ -1,4 +1,4 @@
-class QuickViewController < ApplicationController
+class PopoverController < ApplicationController
   before_action :set_goal, only: [:index]
 
   def set_goal

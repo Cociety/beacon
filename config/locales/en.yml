@@ -30,7 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  quick_view:
+  popover:
     index:
       delete: Delete
       status: Status
