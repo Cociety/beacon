@@ -19,6 +19,7 @@
       keydown->popover#hideIfEscapeKeyPressed
     "
   >
+    <%= turbo_stream_from 'popover' %>
     <%= popover_tag %>
     <%= yield %>
   </body>

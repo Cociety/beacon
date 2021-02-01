@@ -2,7 +2,7 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   initialize() {
-    document.documentElement.addEventListener('popover-content:connect', this.moveIfOffScreen);
+    document.documentElement.addEventListener('popover-content:connect', this.moveIfOffScreen.bind(this));
     window.addEventListener('resize', this.moveIfOffScreen);
   }
 
@@ -26,7 +26,10 @@ export default class extends Controller {
     this.popover.style.top = `${xy.y}px`;
   }
 
-  moveIfOffScreen = () => {
+  moveIfOffScreen() {
+    if (!this.popover.offsetWidth || !this.popover.offsetHeight) {
+      return;
+    }
     this.popoverXY = {
       x: Math.min(window.innerWidth - this.popover.offsetWidth, this.clickXY.x),
       y: Math.min(window.innerHeight - this.popover.offsetHeight, this.clickXY.y)
