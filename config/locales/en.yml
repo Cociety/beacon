@@ -30,12 +30,10 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  context_menu:
+  quick_view:
     index:
       delete: Delete
       status: Status
-  quick_view:
-    index:
       progress: "%{spent} out of %{duration} points completed"
   trees:
     tree:
