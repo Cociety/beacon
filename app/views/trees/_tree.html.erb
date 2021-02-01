@@ -1,4 +1,7 @@
-<%= content_tag :div, id: dom_id(tree) do %>
+<%= content_tag :div, id: dom_id(tree), data: {
+  controller: 'tree',
+  'tree-hierarchy-value': render(partial: 'goals/goal', locals: { goal: tree.top_level_goal }, formats: [:json])
+  } do %>
   <%= turbo_frame_tag "context_menu", loading: :eager, class: "fixed" %>
   <%= turbo_frame_tag "quick_view", loading: :eager, class: "fixed" %>
   <div class="w-full">
@@ -8,17 +11,14 @@
       </span>
       <%= render 'components/progress', percent: tree.percent %>
     </div>
-    <%= content_tag :div,
-      id: 'content',
-      class: 'w-full h-full',
-      data: { goal: render(partial: 'goals/goal', locals: { goal: tree.top_level_goal }, formats: [:json]) } do -%>
-      <svg class="tree"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1">
-          <g class="links"></g>
-          <g class="nodes"></g>
-      </svg>
+    <%= content_tag :div, id: 'content', class: 'w-full h-full', data: { 'tree-target': :tree } do -%>
+        <svg class="tree"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1">
+            <g class="links"></g>
+            <g class="nodes"></g>
+        </svg>
     <%- end -%>
   </div>
 <%- end -%>

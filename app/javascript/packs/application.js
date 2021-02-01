@@ -8,7 +8,6 @@ import Rails from "@rails/ujs"
 import "@hotwired/turbo-rails"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-import Tree from "./tree"
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 
@@ -47,8 +46,3 @@ Rails.isCrossDomain = function (url) {
     return true;
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const tree = new Tree({ selector: "#content", height: 600, nodeRadius: 40 });
-  tree.draw();
-})

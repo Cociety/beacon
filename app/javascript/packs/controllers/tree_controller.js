@@ -1,47 +1,29 @@
+import { Controller } from "stimulus";
 import { hierarchy, linkVertical, select, tree } from "d3";
-import { dragHandler } from "./tree/drag";
+import { dragHandler } from "../tree/drag";
 
-export default class Tree {
-  constructor(options = {}) {
-    if (!options.selector) {
-      throw new Error("selector option must be a string")
-    }
+export default class TreeController extends Controller {
+  static values = { hierarchy: Object };
+  static targets = [ "tree" ];
+
+  initialize() {
     this.options = {
-      height: 200,
-      nodeRadius: 14,
-      ...options
-    };
-    if ( !this.$el ) {
-      throw new Error("can't find $el on page");
+      height: 600,
+      nodeRadius: 40,
+      width: null
     }
-
-    this.isInitialized = false;
-    this.turboFrame = document.querySelector('turbo-frame#tree');
-  }
-
-  get $el() {
-    return document.querySelector(this.options.selector);
+    this.draw();
   }
 
   draw() {
-    this.options.width = this.$el.offsetWidth;
-    this.data = JSON.parse(this.$el.dataset.goal)
+    this.options.width = this.treeTarget.offsetWidth;
     if (!this.isInitialized) {
       this.isInitialized = true;
-
-      // re-render tree with new data after turbolinks updates the dom
-      (new MutationObserver((mutationList) => {
-        mutationList.forEach(m => {
-          if (m.type === "childList") {
-            this.draw();
-          }
-        })
-      })).observe(this.turboFrame, {attributes: false, childList: true});
 
       // re-render on window resize
       window.addEventListener("resize", () => this.draw());
     }
-    this.root = hierarchy(this.data);
+    this.root = hierarchy(this.hierarchyValue);
     const treeLayout = tree();
     treeLayout.size([this.options.width, this.options.height]);
     treeLayout(this.root);
