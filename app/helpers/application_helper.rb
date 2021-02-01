@@ -19,4 +19,14 @@ module ApplicationHelper
       query: { redirect_to: request.original_url }.to_query
     ).to_s
   end
+
+  def popover_tag
+    turbo_frame_tag :popover, loading: :eager
+  end
+
+  def popover_content_tag(**attributes, &block)
+    turbo_frame_tag :popover do
+      tag.div(**attributes.merge(data: { controller: 'popover-content' }).compact, &block)
+    end
+  end
 end

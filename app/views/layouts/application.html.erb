@@ -10,7 +10,16 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="h-screen">
+  <body class="h-screen"
+    data-controller="popover"
+    data-action="
+      click->popover#hideIfClickedOutside
+      click->popover#moveToClickPoint
+      mousedown->popover#hideIfClickedOutside
+      keydown->popover#hideIfEscapeKeyPressed
+    "
+  >
+    <%= popover_tag %>
     <%= yield %>
   </body>
 </html>

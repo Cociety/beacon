@@ -64,11 +64,10 @@ export default class TreeController extends Controller {
       .attr("y", d => d.y - this.options.nodeRadius)
       .attr('height', this.options.nodeRadius*2)
       .attr('width', this.options.nodeRadius*2)
-      .attr('data-controller', 'quick-view context-menu')
-      .attr('data-quick-view-id-value', d => d.data.id)
-      .attr('data-context-menu-id-value', d => d.data.id)
-      .append('xhtml:div')
-      .attr('data-action', 'click->quick-view#show contextmenu->context-menu#show')
+      .append('xhtml:turbo-frame')
+      .append('xhtml:a')
+      .attr('href', d => `/goals/${encodeURIComponent(d.data.id)}/quick_view`)
+      .attr('data-turbo-frame', 'popover')
       .classed('goal', true)
       .each(function() {
         const node = select(this);

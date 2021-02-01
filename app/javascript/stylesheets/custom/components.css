@@ -41,3 +41,9 @@
     @apply bg-green-600 block h-full;
   }
 }
+
+#popover {
+  @apply fixed;
+  width: fit-content;
+  height: fit-content;
+}
