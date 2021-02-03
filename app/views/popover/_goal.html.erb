@@ -4,62 +4,64 @@
       <%= goal.name %>
     </h3>
   </div>
-  <div class="flex flex-col">
-    <div class="p-2">
-      <span class="text-sm">
-        <%= t '.progress', spent: goal.spent, duration: goal.duration %>
-      </span>
-      <div class="flex space-x-1">
-        <span class="btn-pill-group">
-          <%- if goal.spent > Goal::SPENT_MIN %>
-            <%= form_with model: goal, method: :put, class: "btn" do |f| %>
-              <%= f.hidden_field :spent, value: goal.spent-1 %>
-              <%= f.button type: :submit do %>
-                <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+  <div class="p-2 space-y-2">
+    <div class="flex flex-col">
+      <div>
+        <span class="form-label">
+          <%= t '.progress', spent: goal.spent, duration: goal.duration %>
+        </span>
+        <div class="flex space-x-1">
+          <span class="btn-pill-group">
+            <%- if goal.spent > Goal::SPENT_MIN %>
+              <%= form_with model: goal, method: :put, class: "pill" do |f| %>
+                <%= f.hidden_field :spent, value: goal.spent-1 %>
+                <%= f.button type: :submit do %>
+                  <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+                <%- end %>
               <%- end %>
             <%- end %>
-          <%- end %>
-          <% if goal.spent < goal.duration %>
-            <%= form_with model: goal, method: :put, class: "btn" do |f| %>
-              <%= f.hidden_field :spent, value: goal.spent+1 %>
-              <%= f.button type: :submit do %>
-              <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
-            <%- end %>
-            <%- end %>
-          <%- end %>
-        </span>
-        <%= render 'components/progress', percent: goal.percent %>
-        <span class="btn-pill-group">
-          <%- if goal.duration > Goal::DURATION_MIN %>
-            <%= form_with model: goal, method: :put, class: "btn" do |f| %>
-              <%= f.hidden_field :duration, value: goal.duration-1 %>
-              <%= f.button type: :submit do %>
-                <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+            <% if goal.spent < goal.duration %>
+              <%= form_with model: goal, method: :put, class: "pill" do |f| %>
+                <%= f.hidden_field :spent, value: goal.spent+1 %>
+                <%= f.button type: :submit do %>
+                <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+              <%- end %>
               <%- end %>
             <%- end %>
-          <%- end %>
-          <%= form_with model: goal, method: :put, class: "btn" do |f| %>
-            <%= f.hidden_field :duration, value: goal.duration+1 %>
-            <%= f.button type: :submit do %>
-              <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+          </span>
+          <%= render 'components/progress', percent: goal.percent %>
+          <span class="btn-pill-group">
+            <%- if goal.duration > Goal::DURATION_MIN %>
+              <%= form_with model: goal, method: :put, class: "pill" do |f| %>
+                <%= f.hidden_field :duration, value: goal.duration-1 %>
+                <%= f.button type: :submit do %>
+                  <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+                <%- end %>
+              <%- end %>
             <%- end %>
-          <%- end %>
-        </span>
+            <%= form_with model: goal, method: :put, class: "pill" do |f| %>
+              <%= f.hidden_field :duration, value: goal.duration+1 %>
+              <%= f.button type: :submit do %>
+                <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+              <%- end %>
+            <%- end %>
+          </span>
+        </div>
       </div>
     </div>
-  </div>
-<div class="flex flex-col divide-y divide-gray-300">
-    <div class="flex flex-col">
-      <span class="text-sm cursor-default"><%= t('.status') %></span>
-      <% Goal.states.each do |name, _| %>
-        <%= form_with model: goal, method: :put do |f| %>
-          <%= f.hidden_field :state, value: name %>
-          <%= f.submit t(name), class: "ctx-menu-btn #{name}" %>
-        <%- end %>
-      <%- end -%>
-    </div>
-    <%= form_with model: goal, method: :delete do |f| %>
-      <%= f.submit t('.delete'), class: 'ctx-menu-btn danger' %>
+    <div>
+    <%= form_with model: goal, method: :put, data: { controller: 'form-submitter' } do |f| %>
+      <%= f.label :state, t('.status') %>
+      <%= f.collection_select :state, goal_states, :value, :text,
+        { selected: -> (state) { goal.state == state.value }},
+        { class: 'select', data: { action: 'change->form-submitter#submit' }
+      } %>
     <% end %>
   </div>
+  <div class="flex justify-end">
+    <%= form_with model: goal, method: :delete, class:'' do |f| %>
+      <%= f.submit t('.delete'), class: 'btn danger' %>
+    <% end %>
+  </div>
+</div>
 <%- end %>

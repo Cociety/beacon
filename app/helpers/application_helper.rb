@@ -1,3 +1,4 @@
+require "ostruct"
 module ApplicationHelper
   def sign_in_url
     cociety_url(Rails.application.config.cociety[:sign_in_path])
@@ -30,5 +31,9 @@ module ApplicationHelper
     turbo_frame_tag :popover do
       tag.div(**attributes.merge(id: id, data: { controller: 'popover-content' }).compact, &block)
     end
+  end
+
+  def goal_states
+    Goal.states.map { |state, _| OpenStruct.new(value: state, text: t(state)) }
   end
 end
