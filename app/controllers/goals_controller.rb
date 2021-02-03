@@ -1,6 +1,29 @@
 class GoalsController < ApplicationController
-  before_action :set_goal
+  before_action :set_goal, except: [:new, :create]
   before_action :set_new_child_goal, only: [:adopt]
+
+  def new
+    @goal = Goal.new
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('popover', partial: 'popover_form', locals: { goal: @goal })
+      end
+      format.html { render :new }
+    end
+  end
+
+  def create
+    @goal = Goal.new goal_params
+    respond_to do |format|
+      if @goal.save
+        format.html { render :new }
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('popover', partial: 'popover_form', locals: { goal: @goal })
+        end
+      end
+    end
+  end
 
   def update
     @goal.update! goal_params
@@ -28,7 +51,7 @@ class GoalsController < ApplicationController
   end
 
   def goal_params
-    params.require(:goal).permit :state, :spent, :duration
+    params.require(:goal).permit :state, :spent, :duration, :name, :tree_id
   end
 
   def set_new_child_goal

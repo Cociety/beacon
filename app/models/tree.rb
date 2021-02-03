@@ -3,7 +3,7 @@ class Tree < ApplicationRecord
   has_many :goals, -> { includes(:children, :parents) }
 
   after_create_commit { broadcast_replace_to 'tree' }
-  after_update_commit { broadcast_replace_to 'tree' }
+  after_update_commit { reload and broadcast_replace_to 'tree' }
   after_destroy_commit { broadcast_replace_to 'tree' }
 
   def top_level_goal

@@ -30,6 +30,9 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  goal:
+    new: New Goal
+    create: Create Goal
   popover:
     goal:
       delete: Delete

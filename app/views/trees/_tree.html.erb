@@ -3,11 +3,17 @@
   'tree-hierarchy-value': render(partial: 'goals/goal', locals: { goal: tree.top_level_goal }, formats: [:json])
   } do %>
   <div class="w-full">
-    <div class="w-full my-2 px-2">
-      <span class="text-sm">
-        <%= t '.progress', spent: tree.spent, duration: tree.duration %>
-      </span>
-      <%= render 'components/progress', percent: tree.percent %>
+    <div class="flex my-2 px-2 space-x-2 justify-between items-end"> 
+      <div>
+        <span class="text-sm">
+          <%= t '.progress', spent: tree.spent, duration: tree.duration %>
+        </span>
+        <%= render 'components/progress', percent: tree.percent %>
+      </div>
+      <%= link_to new_goal_path, class:"btn btn-primary", data: {'turbo-frame': :popover} do %>
+        <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+        <%= t('goal.new')%>
+      <% end %>
     </div>
     <%= tag.div id: 'content', class: 'w-full h-full', data: { 'tree-target': :tree } do -%>
         <svg class="tree"

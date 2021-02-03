@@ -1,0 +1,37 @@
+<%= form_with model: goal, id: dom_id(goal), class:'flex flex-col space-y-2 m-2' do |f| %>
+  <%= f.hidden_field :tree_id, value: Tree.first.id %>
+
+  <div>
+    <% name_errors = attribute_errors(goal, :name) %>
+    <%= f.label :name %>
+    <%= f.text_field :name, class: { error: name_errors.any? }, value: goal.name, placeholder: true %>
+    <% if name_errors.any? %>
+      <div>
+        <% name_errors.each do |e| %>
+          <p class="text-sm text-red-600"><%= e.full_message %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <% duration_errors = attribute_errors(goal, :duration) %>
+    <%= f.label :duration %>
+    <%= f.number_field :duration, value: goal.duration, min: Goal::DURATION_MIN %>
+    <% if duration_errors.any? %>
+      <div>
+        <% duration_errors.each do |e| %>
+          <p class="text-sm text-red-600"><%= e.full_message %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+
+  <div class="flex justify-end">
+    <%= f.button type: :submit, class:'btn btn-primary' do %>
+      <%= render 'svg/save', w: 'w-4', h: 'w-4' %>
+      <span class="ml-1"><%= t('goal.create')%></span>
+    <% end %>
+  </div>
+<% end %>
