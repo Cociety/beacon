@@ -60,7 +60,10 @@
   </div>
   <div class="flex justify-end">
     <%= form_with model: goal, method: :delete, class:'' do |f| %>
-      <%= f.submit t('.delete'), class: 'btn danger' %>
+      <%= f.button type: :submit, class: 'btn danger' do %>
+        <%= render 'svg/trash', w: 'w-4', h: 'h-4' %>
+        <span class="ml-1"><%= t('.delete') %></span>
+      <% end %>
     <% end %>
   </div>
 </div>
