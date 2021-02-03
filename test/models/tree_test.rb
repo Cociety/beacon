@@ -9,10 +9,8 @@ class TreeTest < ActiveSupport::TestCase
     end
   end
 
-  test 'throws error for no parents' do
-    assert_raise Exception do
-      trees(:no_parents).top_level_goal
-    end
+  test 'returns nil for no parents' do
+    assert_nil trees(:no_parents).top_level_goal
   end
 
   test 'loads if only one goal exists' do

@@ -5,8 +5,6 @@ class Goal < ApplicationRecord
   after_update_commit { broadcast_replace_to 'popover', partial: 'popover/goal', locals: { goal: self } }
   after_destroy_commit { broadcast_remove_to 'popover' }
 
-  before_create :prevent_orphan
-
   before_destroy :prepare_for_reparenting
   after_destroy :reparent_children
 
@@ -31,10 +29,6 @@ class Goal < ApplicationRecord
                             less_than_or_equal_to:    ->(goal) { goal.duration }
 
   validates :name, length: { minimum: 1, maximum: 250 }
-
-  def prevent_orphan
-    parents << tree.top_level_goal unless parents.any?
-  end
 
   def remaining
     duration - spent

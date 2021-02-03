@@ -16,44 +16,44 @@ class GoalTest < ActiveSupport::TestCase
 
   test 'should save a goal' do
     assert_changes -> { Goal.count } do
-      Goal.create tree: @tree
+      Goal.create name: 'goal', tree: @tree
     end
   end
 
   test 'should save child goals' do
     assert_changes -> { Goal.count } do
-      c = @parent.children.create! tree: @tree
+      c = @parent.children.create! name: 'goal', tree: @tree
       assert c.parents.first.id, @parent.id
     end
   end
 
   test 'should save parent goals' do
     assert_changes -> { Goal.count } do
-      p = @parent.parents.create! tree: @tree
+      p = @parent.parents.create! name: 'goal', tree: @tree
       assert p.children.first.id, @parent.id
     end
   end
 
   test 'should get parent goals' do
     assert_changes -> { Goal.parents.count } do
-      Goal.create tree: @tree
+      Goal.create name: 'goal', tree: @tree
     end
     assert_no_changes -> { Goal.parents.count } do
-      @parent.children.create! tree: @tree
+      @parent.children.create! name: 'goal', tree: @tree
     end
   end
 
   test 'should get child goals' do
     assert_changes -> { Goal.children.count } do
-      @parent.children.create! tree: @tree
+      @parent.children.create! name: 'goal', tree: @tree
     end
     assert_no_changes -> { Goal.children.count } do
-      Goal.create! tree: @tree
+      Goal.create! name: 'goal', tree: @tree
     end
   end
 
   test 'should delete relationships when deleting a child goal' do
-    g = @parent.children.create! tree: @tree
+    g = @parent.children.create! name: 'goal', tree: @tree
 
     assert_difference -> { Goal::Relationship.count }, -1 do
       g.destroy
@@ -61,7 +61,7 @@ class GoalTest < ActiveSupport::TestCase
   end
 
   test 'should delete relationships when deleting a parent goal' do
-    g = @parent.parents.create! tree: @tree
+    g = @parent.parents.create! name: 'goal', tree: @tree
 
     assert_difference -> { Goal::Relationship.count }, -1 do
       g.destroy
@@ -69,29 +69,29 @@ class GoalTest < ActiveSupport::TestCase
   end
 
   test 'defaults new goals to "assigned"' do
-    g = Goal.create! tree: @tree
+    g = Goal.create! name: 'goal', tree: @tree
     assert_equal 'assigned', g.state
   end
 
   test 'minimum duration is 1' do
     assert_raise ActiveRecord::RecordInvalid do
-      Goal.create! tree: @tree, duration: 0
+      Goal.create! name: 'goal', tree: @tree, duration: 0
     end
-    Goal.create! tree: @tree, duration: 1
+    Goal.create! name: 'goal', tree: @tree, duration: 1
   end
 
   test 'minimum spent is 0' do
     assert_raise ActiveRecord::RecordInvalid do
-      Goal.create! tree: @tree, spent: -1
+      Goal.create! name: 'goal', tree: @tree, spent: -1
     end
-    Goal.create! tree: @tree, spent: 0
+    Goal.create! name: 'goal', tree: @tree, spent: 0
   end
 
   test "spent can't be greater than duration" do
     assert_raise ActiveRecord::RecordInvalid do
-      Goal.create! tree: @tree, spent: 2, duration: 1
+      Goal.create! name: 'goal', tree: @tree, spent: 2, duration: 1
     end
-    Goal.create! tree: @tree, spent: 1, duration: 1
+    Goal.create! name: 'goal', tree: @tree, spent: 1, duration: 1
   end
 
   test 'should set spent to duration when changing to done' do

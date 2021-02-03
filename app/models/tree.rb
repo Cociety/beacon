@@ -8,6 +8,9 @@ class Tree < ApplicationRecord
 
   def top_level_goal
     goal = top_level_goal_without_tree_ref
+
+    return goal if goal.nil?
+
     # to help views avoid hitting the db for the tree
     goal.tree = self
     goal
@@ -32,8 +35,8 @@ class Tree < ApplicationRecord
   private
 
   def top_level_goal_without_tree_ref
-    # edge case with only one goal since it won't have parents or children
-    return goals.first if goals.size == 1
+    # edge case with zero or one goal since it won't have parents or children
+    return goals.first if goals.size <= 1
 
     # goals without parents and with children
     tlgs = goals.select { |g| g.parents.empty? and g.children.any? }

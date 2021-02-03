@@ -13,7 +13,7 @@ class GoalsController < ApplicationController
   end
 
   def create
-    @goal = Goal.new goal_params
+    create_goal
     respond_to do |format|
       if @goal.save
         format.html { render :new }
@@ -56,5 +56,10 @@ class GoalsController < ApplicationController
 
   def set_new_child_goal
     @new_child = Goal.find(params[:new_child_id])
+  end
+
+  def create_goal
+    @goal = Goal.new goal_params
+    @goal.parents << @goal.tree.top_level_goal unless @goal.parents.any? && @goal.tree.top_level_goal
   end
 end
