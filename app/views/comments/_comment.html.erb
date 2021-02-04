@@ -4,7 +4,7 @@
     <div class="flex-1 space-y-1">
       <div class="flex items-center justify-between">
         <h3 class="text-xs text-gray-700"><%= comment.by.name %></h3>
-        <p class="text-xs text-gray-700"><%= comment.created_at %></p>
+        <p class="text-xs text-gray-700"><%= time_ago_in_words comment.created_at %></p>
       </div>
       <p class="text-sm font-medium"><%= comment.text %></p>
     </div>
