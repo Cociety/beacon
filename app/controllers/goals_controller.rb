@@ -1,5 +1,5 @@
 class GoalsController < ApplicationController
-  before_action :set_goal, except: [:new, :create]
+  before_action :set_goal, except: %i[new create]
   before_action :set_new_child_goal, only: [:adopt]
 
   def new

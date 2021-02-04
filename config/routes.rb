@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'home#index'
   resources :goals do
     resources :popover, only: %i[index]
+    resources :comments, only: %i[create]
     match 'adopt/:new_child_id', action: :adopt, via: %i[put patch]
   end
 end

@@ -65,3 +65,5 @@ gem "devise", "~> 4.7"
 gem "hotwire-rails", "~> 0.1.2"
 
 gem "rexml", "~> 3.2"
+
+gem "name_of_person", "~> 1.1"

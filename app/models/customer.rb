@@ -5,4 +5,6 @@ class Customer < CocietyRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable,
          timeout_in: 2.weeks
+
+  has_person_name
 end

@@ -58,9 +58,17 @@
       } %>
     <% end %>
   </div>
+  <div>
+      <span class="form-label"><%= t('.comments') %></span>
+      <ul class="divide-y divide-gray-200">
+        <%= render goal.comments.limit 3 %>
+      </ul>
+    </div>
+
+    <%= render 'comments/form', commentable: goal, comment: Comment.new %>
   <div class="flex justify-end">
     <%= form_with model: goal, method: :delete, class:'' do |f| %>
-      <%= f.button type: :submit, class: 'btn danger' do %>
+      <%= f.button type: :submit, class: 'btn sm danger' do %>
         <%= render 'svg/trash', w: 'w-4', h: 'h-4' %>
         <span class="ml-1"><%= t('.delete') %></span>
       <% end %>

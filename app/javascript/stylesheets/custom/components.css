@@ -5,12 +5,16 @@
     @apply cursor-pointer;
   }
 
-  &-center {
+  &.sm {
+    @apply px-2 py-1 text-xs;
+  }
+
+  &.center {
     @apply justify-center;
   }
 
   &.danger {
-    @apply hover:bg-red-600 hover:text-white text-red-600;
+    @apply bg-gray-200 hover:bg-red-600 hover:text-white text-red-600;
   }
 
   &-primary {
