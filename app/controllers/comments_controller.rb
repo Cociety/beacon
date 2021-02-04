@@ -2,7 +2,13 @@ class CommentsController < ApplicationController
   before_action :set_commentable
 
   def create
-    @commentable.comments.create comment_params
+    @comment = @commentable.comments.new comment_params
+    if @comment.save
+      c = @commentable.comments.new
+      render turbo_stream: turbo_stream.replace(c, partial: 'comments/form', locals: { comment: c })
+    else
+      render turbo_stream: turbo_stream.replace(@comment, partial: 'comments/form', locals: { comment: @comment })
+    end
   end
 
   private

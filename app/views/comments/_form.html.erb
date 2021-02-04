@@ -1,4 +1,4 @@
-<%= form_with url: commentable_comment_path(commentable), model: comment, id: dom_id(comment), class:'flex flex-col space-y-2' do |f| %>
+<%= form_with url: commentable_comment_path(comment.commentable), model: comment, id: dom_id(comment), class:'flex flex-col space-y-2' do |f| %>
   <%= f.text_field :text, value: comment.text, placeholder: t('comment.placeholder') %>
 
   <div class="flex justify-end">
