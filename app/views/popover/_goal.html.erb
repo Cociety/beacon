@@ -63,7 +63,7 @@
         <ul class="divide-y divide-gray-200">
           <%= turbo_stream_from :comments %>
           <%= turbo_frame_tag :comments do %>
-              <%= render goal.comments.limit 3 %>
+              <%= render goal.comments.limit(3).reverse %>
           <% end %>
         </ul>
     </div>
