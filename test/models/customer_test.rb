@@ -1,3 +1,4 @@
+require "test_helper"
 class CustomerTest < ActiveSupport::TestCase
   test 'should be readonly' do
     assert_raise ActiveRecord::ReadOnlyRecord do

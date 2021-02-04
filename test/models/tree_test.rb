@@ -1,3 +1,4 @@
+require "test_helper"
 class TreeTest < ActiveSupport::TestCase
   test 'gets top_level goal' do
     assert_equal goals(:parent_1), trees(:one).top_level_goal

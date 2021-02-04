@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_29_021350) do
+ActiveRecord::Schema.define(version: 2021_02_04_001111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "text", null: false
+    t.uuid "customer_id", null: false
+    t.string "commentable_type"
+    t.uuid "commentable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["customer_id"], name: "index_comments_on_customer_id"
+  end
 
   create_table "goal_relationships", id: false, force: :cascade do |t|
     t.uuid "parent_id", null: false

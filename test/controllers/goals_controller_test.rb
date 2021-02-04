@@ -1,3 +1,4 @@
+require "test_helper"
 class GoalsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @parent = goals(:parent_1)

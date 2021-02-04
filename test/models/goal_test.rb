@@ -1,4 +1,6 @@
 # rubocop:disable Metrics/ClassLength
+require "test_helper"
+
 class GoalTest < ActiveSupport::TestCase
   def setup
     @parent = goals(:parent_1)
@@ -117,6 +119,12 @@ class GoalTest < ActiveSupport::TestCase
     @parent.update spent: 2, duration: 2
     assert_changes -> { @parent.assigned? }, from: false, to: true do
       @parent.update duration: 3
+    end
+  end
+
+  test 'can add comments' do
+    assert_changes -> { Comment.count } do
+      @parent.comments.create text: 'this is dope', by: customers(:one)
     end
   end
 end
