@@ -98,27 +98,27 @@ class GoalTest < ActiveSupport::TestCase
 
   test 'should set spent to duration when changing to done' do
     assert_changes -> { @parent.spent }, to: @parent.duration do
-      @parent.update state: Goal.states[:done]
+      @parent.update! state: Goal.states[:done]
     end
   end
 
   test 'should set spent to zero when changing from done' do
-    @parent.update state: Goal.states[:done]
+    @parent.update! state: Goal.states[:done]
     assert_changes -> { @parent.spent }, to: 0 do
-      @parent.update state: Goal.states[:assigned]
+      @parent.update! state: Goal.states[:assigned]
     end
   end
 
   test 'sets state to done when spent and duration are equal' do
     assert_changes -> { @parent.done? }, from: false, to: true do
-      @parent.update spent: 2, duration: 2
+      @parent.update! spent: 2, duration: 2
     end
   end
 
   test 'sets state to assigned when spent and duration are no longer equal' do
-    @parent.update spent: 2, duration: 2
+    @parent.update! spent: 2, duration: 2
     assert_changes -> { @parent.assigned? }, from: false, to: true do
-      @parent.update duration: 3
+      @parent.update! duration: 3
     end
   end
 

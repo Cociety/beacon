@@ -2,9 +2,9 @@ class CommentsController < ApplicationController
   before_action :set_commentable
 
   def create
-    @comment = @commentable.comments.new comment_params
+    @comment = Comment.new comment_params
     if @comment.save
-      c = @commentable.comments.new
+      c = Comment.new comment_params
       render turbo_stream: turbo_stream.replace(c, partial: 'comments/form', locals: { comment: c })
     else
       render turbo_stream: turbo_stream.replace(@comment, partial: 'comments/form', locals: { comment: @comment })
@@ -26,6 +26,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:text).merge(by: current_customer)
+    params.require(:comment).permit(:text).merge(by: current_customer, commentable: @commentable)
   end
 end

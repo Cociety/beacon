@@ -68,8 +68,8 @@
         </ul>
     </div>
 
-    <%= turbo_frame_tag goal.comments.new do %>
-      <%= render 'comments/form', comment: goal.comments.new %>
+    <%= turbo_frame_tag Comment.new(commentable: goal) do %>
+      <%= render 'comments/form', comment: Comment.new(commentable: goal) %>
     <% end %>
   <div class="flex justify-end">
     <%= form_with model: goal, method: :delete, class:'' do |f| %>
