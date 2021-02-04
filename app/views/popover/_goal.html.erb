@@ -60,7 +60,7 @@
   </div>
   <div>
       <span class="form-label"><%= t('.comments') %></span>
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-200 max-h-60 overflow-y-scroll">
           <%= turbo_stream_from :comments %>
           <%= turbo_frame_tag :comments do %>
               <%= render goal.comments.limit(3).reverse %>
