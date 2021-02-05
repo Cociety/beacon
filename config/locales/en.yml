@@ -30,6 +30,9 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  auth:
+    sign_out: Sign out
+    sign_in: Sign in
   comment:
     create: Post Comment
     placeholder: Say something
@@ -38,6 +41,7 @@ en:
     create: Create Goal
   popover:
     goal:
+      comments: Comments
       delete: Delete
       status: Status
       progress: "%{spent} out of %{duration} points completed"
