@@ -1,0 +1,44 @@
+<div class="flex flex-col">
+  <div>
+    <span class="form-label">
+      <%= t '.progress', spent: goal.spent, duration: goal.duration %>
+    </span>
+    <div class="flex space-x-1">
+      <span class="btn-pill-group">
+        <%- if goal.spent > Goal::SPENT_MIN %>
+          <%= form_with model: goal, method: :put, class: "pill" do |f| %>
+            <%= f.hidden_field :spent, value: goal.spent-1 %>
+            <%= f.button type: :submit do %>
+              <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+            <%- end %>
+          <%- end %>
+        <%- end %>
+        <% if goal.spent < goal.duration %>
+          <%= form_with model: goal, method: :put, class: "pill" do |f| %>
+            <%= f.hidden_field :spent, value: goal.spent+1 %>
+            <%= f.button type: :submit do %>
+            <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+          <%- end %>
+          <%- end %>
+        <%- end %>
+      </span>
+      <%= render 'components/progress', percent: goal.percent %>
+      <span class="btn-pill-group">
+        <%- if goal.duration > Goal::DURATION_MIN %>
+          <%= form_with model: goal, method: :put, class: "pill" do |f| %>
+            <%= f.hidden_field :duration, value: goal.duration-1 %>
+            <%= f.button type: :submit do %>
+              <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+            <%- end %>
+          <%- end %>
+        <%- end %>
+        <%= form_with model: goal, method: :put, class: "pill" do |f| %>
+          <%= f.hidden_field :duration, value: goal.duration+1 %>
+          <%= f.button type: :submit do %>
+            <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+          <%- end %>
+        <%- end %>
+      </span>
+    </div>
+  </div>
+</div>

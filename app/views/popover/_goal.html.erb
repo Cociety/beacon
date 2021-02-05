@@ -1,76 +1,16 @@
 <%= popover_content_tag goal, class: 'w-96' do %>
-  <div class="bg-white p-2 border-b border-gray-200 w-full">
-    <h3 class="text-lg leading-6 font-medium text-gray-900 break-all clamp-4">
+  <div class="bg-white p-2 border-b border-gray-200 w-full flex justify-between">
+    <h3 class="text-lg leading-6 font-medium text-gray-900 break-all clamp-4 self-center">
       <%= goal.name %>
     </h3>
+    <%= link_to goal_url(goal), class: 'btn btn-secondary flex-grow-0 self-start', data: { 'turbo-frame': '_top' } do %>
+      <%= t('.view') %>
+    <% end %>
   </div>
   <div class="p-2 space-y-2">
-    <div class="flex flex-col">
-      <div>
-        <span class="form-label">
-          <%= t '.progress', spent: goal.spent, duration: goal.duration %>
-        </span>
-        <div class="flex space-x-1">
-          <span class="btn-pill-group">
-            <%- if goal.spent > Goal::SPENT_MIN %>
-              <%= form_with model: goal, method: :put, class: "pill" do |f| %>
-                <%= f.hidden_field :spent, value: goal.spent-1 %>
-                <%= f.button type: :submit do %>
-                  <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
-                <%- end %>
-              <%- end %>
-            <%- end %>
-            <% if goal.spent < goal.duration %>
-              <%= form_with model: goal, method: :put, class: "pill" do |f| %>
-                <%= f.hidden_field :spent, value: goal.spent+1 %>
-                <%= f.button type: :submit do %>
-                <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
-              <%- end %>
-              <%- end %>
-            <%- end %>
-          </span>
-          <%= render 'components/progress', percent: goal.percent %>
-          <span class="btn-pill-group">
-            <%- if goal.duration > Goal::DURATION_MIN %>
-              <%= form_with model: goal, method: :put, class: "pill" do |f| %>
-                <%= f.hidden_field :duration, value: goal.duration-1 %>
-                <%= f.button type: :submit do %>
-                  <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
-                <%- end %>
-              <%- end %>
-            <%- end %>
-            <%= form_with model: goal, method: :put, class: "pill" do |f| %>
-              <%= f.hidden_field :duration, value: goal.duration+1 %>
-              <%= f.button type: :submit do %>
-                <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
-              <%- end %>
-            <%- end %>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div>
-    <%= form_with model: goal, method: :put, data: { controller: 'form-submitter' } do |f| %>
-      <%= f.label :state, t('.status') %>
-      <%= f.collection_select :state, goal_states, :value, :text,
-        { selected: -> (state) { goal.state == state.value }},
-        { class: 'select', data: { action: 'change->form-submitter#submit' }
-      } %>
-    <% end %>
-  </div>
-  <div>
-      <span class="form-label"><%= t('.comments') %></span>
-        <ul class="divide-y divide-gray-200 max-h-60 overflow-y-scroll">
-          <%= turbo_stream_from :comments %>
-          <%= turbo_frame_tag :comments do %>
-              <%= render goal.comments.limit(3).reverse %>
-          <% end %>
-        </ul>
-    </div>
-
-    <%= turbo_frame_tag Comment.new(commentable: goal) do %>
-      <%= render 'comments/form', comment: Comment.new(commentable: goal) %>
-    <% end %>
+    <%= render 'goals/progress', goal: goal %>
+    <%= render 'goals/state', goal: goal %>
+    <%= render 'goals/comments', comments: goal.comments.limit(3).reverse, goal: goal %>
   <div class="flex justify-end">
     <%= form_with model: goal, method: :delete, class:'' do |f| %>
       <%= f.button type: :submit, class: 'btn sm danger' do %>

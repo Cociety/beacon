@@ -1,0 +1,6 @@
+<h1 class="text-lg leading-6 font-medium text-gray-900 break-all clamp-4 self-center">
+  <%= goal.name %>
+</h1>
+<%= render 'goals/progress', goal: goal %>
+<%= render 'goals/state', goal: goal %>
+<%= render 'goals/comments', comments: goal.comments.limit(10).reverse, goal: goal, klass: 'max-h-96' %>

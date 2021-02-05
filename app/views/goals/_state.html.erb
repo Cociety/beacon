@@ -1,0 +1,7 @@
+<%= form_with model: goal, method: :put, data: { controller: 'form-submitter' } do |f| %>
+  <%= f.label :state, t('.status') %>
+  <%= f.collection_select :state, goal_states, :value, :text,
+    { selected: -> (state) { goal.state == state.value }},
+    { class: 'select', data: { action: 'change->form-submitter#submit' }
+  } %>
+<% end %>
