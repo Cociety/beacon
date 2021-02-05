@@ -27,7 +27,7 @@ export default class extends Controller {
   }
 
   moveIfOffScreen = () => {
-    if (!this.popover.offsetWidth || !this.popover.offsetHeight) {
+    if (!this.popover.offsetWidth || !this.popover.offsetHeight || !this.clickXY) {
       return;
     }
     this.popoverXY = {
