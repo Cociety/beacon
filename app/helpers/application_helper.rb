@@ -34,8 +34,4 @@ module ApplicationHelper
   def goal_states
     Goal.states.map { |state, _| OpenStruct.new(value: state, text: t(state)) }
   end
-
-  def attribute_errors(model, attribute)
-    model.errors.select { |e| e.attribute == attribute }
-  end
 end
