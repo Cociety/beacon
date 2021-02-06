@@ -1,10 +1,8 @@
-<%= form_with url: commentable_comment_path(comment.commentable), model: comment, id: dom_id(comment), class:'flex flex-col space-y-2' do |f| %>
+<%= form_with url: commentable_comment_path(comment.commentable), model: comment, id: dom_id(comment), class:'flex flex-col' do |f| %>
   <%= f.text_field :text, value: comment.text, placeholder: t('comment.placeholder') %>
 
-  <div class="flex justify-end">
-    <%= f.button type: :submit, class:'btn btn-primary' do %>
-      <%= render 'svg/comment', w: 'w-4', h: 'w-4' %>
-      <span class="ml-1"><%= t('comment.create')%></span>
-    <% end %>
-  </div>
+  <%= f.button type: :submit, class:'btn btn-primary center mt-2' do %>
+    <%= render 'svg/comment', w: 'w-4', h: 'w-4' %>
+    <span class="ml-1"><%= t('comment.create')%></span>
+  <% end %>
 <% end %>

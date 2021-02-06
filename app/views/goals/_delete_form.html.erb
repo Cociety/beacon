@@ -1,0 +1,6 @@
+<%= form_with model: goal, method: :delete do |f| %>
+  <%= f.button type: :submit, class: 'btn sm danger' do %>
+    <%= render 'svg/trash', w: 'w-4', h: 'h-4' %>
+    <span class="ml-1"><%= t('.delete') %></span>
+  <% end %>
+<% end %>

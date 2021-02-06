@@ -39,6 +39,8 @@ en:
   goals:
     goal:
       view: View
+    delete_form:
+      delete: Delete
     new: New Goal
     create: Create Goal
     progress:
@@ -47,9 +49,6 @@ en:
       status: Status
     comments:
       comments: Comments
-  popover:
-    goal:
-      delete: Delete
   trees:
     tree:
       progress: "%{spent} out of %{duration} points completed"
