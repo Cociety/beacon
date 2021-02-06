@@ -1,5 +1,14 @@
 module.exports = {
-  purge: ['./app/views/**/*.html.erb'],
+  purge: {
+    content: ['./app/views/**/*.html.erb'],
+    enabled: true,
+    options: {
+      safelist: [
+        "type", // [type='checkbox']
+      ],
+    },
+    preserveHtmlElements: true
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
