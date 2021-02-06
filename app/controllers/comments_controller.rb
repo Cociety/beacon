@@ -3,12 +3,8 @@ class CommentsController < ApplicationController
 
   def create
     @comment = Comment.new comment_params
-    if @comment.save
-      c = Comment.new comment_params
-      render turbo_stream: turbo_stream.replace(c, partial: 'comments/form', locals: { comment: c })
-    else
-      render turbo_stream: turbo_stream.replace(@comment, partial: 'comments/form', locals: { comment: @comment })
-    end
+    @comment = Comment.new(commentable: @commentable) if @comment.save
+    render turbo_stream: turbo_stream.replace(@comment, partial: 'comments/form', locals: { comment: @comment })
   end
 
   private
