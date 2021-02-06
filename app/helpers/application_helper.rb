@@ -26,12 +26,8 @@ module ApplicationHelper
   end
 
   def popover_content_tag(id, **attributes, &block)
-    id = "popover_#{id.respond_to?(:to_key) ? dom_id(id) : id}"
-
     turbo_frame_tag :popover do
-      turbo_frame_tag id do
-        tag.div(**attributes.merge(data: { controller: 'popover-content' }).compact, &block)
-      end
+      tag.div(**attributes.merge(data: { controller: 'popover-content' }).compact, &block)
     end
   end
 

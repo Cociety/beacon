@@ -1,8 +1,7 @@
-<% klass ||= '' %>
 <div>
   <span class="form-label"><%= t('.comments') %></span>
-  <ul class="divide-y divide-gray-200 max-h-60 overflow-y-scroll <%= klass %>">
-    <%= turbo_stream_from :comments %>
+  <ul class="divide-y divide-gray-200 max-h-60 overflow-y-scroll">
+    <%= turbo_stream_from [goal, :comments] %>
     <%= turbo_frame_tag :comments do %>
         <%= render comments %>
     <% end %>
