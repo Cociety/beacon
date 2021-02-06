@@ -4,29 +4,19 @@ class GoalsController < ApplicationController
 
   def new
     @goal = Goal.new
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('popover', partial: 'popover_form', locals: { goal: @goal })
-      end
-      format.html { render :new }
-    end
+    render partial: 'popover_form', locals: { goal: @goal }
   end
 
   def create
     create_goal
-    respond_to do |format|
-      if @goal.save
-        format.html { render :new }
-      else
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('popover', partial: 'popover_form', locals: { goal: @goal })
-        end
-      end
+    if @goal.save
+      render partial: 'popover_form', locals: { goal: Goal.new }
+    else
+      render partial: 'popover_form', locals: { goal: @goal }
     end
   end
 
-  def show
-  end
+  def show; end
 
   def update
     @goal.update! goal_params

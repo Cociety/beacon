@@ -1,1 +1,2 @@
 <%= render @goal %>
+<%= render 'goals/comments', comments: @goal.comments.limit(10).reverse, goal: @goal, klass: 'max-h-96' %>

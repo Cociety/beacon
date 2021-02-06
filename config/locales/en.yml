@@ -37,6 +37,8 @@ en:
     create: Post Comment
     placeholder: Say something
   goals:
+    goal:
+      view: View
     new: New Goal
     create: Create Goal
     progress:
@@ -48,7 +50,6 @@ en:
   popover:
     goal:
       delete: Delete
-      view: View
   trees:
     tree:
       progress: "%{spent} out of %{duration} points completed"
