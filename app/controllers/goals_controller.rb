@@ -18,6 +18,8 @@ class GoalsController < ApplicationController
 
   def show; end
 
+  def edit; end
+
   def update
     @goal.update! goal_params
     render json: @goal

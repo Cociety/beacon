@@ -33,6 +33,7 @@ en:
   auth:
     sign_out: Sign out
     sign_in: Sign in
+  cancel: Nevermind
   comment:
     create: Post Comment
     placeholder: Say something
@@ -49,6 +50,7 @@ en:
       status: Status
     comments:
       comments: Comments
+  rename: Rename
   trees:
     tree:
       progress: "%{spent} out of %{duration} points completed"
