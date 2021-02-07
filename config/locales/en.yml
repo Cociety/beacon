@@ -45,6 +45,8 @@ en:
     new: New Goal
     create: Create Goal
     progress:
+      effort_spent: Spent
+      effort_required: Required
       progress: "%{spent} out of %{duration} points completed"
     state:
       status: Status

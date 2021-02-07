@@ -1,38 +1,44 @@
 <div class="flex flex-col">
   <div>
-    <span class="form-label">
-      <%= t '.progress', spent: goal.spent, duration: goal.duration %>
-    </span>
     <div class="flex space-x-1">
-      <span class="btn-pill-group">
-        <%= form_with model: goal, method: :put do |f| %>
-          <%= f.hidden_field :spent, value: goal.spent-1 %>
-          <%= f.button type: :submit, disabled: goal.spent <= Goal::SPENT_MIN, class: 'pill first' do %>
-            <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+      <div class="flex flex-col items-center">
+        <div class="form-label flex-grow-0"><%= t('.effort_spent') %></div>
+        <span class="btn-pill-group">
+          <%= form_with model: goal, method: :put do |f| %>
+            <%= f.hidden_field :spent, value: goal.spent-1 %>
+            <%= f.button type: :submit, disabled: goal.spent <= Goal::SPENT_MIN, class: 'pill first' do %>
+              <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+            <%- end %>
           <%- end %>
-        <%- end %>
-        <%= form_with model: goal, method: :put do |f| %>
-          <%= f.hidden_field :spent, value: goal.spent+1 %>
-          <%= f.button type: :submit, disabled: goal.spent >= goal.duration, class: 'pill' do %>
-            <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+          <%= form_with model: goal, method: :put do |f| %>
+            <%= f.hidden_field :spent, value: goal.spent+1 %>
+            <%= f.button type: :submit, disabled: goal.spent >= goal.duration, class: 'pill' do %>
+              <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+            <%- end %>
           <%- end %>
-        <%- end %>
-      </span>
-      <%= render 'components/progress', percent: goal.percent %>
-      <span class="btn-pill-group">
-        <%= form_with model: goal, method: :put do |f| %>
-          <%= f.hidden_field :duration, value: goal.duration-1 %>
-          <%= f.button type: :submit, disabled: goal.duration <= Goal::DURATION_MIN, class: 'pill first' do %>
-            <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+        </span>
+      </div>
+      <div class="flex-grow flex flex-col items-center">
+        <span class="form-label"><%= t '.progress', spent: goal.spent, duration: goal.duration %></span>
+        <%= render 'components/progress', percent: goal.percent %>
+      </div>
+      <div class="flex flex-col items-center">
+        <span class="form-label"><%= t('.effort_required') %></span>
+        <span class="btn-pill-group">
+          <%= form_with model: goal, method: :put do |f| %>
+            <%= f.hidden_field :duration, value: goal.duration-1 %>
+            <%= f.button type: :submit, disabled: goal.duration <= Goal::DURATION_MIN, class: 'pill first' do %>
+              <%= render 'svg/minus', w: 'w-4', h: 'h-4' %>
+            <%- end %>
           <%- end %>
-        <%- end %>
-        <%= form_with model: goal, method: :put do |f| %>
-          <%= f.hidden_field :duration, value: goal.duration+1 %>
-          <%= f.button type: :submit, class: 'pill' do %>
-            <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+          <%= form_with model: goal, method: :put do |f| %>
+            <%= f.hidden_field :duration, value: goal.duration+1 %>
+            <%= f.button type: :submit, class: 'pill' do %>
+              <%= render 'svg/plus', w: 'w-4', h: 'h-4' %>
+            <%- end %>
           <%- end %>
-        <%- end %>
-      </span>
+        </span>
+      </div>
     </div>
   </div>
 </div>

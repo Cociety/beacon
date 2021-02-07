@@ -86,9 +86,13 @@
   @apply fixed z-50 bg-gray-100 rounded-md bg-gray-100 shadow-md overflow-hidden;
 }
 
+.form-label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
 form {
-  label, .form-label {
-    @apply block text-sm font-medium text-gray-700;
+  label {
+    @apply form-label;
   }
 
   input[type="text"], input[type="number"], .form-input-text {
