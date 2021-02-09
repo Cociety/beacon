@@ -2,6 +2,8 @@ class CommentsController < ApplicationController
   before_action :set_commentable
   before_action :set_comment, except: %i[create]
 
+  def show; end
+
   def create
     @comment = Comment.new create_comment_params
     @comment = Comment.new(commentable: @commentable) if @comment.save

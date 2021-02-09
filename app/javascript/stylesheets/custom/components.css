@@ -90,13 +90,17 @@
   @apply block text-sm font-medium text-gray-700;
 }
 
+.form-input-text {
+  @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md my-1;
+}
+
 form {
   label {
     @apply form-label;
   }
 
-  input[type="text"], input[type="number"], .form-input-text {
-    @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md m-1;
+  input[type="text"], input[type="number"] {
+    @apply form-input-text;
   }
 
   .field_with_errors {
