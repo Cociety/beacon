@@ -3,7 +3,7 @@ class Ability
 
   def initialize(customer)
     if customer.present?
-      can :edit, Comment, customer_id: customer.id
+      can :manage, Comment, customer_id: customer.id
     end
     # Define abilities for the passed in user here. For example:
     #

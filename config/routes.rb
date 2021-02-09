@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create]
     match 'adopt/:new_child_id', action: :adopt, via: %i[put patch]
   end
-  resources :comments, only: %i[edit update] do
+  resources :comments, only: %i[edit update destroy] do
     resource :actions, module: :comments, only: %i[show]
   end
 end

@@ -10,6 +10,11 @@ class CommentsController < ApplicationController
 
   def edit; end
 
+  def destroy
+    @comment.destroy
+    render json: @comment
+  end
+
   def update
     @comment.update! update_comment_params
   end
