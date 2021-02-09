@@ -6,7 +6,8 @@
         <%= render comments %>
     <% end %>
   </ul>
-  <%= turbo_frame_tag Comment.new(commentable: goal) do %>
-    <%= render 'comments/form', comment: Comment.new(commentable: goal) %>
+  <% comment = Comment.new %>
+  <%= turbo_frame_tag comment do %>
+    <%= render 'comments/form', comment: comment, on: goal %>
   <% end %>
 </div>
