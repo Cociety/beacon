@@ -1,5 +1,5 @@
 <% if customer_signed_in? %>
-  <%= tag.h1 "Hi #{current_customer.first_name} #{current_customer.last_name}" %>
+  <%= tag.h1 "Hi #{Current.customer.first_name} #{Current.customer.last_name}" %>
   <%= link_to sign_out_url, method: :delete do %>
     <%= t 'auth.sign_out' %>
   <% end %>

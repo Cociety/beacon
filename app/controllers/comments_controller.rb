@@ -22,6 +22,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:text).merge(by: current_customer, commentable: @commentable)
+    params.require(:comment).permit(:text).merge(by: Current.customer, commentable: @commentable)
   end
 end
