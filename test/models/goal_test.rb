@@ -127,5 +127,14 @@ class GoalTest < ActiveSupport::TestCase
       @parent.comments.create text: 'this is dope', by: customers(:one)
     end
   end
+
+  test 'deletes comments when destroyed' do
+    (1..10).each do |i|
+      @parent.comments.create text: i, by: customers(:one)
+    end
+    assert_difference -> { Comment.count }, -10 do
+      @parent.destroy
+    end
+  end
 end
 # rubocop:enable Metrics/ClassLength
