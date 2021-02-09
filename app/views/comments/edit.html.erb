@@ -1,0 +1,12 @@
+<%= turbo_frame_tag dom_id(@comment) do %>
+  <li class="py-4">
+    <%= form_with model: @comment, method: :put, class:'flex flex-col' do |f| %>
+      <%= f.text_field :text, value: @comment.text, autofocus: true, placeholder: t('comment.placeholder') %>
+
+      <%= f.button type: :submit, class:'btn btn-primary center mt-2' do %>
+        <%= render 'svg/comment', w: 'w-4', h: 'w-4' %>
+        <span class="ml-1"><%= t('comment.update')%></span>
+      <% end %>
+    <% end %>
+  </li>
+<% end %>

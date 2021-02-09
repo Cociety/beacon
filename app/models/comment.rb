@@ -4,7 +4,7 @@ class Comment < ApplicationRecord
   broadcasts_to ->(comment) { [comment.commentable, :comments] }
 
   alias_attribute :by, :customer
-  belongs_to :commentable, polymorphic: true
+  belongs_to :commentable, polymorphic: true, inverse_of: :comments
   belongs_to :customer
 
   validates :text, length: { minimum: 1 }

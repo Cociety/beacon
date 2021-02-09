@@ -34,8 +34,10 @@ en:
     sign_out: Sign out
     sign_in: Sign in
   cancel: Nevermind
+  edit: Edit
   comment:
     create: Post Comment
+    update: Update Comment
     placeholder: Say something
   goals:
     goal:

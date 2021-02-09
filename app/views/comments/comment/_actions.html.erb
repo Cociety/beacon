@@ -1,0 +1,5 @@
+<% if can? :edit, comment %>
+  <%= link_to edit_comment_path(comment), class:'btn secondary sm', data: { 'turbo-frame':  dom_id(comment) } do %>
+    <%= t('edit') %>
+  <% end %>
+<% end %>

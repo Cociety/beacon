@@ -8,7 +8,7 @@
           </h1>
         <% end %>
         <div>
-          <%= link_to edit_goal_path(goal), class: 'btn btn-secondary flex-grow-0 self-start', data: { 'turbo-frame': :goal_name } do %>
+          <%= link_to edit_goal_path(goal), class: 'btn secondary flex-grow-0 self-start', data: { 'turbo-frame': :goal_name } do %>
             <%= render 'svg/pencil', w: 'w-4', h: 'h-4' %>
             <%= t('rename') %>
           <% end %>
