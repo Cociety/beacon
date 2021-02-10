@@ -124,13 +124,13 @@ class GoalTest < ActiveSupport::TestCase
 
   test 'can add comments' do
     assert_changes -> { Comment.count } do
-      @parent.comments.create text: 'this is dope', by: customers(:one)
+      @parent.comments.create text: 'this is dope', by: customers(:justin)
     end
   end
 
   test 'deletes comments when destroyed' do
     (1..10).each do |i|
-      @parent.comments.create text: i, by: customers(:one)
+      @parent.comments.create text: i, by: customers(:justin)
     end
     assert_difference -> { Comment.count }, -10 do
       @parent.destroy

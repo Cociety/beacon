@@ -1,7 +1,14 @@
-one:
+justin:
   encrypted_password: <%= Devise::Encryptor.digest(Customer, 'password') %>
-  first_name: Customer
-  last_name: One
-  email: customer_one@cociety.org
+  first_name: Justin
+  last_name: Robinson
+  email: justin@cociety.org
+  confirmed_at: <%= Time.zone.now %>
+  confirmation_sent_at: <%= Time.zone.now %>
+melissa:
+  encrypted_password: <%= Devise::Encryptor.digest(Customer, 'password') %>
+  first_name: Melissa
+  last_name: Galush
+  email: melissa@cociety.org
   confirmed_at: <%= Time.zone.now %>
   confirmation_sent_at: <%= Time.zone.now %>

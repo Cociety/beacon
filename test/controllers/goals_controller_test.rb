@@ -6,7 +6,7 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     @new_parent = goals(:child_1)
   end
 
-  test 'should delete a goal' do
+  test 'should delete a goal and reparent its children' do
     children_ids = @goal.children.pluck(:id)
     parents_ids = @goal.parents.pluck(:id)
     assert_changes -> { Goal.count } do

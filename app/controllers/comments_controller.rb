@@ -14,11 +14,13 @@ class CommentsController < ApplicationController
   def edit; end
 
   def destroy
+    authorize! :destory, @comment
     @comment.destroy
     render json: @comment
   end
 
   def update
+    authorize! :update, @comment
     @comment.update! update_comment_params
   end
 

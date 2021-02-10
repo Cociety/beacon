@@ -5,7 +5,7 @@ class CustomerTest < ActiveSupport::TestCase
       Customer.new(password: :password, email: 'beacon@cociety.org').save!
     end
 
-    c = customers(:one)
+    c = customers(:justin)
     assert_raise ActiveRecord::ReadOnlyRecord do
       c.update first_name: c.first_name
     end
