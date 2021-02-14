@@ -1,0 +1,7 @@
+<%= form_with model: attachable, id: dom_id(attachable), class:'flex flex-col', method: :put, data: { controller: 'form-submitter' } do |f| %>
+  <%= f.label :attachments, class: 'btn btn-primary center mt-2' do %>
+    <%= render '/svg/file_add', w: 'w-4', h: 'w-4' %>
+    <span class="ml-1"><%= t('attachment.create')%></span>
+  <% end %>
+  <%= f.file_field :attachments, multiple: true, class: 'opactity-0 w-1 h-1 overflow-hidden absolute -z-1', data: { action: 'change->form-submitter#submit' } %>
+<% end %>

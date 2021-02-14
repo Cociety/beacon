@@ -23,5 +23,7 @@ module Beacon
       error_tags = html_tag.starts_with?('<input ') ? instance.full_error_messages.map { |m| "<div class=\"field_error\">#{m}</div>" }.join : ''
       "<div class=\"field_with_errors\">#{html_tag}#{error_tags}</div>".html_safe
     }
+
+    config.active_storage.replace_on_assign_to_many = false
   end
 end

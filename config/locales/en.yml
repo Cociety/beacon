@@ -33,6 +33,9 @@ en:
   auth:
     sign_out: Sign out
     sign_in: Sign in
+  attachments: Attachments
+  attachment:
+    create: Say something words can't
   cancel: Nevermind
   delete: Delete
   edit: Edit

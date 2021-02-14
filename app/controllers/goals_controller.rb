@@ -46,7 +46,7 @@ class GoalsController < ApplicationController
   end
 
   def goal_params
-    params.require(:goal).permit :state, :spent, :duration, :name, :tree_id
+    params.require(:goal).permit :state, :spent, :duration, :name, :tree_id, attachments: []
   end
 
   def set_new_child_goal

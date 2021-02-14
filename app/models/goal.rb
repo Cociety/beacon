@@ -1,5 +1,5 @@
 class Goal < ApplicationRecord
-  include Commentable
+  include Attachable, Commentable
 
   belongs_to :tree, touch: true
   default_scope { order(created_at: :asc) }

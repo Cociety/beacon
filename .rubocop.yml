@@ -7,6 +7,7 @@ AllCops:
     - 'Gemfile'
     - 'node_modules/**/*'
   NewCops: enable
+  TargetRubyVersion: 3.0.0
 Layout/HashAlignment:
   EnforcedColonStyle: table
 Naming/VariableNumber:
@@ -15,3 +16,5 @@ Style/ClassAndModuleChildren:
   EnforcedStyle: compact
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+Style/MixinGrouping:
+  EnforcedStyle: grouped

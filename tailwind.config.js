@@ -15,7 +15,10 @@ module.exports = {
       fill: {
         none: 'none'
       },
-      stroke: theme => theme('colors')
+      stroke: theme => theme('colors'),
+      zIndex: {
+        '-1': -1
+      }
     },
     lineClamp: {
       4: 4
@@ -24,8 +27,7 @@ module.exports = {
   variants: {
     extend: {
       borderRadius: ['first', 'last'],
-      borderWidth: ['last'],
-
+      borderWidth: ['last']
     },
   },
   plugins: [
