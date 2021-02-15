@@ -6,7 +6,7 @@
       <%= render '/svg/file_with_extension', w: 'w-10', h: 'h-10', extension: attachment.filename.extension %>
     <% end %>
   </div>
-  <div class="flex flex-col w-full">
+  <div class="flex flex-col flex-grow truncate">
       <p class="text-sm font-medium text-gray-900 truncate">
         <%= attachment.filename %>
       </p>
