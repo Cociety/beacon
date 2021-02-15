@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :comments, only: %i[show edit update destroy] do
     resource :actions, module: :comments, only: %i[show]
   end
+  resources :attachments, only: %i[destroy]
 end
