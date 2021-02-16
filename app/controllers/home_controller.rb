@@ -3,5 +3,6 @@ class HomeController < ApplicationController
 
   def set_tree
     @tree = Tree.first
+    authorize! :read, @tree
   end
 end

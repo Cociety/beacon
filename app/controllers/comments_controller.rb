@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
   def edit; end
 
   def destroy
-    authorize! :destory, @comment
+    authorize! :destroy, @comment
     @comment.destroy
     render json: @comment
   end

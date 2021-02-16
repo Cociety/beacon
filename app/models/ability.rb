@@ -4,6 +4,9 @@ class Ability
   def initialize(customer)
     if customer.present?
       can :manage, Comment, customer_id: customer.id
+      can :read, Tree do |tree|
+        tree.ruled_by? :reader, customer
+      end
     end
     # Define abilities for the passed in user here. For example:
     #
