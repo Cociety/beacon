@@ -1,6 +1,8 @@
 class GoalsController < ApplicationController
-  before_action :set_goal, except: %i[new create]
+  before_action :set_goal
   before_action :set_new_child_goal, only: [:adopt]
+  before_action :authorize_read, only: %i[index show]
+  before_action :authorize_write, except: %i[index show]
 
   def new
     @goal = Goal.new
@@ -36,6 +38,14 @@ class GoalsController < ApplicationController
   end
 
   private
+
+  def authorize_read
+    authorize! :read, @goal
+  end
+
+  def authorize_write
+    authorize! :write, @goal
+  end
 
   def set_goal
     @goal = Goal.find(goal_id)

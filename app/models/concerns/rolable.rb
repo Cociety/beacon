@@ -18,6 +18,10 @@ module Rolable
           .count.positive?
     end
 
+    def any_role?(role_name, resource)
+      role? role_name, resource
+    end
+
     def remove_role(role_name, resource)
       role = Role.find_by name: role_name, resource: resource
       ModelRole.destroy_by(model: self, role: role) if role
