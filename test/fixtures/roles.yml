@@ -1,0 +1,3 @@
+test_tree_one:
+  name: test
+  resource: (Tree) one

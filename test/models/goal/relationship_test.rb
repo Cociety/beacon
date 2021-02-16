@@ -1,3 +1,4 @@
+require "test_helper"
 class Goal::RelationshipTest < ActiveSupport::TestCase
   setup do
     @parent = goals(:parent_1)

@@ -4,6 +4,6 @@ class Goal::Relationship < ApplicationRecord
   has_one :tree, through: :parent, touch: true
 
   def _delete_row
-    self.class._delete_record({ parent_id: parent_id, child_id: child_id })
+    self.class._delete_record(attributes)
   end
 end

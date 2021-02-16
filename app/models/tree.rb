@@ -1,4 +1,6 @@
 class Tree < ApplicationRecord
+  include Resourcable
+
   default_scope { order(updated_at: :desc) }
   has_many :goals, -> { includes(:children, :parents) }
 

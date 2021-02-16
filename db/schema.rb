@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_14_072502) do
+ActiveRecord::Schema.define(version: 2021_02_15_095424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -69,6 +69,25 @@ ActiveRecord::Schema.define(version: 2021_02_14_072502) do
     t.integer "duration", default: 1
     t.integer "spent", default: 0
     t.index ["tree_id"], name: "index_goals_on_tree_id"
+  end
+
+  create_table "model_roles", id: false, force: :cascade do |t|
+    t.string "model_type"
+    t.uuid "model_id"
+    t.uuid "role_id"
+    t.index ["model_type", "model_id", "role_id"], name: "index_model_roles_on_model_type_and_model_id_and_role_id", unique: true
+    t.index ["model_type", "model_id"], name: "index_model_roles_on_model"
+    t.index ["role_id"], name: "index_model_roles_on_role_id"
+  end
+
+  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.uuid "resource_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", unique: true
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
   create_table "trees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
