@@ -1,5 +1,5 @@
 class GoalsController < ApplicationController
-  before_action :set_goal
+  before_action :set_goal, except: [:new]
   before_action :set_new_child_goal, only: [:adopt]
   before_action :authorize_read, only: %i[index show]
   before_action :authorize_write, except: %i[index show]

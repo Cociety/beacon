@@ -1,7 +1,1 @@
-<% if customer_signed_in? %>
-  <%= turbo_stream_from 'tree' %>
-  <%= turbo_frame_tag 'tree' do %>
-    <%= render @tree %>
-  <%- end -%>
-<% end %>
-
+<%= render collection: @trees, partial: 'trees/preview', as: :tree, layout: 'tree_list' %>
