@@ -3,7 +3,7 @@
     <%= f.text_field :name, value: goal.name, autofocus: true %>
 
     <div class="flex justify-between pt-2">
-      <%= f.button type: :submit, class: 'btn btn-primary flex-grow-0 self-start', data: { 'turbo-frame': :goal_name } do %>
+      <%= f.button type: :submit, class: 'btn primary flex-grow-0 self-start', data: { 'turbo-frame': :goal_name } do %>
         <%= render '/svg/pencil', w: 'w-4', h: 'h-4' %>
         <%= t('rename') %>
       <% end %>

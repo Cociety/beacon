@@ -1,7 +1,7 @@
 <%= form_with url: commentable_comment_path(on), model: comment, id: dom_id(comment), class:'flex flex-col' do |f| %>
   <%= f.text_field :text, value: comment.text, autofocus: true, placeholder: t('comment.placeholder') %>
 
-  <%= f.button type: :submit, class:'btn btn-primary center mt-2' do %>
+  <%= f.button type: :submit, class:'btn primary center mt-2' do %>
     <%= render '/svg/comment', w: 'w-4', h: 'w-4' %>
     <span class="ml-1"><%= t('comment.create')%></span>
   <% end %>

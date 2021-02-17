@@ -17,16 +17,12 @@
     @apply bg-gray-200 hover:bg-red-600 hover:text-white text-red-600;
   }
 
-  &-primary {
+  &.primary {
     @apply font-bold text-white bg-indigo-600 hover:bg-indigo-700;
   }
 
   &.secondary {
     @apply text-indigo-700 bg-indigo-100 hover:bg-indigo-200;
-  }
-
-  &-square {
-    @apply rounded-none !important;
   }
 
   &-pill-group {
