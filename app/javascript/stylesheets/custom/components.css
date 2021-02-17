@@ -42,14 +42,6 @@
   }
 }
 
-.ctx-menu-btn {
-  @apply transition-colors duration-200 px-2 py-1 w-full h-full text-left bg-gray-100 cursor-pointer hover:bg-gray-300 text-gray-900;
-
-  &.danger {
-    @apply hover:bg-red-600 hover:text-white text-red-600;
-  }
-}
-
 .assigned {
   @apply bg-gray-50 border-gray-800 text-gray-800;
 }
