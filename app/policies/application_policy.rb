@@ -2,6 +2,8 @@ class ApplicationPolicy
   attr_reader :customer, :record
 
   def initialize(customer, record)
+    raise Pundit::NotAuthorizedError, 'must be logged in' unless customer
+
     @customer = customer
     @record = record
   end
@@ -38,6 +40,8 @@ class ApplicationPolicy
     attr_reader :customer, :scope
 
     def initialize(customer, scope)
+      raise Pundit::NotAuthorizedError, 'must be logged in' unless customer
+
       @customer = customer
       @scope = scope
     end

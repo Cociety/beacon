@@ -1,1 +1,3 @@
-<%= render collection: @trees, partial: 'trees/preview', as: :tree, layout: 'tree_list' %>
+<% if customer_signed_in? %>
+  <%= link_to 'Trees', trees_path, class: 'btn primary' %>
+<% end %>
