@@ -68,7 +68,6 @@ gem "rexml", "~> 3.2"
 
 gem "name_of_person", "~> 1.1"
 
-gem "cancancan", "~> 3.2"
 
 gem "aws-sdk-s3", "~> 1.88"
 
