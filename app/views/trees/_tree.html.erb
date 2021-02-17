@@ -10,7 +10,7 @@
         </span>
         <%= render 'components/progress', percent: tree.percent %>
       </div>
-      <%= link_to new_goal_path, class:"btn btn-primary", data: {'turbo-frame': :popover} do %>
+      <%= link_to new_tree_goal_path(tree), class:"btn btn-primary", data: {'turbo-frame': :popover} do %>
         <%= render '/svg/plus', w: 'w-4', h: 'h-4' %>
         <%= t('goals.new')%>
       <% end %>

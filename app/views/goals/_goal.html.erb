@@ -7,24 +7,22 @@
             <%= goal.name %>
           </h1>
         <% end %>
-        <% if can? :manage, goal %>
-          <div>
-            <%= link_to edit_goal_path(goal), class: 'btn secondary flex-grow-0 self-start', data: { 'turbo-frame': :goal_name } do %>
-              <%= render '/svg/pencil', w: 'w-4', h: 'h-4' %>
-              <%= t('rename') %>
-            <% end %>
-          </div>
-        <% end %>
+        <div>
+          <%= link_to edit_goal_path(goal), class: 'btn secondary flex-grow-0 self-start', data: { 'turbo-frame': :goal_name } do %>
+            <%= render '/svg/pencil', w: 'w-4', h: 'h-4' %>
+            <%= t('rename') %>
+          <% end %>
+        </div>
       </div>
     <% end %>
   </div>
   <div class="p-2 space-y-2">
-    <%= render 'goals/progress', goal: goal %>
-    <%= render 'goals/state', goal: goal %>
-    <%= render 'goals/comments', comments: goal.comments.limit(10).reverse, goal: goal %>
-    <%= render 'goals/attachments', goal: goal %>
+    <%= render '/goals/progress', goal: goal %>
+    <%= render '/goals/state', goal: goal %>
+    <%= render '/goals/comments', comments: goal.comments.limit(10).reverse, goal: goal %>
+    <%= render '/goals/attachments', goal: goal %>
     <div class="flex justify-end">
-      <%= render 'goals/delete_form', goal: goal %>
+      <%= render '/goals/delete_form', goal: goal %>
     </div>
   </div>
 <% end %>

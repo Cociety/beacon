@@ -1,6 +1,4 @@
-<%= form_with model: goal, id: dom_id(goal), class:'flex flex-col space-y-2 m-2 w-60' do |f| %>
-  <%= f.hidden_field :tree_id, value: Tree.first.id %>
-
+<%= form_with url: tree_goals_path(@tree, goal), model: goal, id: dom_id(goal), class:'flex flex-col space-y-2 m-2 w-60' do |f| %>
   <div>
     <%= f.label :name %>
     <%= f.text_field :name, value: goal.name, autofocus: true %>

@@ -1,12 +1,8 @@
 <div class="flex space-x-1">
-  <% if can? :edit, comment %>
-    <%= link_to edit_comment_path(comment), class:'btn secondary sm', data: { 'turbo-frame':  dom_id(comment) } do %>
+  <%= link_to edit_comment_path(comment), class:'btn secondary sm', data: { 'turbo-frame':  dom_id(comment) } do %>
       <%= t('edit') %>
-    <% end %>
   <% end %>
-  <% if can? :delete, comment %>
-    <%= link_to comment, class:'btn sm danger', method: :delete do %>
-      <%= t('delete') %>
-    <% end %>
+  <%= link_to comment, class:'btn sm danger', method: :delete do %>
+    <%= t('delete') %>
   <% end %>
 </div>
