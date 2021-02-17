@@ -72,3 +72,5 @@ gem "name_of_person", "~> 1.1"
 gem "aws-sdk-s3", "~> 1.88"
 
 gem "image_processing", "~> 1.12"
+
+gem "pundit", "~> 2.1"

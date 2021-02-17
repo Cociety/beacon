@@ -1,7 +1,6 @@
 class Goals::PopoverController < ApplicationController
-  before_action :set_goal, only: [:index]
-
-  def set_goal
-    @goal = Goal.find(params[:goal_id])
+  def index
+    goal = Goal.find params[:goal_id]
+    @goal = authorize goal, :show?
   end
 end

@@ -1,11 +1,5 @@
 class Comments::ActionsController < ApplicationController
-  before_action :set_comment
-
-  def show; end
-
-  private
-
-  def set_comment
-    @comment = Comment.find params[:comment_id]
+  def show
+    @comment = authorize Comment.find(params[:comment_id]), policy_class: Comment::ActionPolicy
   end
 end

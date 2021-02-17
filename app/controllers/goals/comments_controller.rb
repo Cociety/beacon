@@ -2,7 +2,7 @@ class Goals::CommentsController < ApplicationController
   before_action :set_goal
 
   def create
-    @comment = Comment.new comment_params
+    @comment = authorize Comment.new(comment_params), policy_class: Goal::CommentPolicy
     @comment = Comment.new if @comment.save
     render turbo_stream: turbo_stream.replace(@comment, partial: 'comments/form',
                                                         locals:  { comment: @comment, on: @goal })

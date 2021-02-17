@@ -1,7 +1,7 @@
 require "ostruct"
 module ApplicationHelper
-  def sign_in_url
-    cociety_url(Rails.application.config.cociety[:sign_in_path])
+  def sign_in_url(redirect_to)
+    cociety_url(Rails.application.config.cociety[:sign_in_path], redirect_to)
   end
 
   def sign_out_url
@@ -10,14 +10,14 @@ module ApplicationHelper
 
   private
 
-  def cociety_url(path = '/')
+  def cociety_url(path = '/', redirect_to = request.original_url)
     cociety = Rails.application.config.cociety
     protocol = cociety[:protocol] == :http ? URI::HTTP : URI::HTTPS
     protocol.build(
       host:  cociety[:host],
       port:  cociety[:port],
       path:  path,
-      query: { redirect_to: request.original_url }.to_query
+      query: { redirect_to: redirect_to }.to_query
     ).to_s
   end
 
