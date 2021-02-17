@@ -7,7 +7,9 @@
     <% end %>
   </ul>
   <% comment = Comment.new %>
-  <%= turbo_frame_tag comment do %>
-    <%= render 'comments/form', comment: comment, on: goal %>
+  <% if policy(goal).create? %>
+    <%= turbo_frame_tag comment do %>
+      <%= render 'comments/form', comment: comment, on: goal %>
+    <% end %>
   <% end %>
 </div>

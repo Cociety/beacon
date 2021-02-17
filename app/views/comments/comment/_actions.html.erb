@@ -1,8 +1,12 @@
 <div class="flex space-x-1">
-  <%= link_to edit_comment_path(comment), class:'btn secondary sm', data: { 'turbo-frame':  dom_id(comment) } do %>
-      <%= t('edit') %>
+  <% if policy(comment).edit? %>
+    <%= link_to edit_comment_path(comment), class:'btn secondary sm', data: { 'turbo-frame':  dom_id(comment) } do %>
+        <%= t('edit') %>
+    <% end %>
   <% end %>
-  <%= link_to comment, class:'btn sm danger', method: :delete do %>
-    <%= t('delete') %>
+  <% if policy(comment).destroy? %>
+    <%= link_to comment, class:'btn sm danger', method: :delete do %>
+      <%= t('delete') %>
+    <% end %>
   <% end %>
 </div>

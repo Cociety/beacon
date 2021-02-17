@@ -10,10 +10,12 @@
       <p class="text-sm font-medium text-gray-900 truncate">
         <%= attachment.filename %>
       </p>
-    <%= form_with url: attachment_path(attachment), model: attachment, method: :delete, class: 'self-end' do |f| %>
-      <%= f.button type: :submit, class: 'btn sm danger' do %>
-        <%= render '/svg/trash', w: 'w-4', h: 'h-4' %>
+      <% if policy(attachment.record).destroy? %>
+        <%= form_with url: attachment_path(attachment), model: attachment, method: :delete, class: 'self-end' do |f| %>
+          <%= f.button type: :submit, class: 'btn sm danger' do %>
+            <%= render '/svg/trash', w: 'w-4', h: 'h-4' %>
+          <% end %>
+        <% end %>
       <% end %>
-    <% end %>
   </div>
 <% end %>

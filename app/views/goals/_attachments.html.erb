@@ -8,7 +8,9 @@
       </div>
     <% end %>
   </ul>
-  <%= turbo_frame_tag :attachment do %>
-    <%= render 'attachments/form', attachable: goal %>
+  <% if policy(goal).create? %>
+    <%= turbo_frame_tag :attachment do %>
+      <%= render 'attachments/form', attachable: goal %>
+    <% end %>
   <% end %>
 </div>
