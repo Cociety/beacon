@@ -14,8 +14,7 @@ module Rolable
 
     def role?(role_name, resource)
       Role.joins(:model_roles)
-          .where(name: role_name, resource: resource, model_roles: { model: self })
-          .count.positive?
+          .exists?(name: role_name, resource: resource, model_roles: { model: self })
     end
 
     def any_role?(role_name, resource)
