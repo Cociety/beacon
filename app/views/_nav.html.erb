@@ -1,11 +1,13 @@
 <% if customer_signed_in? %>
-  <%= tag.h1 "Hi #{Current.customer.first_name} #{Current.customer.last_name}" %>
-  <%= link_to sign_out_url, method: :delete do %>
-    <%= t 'auth.sign_out' %>
+  <%= tag.h1 "Hi #{Current.customer.name}" %>
+  <%= form_with url: sign_out_url, method: :delete do |f| %>
+    <%= f.button type: :submit, data: {turbo: false}, class: 'btn secondary' do %>
+      <%= t('auth.sign_out') %>
+    <% end %>
   <% end %>
 <% else %>
   <%= tag.h1 do -%>
-    <%= link_to sign_in_url do %>
+    <%= link_to sign_in_url, class: 'btn btn-primary' do %>
       <%= t 'auth.sign_in' %>
     <% end %>
   <%- end -%>
