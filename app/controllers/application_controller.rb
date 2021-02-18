@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   after_action :verify_authorized_or_scoped
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :user_not_authorized
 
   def pundit_user
     Current.customer
