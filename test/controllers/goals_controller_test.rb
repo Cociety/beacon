@@ -4,13 +4,16 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     @parent = goals(:parent_1)
     @goal = goals(:child_2)
     @new_parent = goals(:child_1)
+    @justin = customers(:justin)
+    @justin.add_role :writer, @parent.tree
+    sign_in @justin
   end
 
   test 'should delete a goal and reparent its children' do
     children_ids = @goal.children.pluck(:id)
     parents_ids = @goal.parents.pluck(:id)
     assert_changes -> { Goal.count } do
-      delete goal_url(@goal), as: :json
+      delete goal_url(@goal)
     end
     parents_ids.each do |p|
       children_ids.each do |c|
@@ -21,7 +24,7 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should move a goal to a new parent' do
     assert_equal @parent.id, @goal.parents.first.id
-    put "/goals/#{@new_parent.id}/adopt/#{@goal.id}", as: :json
+    put goal_adopt_url(@new_parent, @goal), as: :json
     assert_response :ok
     assert_equal 1, @goal.parents.count
     assert_equal @new_parent.id, @goal.parents.first.id

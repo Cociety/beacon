@@ -11,7 +11,7 @@ module Resourcable
     }
 
     def ruled_by?(role_name, model)
-      model.role?(role_name, self)
+      model&.role?(role_name, self)
     end
 
     def ruled_by_any?(role_name, model)

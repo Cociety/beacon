@@ -1,10 +1,11 @@
 # rubocop:disable Metrics/ClassLength
-require "test_helper"
+require 'test_helper'
 
 class GoalTest < ActiveSupport::TestCase
   def setup
     @parent = goals(:parent_1)
     @tree = @parent.tree
+    sign_in customers(:justin)
   end
 
   test 'should move a goal to a new parent' do
