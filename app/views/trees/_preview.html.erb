@@ -1,1 +1,3 @@
-<%= link_to tree.top_level_goal.name, tree %>
+<li>
+  <%= link_to tree.top_level_goal&.name || tree.id, tree %>
+</li>

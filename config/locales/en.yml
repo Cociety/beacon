@@ -44,6 +44,7 @@ en:
     update: Update Comment
     placeholder: Say something
   goals:
+    none: Click "New Goal" to the right
     goal:
       view: View
     new: New Goal
@@ -58,6 +59,7 @@ en:
       comments: Comments
   rename: Rename
   trees:
+    create: Create Tree
     tree:
       progress: "%{spent} out of %{duration} points completed"
   blocked: Blocked

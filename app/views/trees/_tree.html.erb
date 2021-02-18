@@ -1,6 +1,6 @@
 <%= tag.div id: dom_id(tree), data: {
   controller: 'tree',
-  'tree-hierarchy-value': render(partial: 'goals/goal', locals: { goal: tree.top_level_goal }, formats: [:json])
+  'tree-hierarchy-value': render(partial: '/goals/goal', locals: { goal: tree.top_level_goal }, formats: [:json])
   } do %>
   <div class="w-full">
     <div class="flex my-2 px-2 space-x-2 justify-between items-end"> 

@@ -8,7 +8,7 @@ class Trees::GoalsController < ApplicationController
 
   def create
     @goal = Goal.new goal_params.merge(tree: @tree)
-    @goal.parents << @goal.tree.top_level_goal unless @goal.parents.any? && @goal.tree.top_level_goal
+    @goal.parents << @goal.tree.top_level_goal if @goal.tree.top_level_goal && @goal.parents.empty?
     if @goal.save
       redirect_to action: :new
     else

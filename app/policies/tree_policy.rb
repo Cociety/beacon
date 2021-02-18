@@ -10,7 +10,7 @@ class TreePolicy < ApplicationPolicy
   end
 
   def create?
-    edit?
+    customer.present?
   end
 
   def show?

@@ -1,0 +1,9 @@
+<%= form_with model: tree, id: dom_id(tree), method: :post, class:'flex flex-col space-y-2 m-2 w-60' do |f| %>
+
+  <div class="flex justify-end">
+    <%= f.button type: :submit, class:'btn primary' do %>
+      <%= render '/svg/save', w: 'w-4', h: 'w-4' %>
+      <span class="ml-1"><%= t('trees.create')%></span>
+    <% end %>
+  </div>
+<% end %>

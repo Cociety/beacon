@@ -2,9 +2,9 @@ class Tree < ApplicationRecord
   include Resourcable
 
   default_scope { order(updated_at: :desc) }
-  has_many :goals, -> { includes(:children, :parents) }
+  has_many :goals, -> { includes(:children, :parents) }, dependent: :destroy
 
-  after_create_commit { broadcast_replace_to 'tree' }
+  after_create_commit { broadcast_prepend_to 'tree_preview', partial: '/trees/preview' }
   after_update_commit { reload and broadcast_replace_to 'tree' }
   after_destroy_commit { broadcast_replace_to 'tree' }
 
@@ -31,7 +31,11 @@ class Tree < ApplicationRecord
   end
 
   def percent
-    (spent * 100) / duration
+    if duration.zero?
+      0
+    else
+      (spent * 100) / duration
+    end
   end
 
   private
