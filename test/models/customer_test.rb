@@ -22,8 +22,6 @@ class CustomerTest < ActiveSupport::TestCase
   end
 
   test 'retrievs roles' do
-    assert @justin.roles.count.zero?
-    @justin.add_role :reader, @tree
     assert @justin.roles.count.positive?
   end
 
@@ -35,10 +33,10 @@ class CustomerTest < ActiveSupport::TestCase
 
   test 'detects roles' do
     assert_not @justin.role? :reader, @tree
-    assert_not @justin.role? :writer, @tree
+    assert_not @justin.role? :non_existent_role, @tree
     @justin.add_role :reader, @tree
     assert @justin.role? :reader, @tree
-    assert_not @justin.role? :writer, @tree
+    assert_not @justin.role? :non_existent_role, @tree
   end
 
   test 'removes roles' do

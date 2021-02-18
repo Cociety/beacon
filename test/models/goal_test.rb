@@ -5,7 +5,8 @@ class GoalTest < ActiveSupport::TestCase
   def setup
     @parent = goals(:parent_1)
     @tree = @parent.tree
-    sign_in customers(:justin)
+    @justin = customers(:justin)
+    sign_in @justin
   end
 
   test 'should move a goal to a new parent' do
@@ -125,15 +126,12 @@ class GoalTest < ActiveSupport::TestCase
 
   test 'can add comments' do
     assert_changes -> { Comment.count } do
-      @parent.comments.create text: 'this is dope', by: customers(:justin)
+      @parent.comments.create text: 'this is dope', by: @justin
     end
   end
 
   test 'deletes comments when destroyed' do
-    (1..10).each do |i|
-      @parent.comments.create text: i, by: customers(:justin)
-    end
-    assert_difference -> { Comment.count }, -10 do
+    assert_difference -> { Comment.count }, -1 do
       @parent.destroy
     end
   end

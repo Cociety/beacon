@@ -13,7 +13,7 @@ class ActiveSupport::TestCase
   # This is to fix a limitation in heroku CI pipeline
   # Rails needs superuser permissions on postgres dbs to disable foreign key constraints during test data load
   # Heroku doesn't give superuser permissions https://devcenter.heroku.com/articles/heroku-postgresql#connection-permissions
-  fixtures %w[customers trees goals comments roles]
+  fixtures %w[customers trees goals comments roles model_roles]
 
   # Add more helper methods to be used by all tests here...
 end

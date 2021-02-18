@@ -5,7 +5,6 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     @goal = goals(:child_2)
     @new_parent = goals(:child_1)
     @justin = customers(:justin)
-    @justin.add_role :writer, @parent.tree
     sign_in @justin
   end
 
