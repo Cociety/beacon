@@ -5,8 +5,12 @@ class TreePolicy < ApplicationPolicy
     tree.ruled_by? :writer, customer
   end
 
+  def new?
+    edit?
+  end
+
   def create?
-    new?
+    edit?
   end
 
   def show?
