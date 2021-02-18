@@ -1,4 +1,4 @@
 hello:
   text: hello
-  commentable: (Goal) parent_1
+  commentable: parent_1 (Goal) 
   customer: justin

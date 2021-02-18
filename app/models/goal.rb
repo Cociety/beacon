@@ -65,8 +65,8 @@ class Goal < ApplicationRecord
   end
 
   def reparent_children
-    children = Goal.find(@children_ids)
-    parents = Goal.find(@parent_ids)
+    children = Goal.where(id: @children_ids)
+    parents = Goal.where(id: @parent_ids)
     parents.each do |p|
       children.each { |c| c.add_parent p }
     end
