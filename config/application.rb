@@ -11,6 +11,8 @@ module Beacon
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
+    ENV['PORT'] ||= '3001'
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -25,5 +27,15 @@ module Beacon
     }
 
     config.active_storage.replace_on_assign_to_many = false
+
+    config.active_job.queue_adapter = :sidekiq
+
+    # nil will use the "default" queue
+    # some of these options will not work with your Rails version
+    # add/remove as necessary
+    config.action_mailer.deliver_later_queue_name = nil # defaults to "mailers"
+    config.active_storage.queues.analysis   = nil       # defaults to "active_storage_analysis"
+    config.active_storage.queues.purge      = nil       # defaults to "active_storage_purge"
+    config.active_storage.queues.mirror     = nil       # defaults to "active_storage_mirror"
   end
 end

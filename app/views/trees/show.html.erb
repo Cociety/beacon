@@ -1,4 +1,4 @@
-<% if customer_signed_in? %>
+<% if policy(@tree).show? %>
   <%= turbo_stream_from 'tree' %>
   <%= turbo_frame_tag 'tree' do %>
     <%= render @tree %>

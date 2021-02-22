@@ -74,3 +74,5 @@ gem "aws-sdk-s3", "~> 1.88"
 gem "image_processing", "~> 1.12"
 
 gem "pundit", "~> 2.1"
+
+gem "sidekiq", "~> 6.1"

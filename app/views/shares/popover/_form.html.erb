@@ -1,0 +1,5 @@
+<%= popover_content_tag share do %>
+  <% if policy(@tree).share? %>
+    <%= render 'shares/form', share: share %>
+  <% end %>
+<% end %>

@@ -1,8 +1,8 @@
-module SetCurrentCustomer
+module CurrentCustomer
   extend ActiveSupport::Concern
 
   included do
-    before_action do
+    def set_current_customer
       Current.customer = current_customer
     end
   end

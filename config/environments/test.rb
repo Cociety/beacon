@@ -16,6 +16,14 @@ Rails.application.configure do
   # preloads Rails for running tests, you may have to set it to true.
   config.eager_load = false
 
+  config.cociety = {
+    host:          ENV.fetch('COCIETY_HOST', 'cociety.test'),
+    port:          ENV.fetch('COCIETY_PORT', 3000),
+    protocol:      :http,
+    sign_in_path:  '/customer/sign_in',
+    sign_out_path: '/customer/sign_out'
+  }
+
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {
@@ -37,6 +45,7 @@ Rails.application.configure do
   config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.default_url_options = { host: 'beacon.cociety.test', protocol: :http }
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the

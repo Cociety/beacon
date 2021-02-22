@@ -1,9 +1,15 @@
 class ApplicationController < ActionController::Base
-  include Pundit, SetCurrentCustomer
+  include Pundit, CurrentCustomer, SharedRoles, ScopedSession, SetCurrentRequestDetails
+
+  before_action :set_current_customer, :scope_session, :process_shared_roles
 
   after_action :verify_authorized_or_scoped
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :user_not_authorized
+
+  def scoped_session
+    :beacon
+  end
 
   def pundit_user
     Current.customer

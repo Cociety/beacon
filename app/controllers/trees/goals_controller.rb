@@ -19,7 +19,7 @@ class Trees::GoalsController < ApplicationController
   private
 
   def set_tree
-    @tree = authorize Tree.find(params[:tree_id])
+    @tree = authorize Tree.find(params[:tree_id]), :edit?
   end
 
   def goal_params

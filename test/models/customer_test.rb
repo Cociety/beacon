@@ -31,6 +31,12 @@ class CustomerTest < ActiveSupport::TestCase
     end
   end
 
+  test 'silently fails to add existing roles' do
+    assert_nothing_raised do
+      @justin.roles << roles(:writer_tree_one)
+    end
+  end
+
   test 'detects roles' do
     assert_not @justin.role? :reader, @tree
     assert_not @justin.role? :non_existent_role, @tree

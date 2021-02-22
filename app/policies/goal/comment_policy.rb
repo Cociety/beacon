@@ -6,7 +6,7 @@ class Goal::CommentPolicy < ApplicationPolicy
   end
 
   def create?
-    tree.ruled_by? :writer, customer
+    customer.present? && tree.ruled_by?(:writer, customer)
   end
 
   private

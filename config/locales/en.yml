@@ -62,6 +62,7 @@ en:
     create: Create Tree
     tree:
       progress: "%{spent} out of %{duration} points completed"
+  share: Share
   blocked: Blocked
   assigned: Assigned
   in_progress: In Progress

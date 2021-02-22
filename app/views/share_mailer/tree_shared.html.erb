@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hey <%= @customer&.first_name %>,</p>
+    <p><%= @share.sharer.name %> wants you to take a look at their Beacon Tree.</p>
+    <p><%= link_to "Check it out", @url %></p>
+  </body>
+</html>

@@ -10,12 +10,20 @@
         </span>
         <%= render 'components/progress', percent: tree.percent %>
       </div>
-      <% if policy(tree).edit? %>
-        <%= link_to new_tree_goal_path(tree), class:"btn primary", data: {'turbo-frame': :popover} do %>
-          <%= render '/svg/plus', w: 'w-4', h: 'h-4' %>
-          <%= t('goals.new')%>
+      <div>
+        <% if policy(tree).edit? %>
+          <%= link_to new_tree_goal_path(tree), class:"btn primary", data: {'turbo-frame': :popover} do %>
+            <%= render '/svg/plus', w: 'w-4', h: 'h-4' %>
+            <%= t('goals.new')%>
+          <% end %>
         <% end %>
-      <% end %>
+        <% if policy(tree).share? %>
+          <%= link_to new_tree_share_path(tree), class:"btn primary", data: {'turbo-frame': :popover} do %>
+            <%= render '/svg/share', w: 'w-4', h: 'h-4' %>
+            <%= t('share')%>
+          <% end %>
+        <% end %>
+      </div>
     </div>
     <%= tag.div id: 'content', class: 'w-full h-full', data: { 'tree-target': :tree } do -%>
         <svg class="tree"

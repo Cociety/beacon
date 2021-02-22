@@ -1,0 +1,6 @@
+:queues:
+  - low
+  - default
+  - high
+  - critical
+  - mailers

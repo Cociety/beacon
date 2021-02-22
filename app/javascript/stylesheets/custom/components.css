@@ -71,7 +71,7 @@
 }
 
 #popover {
-  @apply fixed z-50 bg-gray-100 rounded-md bg-gray-100 shadow-md overflow-hidden;
+  @apply fixed z-50 bg-gray-100 rounded-md shadow-md overflow-hidden;
 }
 
 .form-label {
@@ -87,8 +87,10 @@ form {
     @apply form-label;
   }
 
-  input[type="text"], input[type="number"] {
-    @apply form-input-text;
+  input {
+    &[type="text"], &[type="number"], &[type="email"] {
+      @apply form-input-text;
+    }
   }
 
   .field_with_errors {

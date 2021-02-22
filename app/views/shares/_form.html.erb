@@ -1,0 +1,18 @@
+<%= form_with url: tree_share_path(@tree, share), model: share, id: dom_id(share), class:'flex flex-col space-y-2 m-2 w-60' do |f| %>
+  <div>
+    <%= f.label :with %>
+    <%= f.email_field :sharee, autofocus: true, placeholder: 'someone@cociety.org' %>
+  </div>
+
+  <div class="flex items-center">
+    <%= f.check_box :read_only?, class:'h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded' %>
+    <%= f.label :read_only?, class:'ml-2' %>
+  </div>
+
+  <div class="flex justify-end">
+    <%= f.button type: :submit, class:'btn primary' do %>
+      <%= render '/svg/share', w: 'w-4', h: 'w-4' %>
+      <span class="ml-1"><%= t('share')%></span>
+    <% end %>
+  </div>
+<% end %>

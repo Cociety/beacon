@@ -16,6 +16,11 @@ class TreePolicy < ApplicationPolicy
   def show?
     tree.ruled_by_any? %i[reader writer], customer
   end
+
+  def share?
+    customer.present? && edit?
+  end
+
   class Scope < Scope
     def resolve
       scope.for_customer
