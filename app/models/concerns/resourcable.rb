@@ -8,6 +8,7 @@ module Resourcable
     scope :for_customer, ->(customer = Current.customer) {
       joins(:model_roles)
         .where(roles: { name: %i[reader writer] }, model_roles: { model: customer })
+        .distinct
     }
 
     def ruled_by?(role_name, model)
