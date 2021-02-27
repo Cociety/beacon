@@ -19,9 +19,7 @@ Rails.application.configure do
   config.cociety = {
     host:          ENV.fetch('COCIETY_HOST', 'cociety.test'),
     port:          ENV.fetch('COCIETY_PORT', 3000),
-    protocol:      :http,
-    sign_in_path:  '/customer/sign_in',
-    sign_out_path: '/customer/sign_out'
+    protocol:      :http
   }
 
   # Configure public file server for tests with Cache-Control for performance.

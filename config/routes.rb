@@ -1,21 +1,24 @@
-def cociety_url(path = '/')
+def cociety_url(path = '/', redirect_to = nil)
   cociety = Rails.application.config.cociety
   protocol = cociety[:protocol] == :http ? URI::HTTP : URI::HTTPS
   protocol.build(
     host:  cociety[:host],
     port:  cociety[:port],
     path:  path,
-    query: { redirect_to: Current.url }.to_query
+    query: { redirect_to: redirect_to }.to_query
   ).to_s
 end
 
 Rails.application.routes.draw do
   devise_for :customers, skip: :all
+  direct :avatar do |customer|
+    cociety_url("/customer/#{customer.id}/avatar")
+  end
   direct :sign_in do
-    cociety_url(Rails.application.config.cociety[:sign_in_path])
+    cociety_url('/customer/sign_in', Current.url)
   end
   direct :sign_out do
-    cociety_url(Rails.application.config.cociety[:sign_out_path])
+    cociety_url('/customer/sign_out', Current.url)
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'home#index'
