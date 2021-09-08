@@ -1,15 +1,22 @@
-<% if customer_signed_in? %>
-  <%= tag.h1 "Hi #{Current.customer.name}" %>
-  <%= render 'customer/avatar' %>
-  <%= form_with url: sign_out_url, method: :delete do |f| %>
-    <%= f.button type: :submit, class: 'btn secondary' do %>
-      <%= t('auth.sign_out') %>
+<div class="w-full bg-indigo-300 flex justify-between h-12 items-center">
+  <span class="ml-2">Beacon</span>
+  <div class="flex items-center space-x-1 mr-2">
+    <% if customer_signed_in? %>
+      <span>
+        <%= Current.customer.name.first %>
+      </span>
+      <%= render 'customer/avatar' %>
+      <%= form_with url: sign_out_url, method: :delete do |f| %>
+        <%= f.button type: :submit, class: 'btn secondary' do %>
+          <%= t('auth.sign_out') %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= tag.h1 do -%>
+        <%= link_to sign_in_url, class: 'btn primary' do %>
+          <%= t 'auth.sign_in' %>
+        <% end %>
+      <%- end -%>
     <% end %>
-  <% end %>
-<% else %>
-  <%= tag.h1 do -%>
-    <%= link_to sign_in_url, class: 'btn primary' do %>
-      <%= t 'auth.sign_in' %>
-    <% end %>
-  <%- end -%>
-<% end %>
+  </div>
+</div>
