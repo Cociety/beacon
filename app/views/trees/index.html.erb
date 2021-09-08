@@ -1,9 +1,6 @@
-<%= turbo_stream_from :tree_preview %>
 <div class="w-full flex justify-between">
   <ul>
-    <%= turbo_frame_tag :trees, target: :_top do %>
-      <%= render collection: @trees, partial: 'trees/preview', as: :tree %>
-    <% end %>
+    <%= render collection: @trees, partial: 'trees/preview', as: :tree %>
   </ul>
   <%= render '/trees/form', tree: @tree %>
 </div>

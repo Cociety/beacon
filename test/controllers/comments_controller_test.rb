@@ -11,16 +11,16 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_changes -> { Comment.count } do
       delete comment_path @comment
-      assert_response :ok
+      assert_redirected_to @commentable
     end
   end
 
-  # test "can not delete someone else's comment" do
-  #   sign_in customers(:melissa)
+  test "can not delete someone else's comment" do
+    sign_in customers(:melissa)
 
-  #   assert_no_changes -> { Comment.count } do
-  #     delete comment_path comments(:hello)
-  #     assert_response :not_found
-  #   end
-  # end
+    assert_no_changes -> { Comment.count } do
+      delete comment_path comments(:hello)
+      assert_redirected_to root_path
+    end
+  end
 end

@@ -13,7 +13,6 @@ gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.0'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
@@ -62,12 +61,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "devise", "~> 4.7"
 
-gem "hotwire-rails", "~> 0.1.2"
-
 gem "rexml", "~> 3.2"
 
 gem "name_of_person", "~> 1.1"
-
 
 gem "aws-sdk-s3", "~> 1.88"
 
@@ -76,3 +72,7 @@ gem "image_processing", "~> 1.12"
 gem "pundit", "~> 2.1"
 
 gem "sidekiq", "~> 6.1"
+
+gem "importmap-rails", "~> 0.5.1"
+
+gem "stimulus-rails", "~> 0.4.2"

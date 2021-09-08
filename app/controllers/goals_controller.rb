@@ -8,12 +8,12 @@ class GoalsController < ApplicationController
 
   def update
     @goal.update! goal_params
-    render json: @goal
+    render :show
   end
 
   def destroy
     @goal.destroy
-    render json: @goal
+    redirect_to @goal.tree
   end
 
   private

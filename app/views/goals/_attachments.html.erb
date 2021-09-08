@@ -1,16 +1,11 @@
 <div>
   <span class="form-label"><%= t('attachments') %></span>
   <ul class="max-h-60 overflow-y-scroll">
-    <%= turbo_stream_from [goal, :attachments] %>
-    <%= turbo_frame_tag :attachments do %>
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <%= render goal.attachments %>
-      </div>
-    <% end %>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <%= render goal.attachments %>
+    </div>
   </ul>
   <% if policy(goal).edit? %>
-    <%= turbo_frame_tag :attachment do %>
-      <%= render 'attachments/form', attachable: goal %>
-    <% end %>
+    <%= render 'attachments/form', attachable: goal %>
   <% end %>
 </div>

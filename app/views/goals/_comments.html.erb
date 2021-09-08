@@ -1,15 +1,10 @@
 <div>
   <span class="form-label"><%= t('.comments') %></span>
   <ul class="max-h-60 overflow-y-scroll">
-    <%= turbo_stream_from [goal, :comments] %>
-    <%= turbo_frame_tag :comments do %>
-        <%= render comments %>
-    <% end %>
+      <%= render comments %>
   </ul>
   <% comment = Comment.new %>
   <% if policy(goal).edit? && policy(comment).create? %>
-    <%= turbo_frame_tag comment do %>
-      <%= render 'comments/form', comment: comment, on: goal %>
-    <% end %>
+    <%= render 'comments/form', comment: comment, on: goal %>
   <% end %>
 </div>

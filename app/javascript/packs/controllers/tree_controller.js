@@ -64,10 +64,8 @@ export default class TreeController extends Controller {
       .attr("y", d => d.y - this.options.nodeRadius)
       .attr('height', this.options.nodeRadius*2)
       .attr('width', this.options.nodeRadius*2)
-      .append('xhtml:turbo-frame')
       .append('xhtml:a')
-      .attr('href', d => `/goals/${encodeURIComponent(d.data.id)}/popover`)
-      .attr('data-turbo-frame', 'popover')
+      .attr('href', d => `/goals/${encodeURIComponent(d.data.id)}`)
       .classed('goal', true)
       .each(function() {
         const node = select(this);

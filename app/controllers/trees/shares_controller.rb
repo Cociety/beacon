@@ -3,12 +3,14 @@ class Trees::SharesController < ApplicationController
 
   def new
     @share = Share.new
-    render partial: '/shares/popover/form', locals: { share: @share }
   end
 
   def create
     @share = Share.new share_params
-    render partial: '/shares/popover/form', locals: { share: @share } unless @share.save
+    if @share.save
+      flash[:notice] = t '.shared', with: @share.sharee
+      redirect_to @share.role.resource
+    end
   end
 
   private

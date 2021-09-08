@@ -4,9 +4,6 @@ class Goal < ApplicationRecord
   belongs_to :tree, touch: true
   default_scope { order(created_at: :asc) }
 
-  after_update_commit { broadcast_replace_to :goal }
-  after_destroy_commit { broadcast_remove_to :popover }
-
   before_destroy :prepare_for_reparenting
   after_destroy :reparent_children
 

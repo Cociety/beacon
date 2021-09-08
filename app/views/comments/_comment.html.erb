@@ -1,17 +1,15 @@
-<%= turbo_frame_tag dom_id(comment) do %>
-  <li class="py-4" data-controller="scroll-into-view">
-    <div class="flex space-x-3">
-      <%= render 'customer/avatar', customer: comment.customer %>
-      <div class="flex-1 space-y-1">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs text-gray-700"><%= comment.by.name %></h3>
-          <p class="text-xs text-gray-700"><%= time_ago_in_words comment.created_at %></p>
-        </div>
-        <div class="flex justify-between items-start">
-          <p class="text-sm font-medium"><%= comment.text %></p>
-          <%= render 'comments/comment/actions_or_lazyload', comment: comment %>
-        </div>
+<li class="py-4" data-controller="scroll-into-view">
+  <div class="flex space-x-3">
+    <%= render 'customer/avatar', customer: comment.customer %>
+    <div class="flex-1 space-y-1">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xs text-gray-700"><%= comment.by.name %></h3>
+        <p class="text-xs text-gray-700"><%= time_ago_in_words comment.created_at %></p>
+      </div>
+      <div class="flex justify-between items-start">
+        <p class="text-sm font-medium"><%= comment.text %></p>
+        <%= render 'comments/comment/actions', comment: comment %>
       </div>
     </div>
-  </li>
-<% end %>
+  </div>
+</li>

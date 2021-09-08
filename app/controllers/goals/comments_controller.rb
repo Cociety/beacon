@@ -3,9 +3,7 @@ class Goals::CommentsController < ApplicationController
 
   def create
     @comment = authorize Comment.new(comment_params), policy_class: Goal::CommentPolicy
-    @comment = Comment.new if @comment.save
-    render turbo_stream: turbo_stream.replace(@comment, partial: 'comments/form',
-                                                        locals:  { comment: @comment, on: @goal })
+    redirect_to @comment.commentable if @comment.save
   end
 
   private

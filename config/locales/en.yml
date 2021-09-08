@@ -60,6 +60,9 @@ en:
   rename: Rename
   trees:
     create: Create Tree
+    shares:
+      create:
+        shared: Shared with %{with}
     tree:
       progress: "%{spent} out of %{duration} points completed"
   share: Share
@@ -68,3 +71,4 @@ en:
   in_progress: In Progress
   testing: Testing
   done: Done
+  back: Back

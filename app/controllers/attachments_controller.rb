@@ -3,5 +3,6 @@ class AttachmentsController < ApplicationController
     @attachment = ActiveStorage::Attachment.find params[:id]
     authorize @attachment.record
     @attachment.purge
+    redirect_to @attachment.record
   end
 end

@@ -11,19 +11,11 @@
   </head>
 
   <body>
-    <div class="h-screen"
-      data-controller="popover"
-      data-action="
-        click->popover#hideIfClickedOutside
-        click->popover#moveToClickPoint
-        mousedown->popover#hideIfClickedOutside
-        keydown->popover#hideIfEscapeKeyPressed
-      "
-    >
-      <%= turbo_stream_from :popover %>
-      <%= turbo_stream_from :goal %>
-      <%= popover_tag %>
+    <div class="h-screen">
       <%= render '/nav' %>
+      <% if notice %>
+        <%= notice %>
+      <% end %>
       <%= yield %>
     </div>
   </body>

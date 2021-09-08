@@ -2,7 +2,7 @@
   <%= tag.h1 "Hi #{Current.customer.name}" %>
   <%= render 'customer/avatar' %>
   <%= form_with url: sign_out_url, method: :delete do |f| %>
-    <%= f.button type: :submit, data: {turbo: false}, class: 'btn secondary' do %>
+    <%= f.button type: :submit, class: 'btn secondary' do %>
       <%= t('auth.sign_out') %>
     <% end %>
   <% end %>

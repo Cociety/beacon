@@ -10,7 +10,7 @@ class Tree::SharesControllerTest < ActionDispatch::IntegrationTest
   test 'shares a tree' do
     assert_changes -> { Share.count } do
       post tree_share_path(@tree), params: { share: { sharee: 'someone@cociety.org' } }
-      assert_response :ok
+      assert_redirected_to @tree
     end
   end
 end

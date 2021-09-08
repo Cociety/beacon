@@ -3,16 +3,15 @@ class Trees::GoalsController < ApplicationController
 
   def new
     @goal = Goal.new
-    render partial: '/goals/popover_form', locals: { goal: @goal }
   end
 
   def create
     @goal = Goal.new goal_params.merge(tree: @tree)
     @goal.parents << @goal.tree.top_level_goal if @goal.tree.top_level_goal && @goal.parents.empty?
     if @goal.save
-      redirect_to action: :new
+      redirect_to @goal.tree
     else
-      render partial: '/goals/popover_form', locals: { goal: @goal }
+      render :new
     end
   end
 

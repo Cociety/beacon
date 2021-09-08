@@ -4,10 +4,6 @@ class Tree < ApplicationRecord
   default_scope { order(updated_at: :desc) }
   has_many :goals, -> { includes(:children, :parents) }, dependent: :destroy
 
-  after_create_commit { broadcast_prepend_to 'tree_preview', partial: '/trees/preview' }
-  after_update_commit { reload and broadcast_replace_to 'tree' }
-  after_destroy_commit { broadcast_replace_to 'tree' }
-
   def top_level_goal
     goal = top_level_goal_without_tree_ref
 

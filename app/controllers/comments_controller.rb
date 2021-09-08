@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    render json: @comment
+    redirect_to @comment.commentable
   end
 
   def update

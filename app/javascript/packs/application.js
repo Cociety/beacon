@@ -5,7 +5,6 @@
 import "../stylesheets/application.css"
 
 import Rails from "@rails/ujs"
-import "@hotwired/turbo-rails"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import { Application } from "stimulus"

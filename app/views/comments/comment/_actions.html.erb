@@ -1,6 +1,6 @@
 <div class="flex space-x-1">
   <% if policy(comment).edit? %>
-    <%= link_to edit_comment_path(comment), class:'btn secondary sm', data: { 'turbo-frame':  dom_id(comment) } do %>
+    <%= link_to edit_comment_path(comment), class:'btn secondary sm' do %>
         <%= t('edit') %>
     <% end %>
   <% end %>

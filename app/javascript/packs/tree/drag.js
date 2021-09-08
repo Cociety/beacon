@@ -70,7 +70,8 @@ function resetNewParent() {
 function adopt(goalId, newChildId) {
   ajax({
     url: `/goals/${encodeURIComponent(goalId)}/adopt/${encodeURIComponent(newChildId)}`,
-    type: 'PUT'
+    type: 'PUT',
+    success: () => { location.reload(); }
   });
 }
 

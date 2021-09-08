@@ -1,7 +1,4 @@
 <% if policy(@tree).show? %>
-  <%= turbo_stream_from 'tree' %>
-  <%= turbo_frame_tag 'tree' do %>
-    <%= render @tree %>
-  <%- end -%>
+  <%= render @tree %>
 <% end %>
 
