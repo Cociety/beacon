@@ -23,6 +23,17 @@
             <%= t('share')%>
           <% end %>
         <% end %>
+        <% if @show_completed_goals %>
+          <%= link_to tree_path(show_completed_goals: 0), class:'btn secondary' do %>
+            <%= render '/svg/eye_closed', w: 'w-4', h: 'h-4' %>
+            <%= t '.hide_completed' %>
+          <% end %>
+        <% else %>
+          <%= link_to tree_path(show_completed_goals: 1), class:'btn secondary' do %>
+            <%= render '/svg/eye', w: 'w-4', h: 'h-4' %>
+            <%= t '.show_completed' %>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <%= tag.div id: 'content', class: 'w-full h-full', data: { 'tree-target': :tree } do -%>

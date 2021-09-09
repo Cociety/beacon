@@ -3,6 +3,7 @@ class Goal < ApplicationRecord
 
   belongs_to :tree, touch: true
   default_scope { order(created_at: :asc) }
+  scope :incomplete, -> { where.not(state: Goal.states[:done]) }
 
   before_destroy :prepare_for_reparenting
   after_destroy :reparent_children
