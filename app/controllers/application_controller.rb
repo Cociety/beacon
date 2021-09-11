@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit, CurrentCustomer, SharedRoles, ScopedSession, SetCurrentRequestDetails
 
   before_action :set_current_customer, :scope_session, :process_shared_roles
+  before_action :set_paper_trail_whodunnit
 
   after_action :verify_authorized_or_scoped
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -12,6 +13,10 @@ class ApplicationController < ActionController::Base
   end
 
   def pundit_user
+    Current.customer
+  end
+
+  def user_for_paper_trail
     Current.customer
   end
 

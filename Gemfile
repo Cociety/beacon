@@ -76,3 +76,7 @@ gem "sidekiq", "~> 6.1"
 gem "importmap-rails", "~> 0.5.1"
 
 gem "stimulus-rails", "~> 0.4.2"
+
+gem "paper_trail", "~> 12.1"
+
+gem "paper_trail-globalid", "~> 0.2.0"

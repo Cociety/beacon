@@ -1,4 +1,5 @@
 class Comment < ApplicationRecord
+  has_paper_trail
   default_scope { order(created_at: :desc) }
 
   # broadcasts_to ->(comment) { [comment.commentable, :comments] }

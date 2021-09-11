@@ -166,5 +166,11 @@ class GoalTest < ActiveSupport::TestCase
       @parent.assign_to @melissa
     end
   end
+
+  test 'should version changes' do
+    assert_changes -> { @parent.versions.count } do
+      @parent.update! name: "#{@parent.name}!"
+    end
+  end
 end
 # rubocop:enable Metrics/ClassLength
