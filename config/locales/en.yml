@@ -44,6 +44,8 @@ en:
     update: Update Comment
     placeholder: Say something
   goals:
+    assignee:
+      assigned_to: Assigned to
     none: Click "New Goal" to the right
     goal:
       view: View

@@ -6,6 +6,7 @@ class GoalTest < ActiveSupport::TestCase
     @parent = goals(:parent_1)
     @tree = @parent.tree
     @justin = customers(:justin)
+    @melissa = customers(:melissa)
     sign_in @justin
   end
 
@@ -133,6 +134,36 @@ class GoalTest < ActiveSupport::TestCase
   test 'deletes comments when destroyed' do
     assert_difference -> { Comment.count }, -1 do
       @parent.destroy
+    end
+  end
+
+  test 'should assign a goal to a customer' do
+    assert_changes -> { @parent.assignee } do
+      @parent.assign_to @justin
+    end
+  end
+
+  test 'should only allow one assignee' do
+    assert_difference -> { Customer.with_role(:assignee, @parent).count }, 1 do
+      @parent.assign_to @justin
+      @parent.assign_to @melissa
+      assert_equal @melissa.id, @parent.assignee.id
+    end
+  end
+
+  test 'should not grant writer role if new assignee is explict reader' do
+    @melissa.remove_role :writer, @tree
+    @melissa.add_role :reader, @tree
+    assert_no_changes -> { @melissa.role? :writer, @tree } do
+      @parent.assign_to @melissa
+    end
+  end
+
+  test 'should grant writer role' do
+    @melissa.remove_role :writer, @tree
+    @melissa.remove_role :reader, @tree
+    assert_changes -> { @melissa.role? :writer, @tree } do
+      @parent.assign_to @melissa
     end
   end
 end

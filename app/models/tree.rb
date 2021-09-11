@@ -34,6 +34,10 @@ class Tree < ApplicationRecord
     end
   end
 
+  def readers_and_writers
+    Customer.with_role %i[reader writer], self
+  end
+
   private
 
   def top_level_goal_without_tree_ref

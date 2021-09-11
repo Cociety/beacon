@@ -1,5 +1,5 @@
 class Goal < ApplicationRecord
-  include Attachable, Commentable
+  include Attachable, Commentable, Resourcable
 
   belongs_to :tree, touch: true
   default_scope { order(created_at: :asc) }
@@ -83,6 +83,25 @@ class Goal < ApplicationRecord
       children << new_child
       save!
     end
+  end
+
+  def assignee
+    Customer.with_role(:assignee, self).first
+  end
+
+  def assignee_id
+    assignee&.id
+  end
+
+  def assign_to(customer)
+    return false unless customer
+
+    transaction do
+      customer.add_role(:writer, tree) unless customer.role?(:reader, tree) && !customer.role?(:writer, tree)
+      roles.where(name: :assignee).destroy_all
+      customer.add_role :assignee, self
+    end
+    true
   end
 
   private

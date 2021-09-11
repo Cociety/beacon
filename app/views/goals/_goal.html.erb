@@ -16,6 +16,7 @@
   </div>
 </div>
 <div class="p-2 space-y-2">
+  <%= render '/goals/assignee', goal: goal %>
   <%= render '/goals/progress', goal: goal %>
   <%= render '/goals/state', goal: goal %>
   <%= render '/goals/comments', comments: goal.comments.limit(10).reverse, goal: goal %>

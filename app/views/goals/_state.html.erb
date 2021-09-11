@@ -3,8 +3,8 @@
     <%= f.label :state, t('.status') %>
     <%= f.collection_select :state, goal_states, :value, :text,
       { selected: -> (state) { goal.state == state.value }},
-      { class: 'select', data: { action: 'change->form-submitter#submit' }
-    } %>
+      { class: 'select', data: { action: 'change->form-submitter#submit' }}
+    %>
   <% end %>
 <% else %>
   <span class="form-label"><%= t('.status') %></span>

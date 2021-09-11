@@ -1,3 +1,5 @@
+# read what roles (from the homegrown Roles class) are attached
+# and which models (usually Customers) have access to those roles
 module Resourcable
   extend ActiveSupport::Concern
 

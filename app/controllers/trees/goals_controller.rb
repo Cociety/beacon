@@ -9,6 +9,7 @@ class Trees::GoalsController < ApplicationController
     @goal = Goal.new goal_params.merge(tree: @tree)
     @goal.parents << @goal.tree.top_level_goal if @goal.tree.top_level_goal && @goal.parents.empty?
     if @goal.save
+      @goal.assign_to Current.customer
       redirect_to @goal.tree
     else
       render :new
