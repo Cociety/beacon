@@ -1,11 +1,16 @@
 require: rubocop-rails
 AllCops:
   Exclude:
-    - 'bin/**/*'
+    - bin/**/*
     - config/application.rb
-    - 'db/(*_)?schema.rb'
-    - 'Gemfile'
-    - 'node_modules/**/*'
+    - !ruby/regexp  /db\/.*schema.rb$/
+    - db/migrate/*
+    - Gemfile
+    - node_modules/**/*
+    - test/**/*
+    - test/models/comment_test.rb
+    - storage/**/*
+    - tmp/**/*
   NewCops: enable
   TargetRubyVersion: 3.0.0
 Layout/HashAlignment:

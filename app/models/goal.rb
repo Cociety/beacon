@@ -6,11 +6,10 @@ class Goal < ApplicationRecord
   default_scope { order(created_at: :asc) }
   scope :incomplete, -> { where.not(state: Goal.states[:done]) }
 
-  before_destroy :prepare_for_reparenting
-  after_destroy :reparent_children
-
   before_save :set_spent_based_on_done_state
   before_save :set_state_based_on_spent_and_duration
+  before_destroy :prepare_for_reparenting
+  after_destroy :reparent_children
 
   scope :parents, -> { left_outer_joins(:parent_relationships).merge(Relationship.where(child_id: nil)) }
   has_many :parent_relationships, foreign_key: :child_id, class_name: :Relationship, inverse_of: :child
@@ -23,11 +22,11 @@ class Goal < ApplicationRecord
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 
   DURATION_MIN = 1
-  validates_numericality_of :duration, greater_than_or_equal_to: DURATION_MIN
+  validates :duration, numericality: { greater_than_or_equal_to: DURATION_MIN }
   SPENT_MIN = 0
-  validates_numericality_of :spent,
-                            greater_than_or_equal_to: SPENT_MIN,
-                            less_than_or_equal_to:    ->(goal) { goal.duration }
+  validates :spent,
+            numericality: { greater_than_or_equal_to: SPENT_MIN,
+                            less_than_or_equal_to:    ->(goal) { goal.duration } }
 
   validates :name, length: { minimum: 1, maximum: 250 }
 

@@ -16,9 +16,9 @@ Rails.application.configure do
 
   config.host = ENV.fetch('HOST', 'beacon.cociety.local')
   config.cociety = {
-    host:          ENV.fetch('COCIETY_HOST', 'cociety.local'),
-    port:          ENV.fetch('COCIETY_PORT', 3000),
-    protocol:      :http
+    host:     ENV.fetch('COCIETY_HOST', 'cociety.local'),
+    port:     ENV.fetch('COCIETY_PORT', 3000),
+    protocol: :http
   }
   config.hosts << config.host
 
@@ -83,14 +83,14 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.session_store(:redis_session_store, **{
-    key:        '_cociety_session',
-    serializer: :json,
-    domain:     :all,
-    tld_length: 2,
-    redis:      {
-      expire_after: 1.week,
-      key_prefix:   'cociety:session:',
-      url:          ENV['REDIS_URL']
-    }
-  })
+                         key:        '_cociety_session',
+                         serializer: :json,
+                         domain:     :all,
+                         tld_length: 2,
+                         redis:      {
+                           expire_after: 1.week,
+                           key_prefix:   'cociety:session:',
+                           url:          ENV['REDIS_URL']
+                         }
+                       })
 end

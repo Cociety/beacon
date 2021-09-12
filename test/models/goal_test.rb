@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 require 'test_helper'
 
 class GoalTest < ActiveSupport::TestCase
@@ -173,4 +172,3 @@ class GoalTest < ActiveSupport::TestCase
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

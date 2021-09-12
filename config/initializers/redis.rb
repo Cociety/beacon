@@ -4,4 +4,4 @@ port = ENV.fetch('REDIS_PORT', '6379')
 database = ENV.fetch('REDIS_DATABASE', '0')
 ENV['REDIS_URL'] ||= "#{protocol}//#{host}:#{port}/#{database}"
 
-puts "REDIS URL: #{ENV['REDIS_URL']}"
+Rails.logger.debug { "REDIS URL: #{ENV['REDIS_URL']}" }

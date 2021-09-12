@@ -17,9 +17,9 @@ Rails.application.configure do
   config.eager_load = false
 
   config.cociety = {
-    host:          ENV.fetch('COCIETY_HOST', 'cociety.test'),
-    port:          ENV.fetch('COCIETY_PORT', 3000),
-    protocol:      :http
+    host:     ENV.fetch('COCIETY_HOST', 'cociety.test'),
+    port:     ENV.fetch('COCIETY_PORT', 3000),
+    protocol: :http
   }
 
   # Configure public file server for tests with Cache-Control for performance.

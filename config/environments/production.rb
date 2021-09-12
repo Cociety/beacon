@@ -17,8 +17,8 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   config.cociety = {
-    host:          ENV.fetch('COCIETY_HOST', 'www.cociety.org'),
-    port:          ENV.fetch('COCIETY_PORT', 443)
+    host: ENV.fetch('COCIETY_HOST', 'www.cociety.org'),
+    port: ENV.fetch('COCIETY_PORT', 443)
   }
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
