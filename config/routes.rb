@@ -1,12 +1,13 @@
 def cociety_url(path = '/', redirect_to = nil)
   cociety = Rails.application.config.cociety
   protocol = cociety[:protocol] == :http ? URI::HTTP : URI::HTTPS
-  protocol.build(
-    host:  cociety[:host],
-    port:  cociety[:port],
-    path:  path,
-    query: { redirect_to: redirect_to }.to_query
-  ).to_s
+  url = protocol.build(
+    host: cociety[:host],
+    port: cociety[:port],
+    path: path
+  )
+  url.query = { redirect_to: redirect_to }.to_query if redirect_to
+  url.to_s
 end
 
 Rails.application.routes.draw do
