@@ -1,10 +1,10 @@
-import { Controller } from "stimulus";
-import { hierarchy, linkVertical, select, tree } from "d3";
-import { dragHandler } from "../tree/drag";
+import { Controller } from 'stimulus';
+import { hierarchy, linkVertical, select, tree } from 'd3';
+import { dragHandler } from '../tree/drag';
 
 export default class TreeController extends Controller {
   static values = { hierarchy: Object };
-  static targets = [ "tree" ];
+  static targets = [ 'tree' ];
 
   initialize() {
     this.options = {
@@ -22,7 +22,7 @@ export default class TreeController extends Controller {
       this.isInitialized = true;
 
       // re-render on window resize
-      window.addEventListener("resize", () => this.draw());
+      window.addEventListener('resize', () => this.draw());
     }
     this.root = hierarchy(this.hierarchyValue);
     const treeLayout = tree();
@@ -37,8 +37,8 @@ export default class TreeController extends Controller {
       .attr('height', height + viewBoxPadding)
       .attr('viewBox', `0 0 ${width + viewBoxPadding} ${height}`)
 
-    this.treeSvg.selectAll("g.node").remove();
-    this.treeSvg.selectAll("path.link").remove();
+    this.treeSvg.selectAll('g.node').remove();
+    this.treeSvg.selectAll('path.link').remove();
     this.datums = this.uniqueDatums();
     this.drawNodes();
     this.drawVertices();
@@ -48,12 +48,12 @@ export default class TreeController extends Controller {
     const self = this;
     const { nodeRadius, avatarRadius } = this.options;
     this.nodes = this.treeSvg
-      .select("g.nodes")
-      .selectAll("g")
+      .select('g.nodes')
+      .selectAll('g')
       .data(this.datums)
-      .join("g")
-        .classed("node", true)
-        .attr("id", d => `node_${d.data.id}`)
+      .join('g')
+        .classed('node', true)
+        .attr('id', d => `node_${d.data.id}`)
         .call(dragHandler)
         .each(function() {
           const node = select(this);
@@ -61,9 +61,9 @@ export default class TreeController extends Controller {
         });
 
     this.nodes
-      .append("foreignObject")
-      .attr("x", d => d.x - nodeRadius)
-      .attr("y", d => d.y - nodeRadius)
+      .append('foreignObject')
+      .attr('x', d => d.x - nodeRadius)
+      .attr('y', d => d.y - nodeRadius)
       .attr('height', nodeRadius*2)
       .attr('width', nodeRadius*2)
       .append('xhtml:a')
@@ -72,11 +72,11 @@ export default class TreeController extends Controller {
       .each(function() {
         const node = select(this);
         const data = node.datum().data;
-        const state = data.hasBlockedChildren ? "blocked" : data.state;
+        const state = data.hasBlockedChildren ? 'blocked' : data.state;
         node.classed(state, true);
       })
-      .append("xhtml:p")
-      .classed("label", true)
+      .append('xhtml:p')
+      .classed('label', true)
       .text(d => d.data.name);
 
     this.nodes.each(function() {
@@ -84,10 +84,10 @@ export default class TreeController extends Controller {
       const data = node.datum().data;
       if (data.assignee) {
         node.append('svg:image')
-            .attr("x", d => d.x + nodeRadius - avatarRadius)
-            .attr("y", d => d.y - nodeRadius - avatarRadius/2)
+            .attr('x', d => d.x + nodeRadius - avatarRadius)
+            .attr('y', d => d.y - nodeRadius - avatarRadius/2)
             .attr('xlink:href', data.assignee.avatar_url)
-            .classed("avatar", true)
+            .classed('avatar', true)
             .attr('style', `width: ${avatarRadius*2}px; height: ${avatarRadius*2}px`)
       }
     });
@@ -95,27 +95,27 @@ export default class TreeController extends Controller {
 
   drawVertices() {
     this.treeSvg.select('g.links')
-      .selectAll("path")
+      .selectAll('path')
       .data(this.links())
       .enter()
-      .append("path")
-      .classed("link", true)
+      .append('path')
+      .classed('link', true)
       .each(function() {
         const link = select(this);
         const data = link.datum().target.data;
-        const state = data.hasBlockedChildren ? "blocked" : data.state;
+        const state = data.hasBlockedChildren ? 'blocked' : data.state;
         link.classed(state, true);
       })
-      .style("stroke-width", d => d.target.data.duration || 1)
-      .attr("id", d => `link_${d.source.data.id}_${d.target.data.id}`)
-      .join("path")
-        .attr("d", linkVertical()
+      .style('stroke-width', d => d.target.data.duration || 1)
+      .attr('id', d => `link_${d.source.data.id}_${d.target.data.id}`)
+      .join('path')
+        .attr('d', linkVertical()
             .x(d => d.x)
             .y(d => d.y));
   }
 
   hasBlockedChildren(datum) {
-    if (datum.data.state === "blocked") {
+    if (datum.data.state === 'blocked') {
       return true;
     }
 
