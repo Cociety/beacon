@@ -25,8 +25,7 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @parent.id, @goal.parents.first.id
     put goal_adopt_url(@new_parent, @goal), as: :json
     assert_response :ok
-    assert_equal 1, @goal.parents.count
-    assert_equal @new_parent.id, @goal.parents.first.id
+    assert_array_equal [@parent.id, @new_parent.id], @goal.parents.pluck(:id)
   end
 
   test 'should update a goal' do

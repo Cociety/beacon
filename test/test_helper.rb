@@ -38,4 +38,8 @@ class ActiveSupport::TestCase
     cls = policy_class || self.class.superclass.to_s.gsub(/Test/, '').constantize
     cls.new(customer, record).public_send(action)
   end
+
+  def assert_array_equal(a1, a2)
+    assert_equal a1.sort, a2.sort
+  end
 end

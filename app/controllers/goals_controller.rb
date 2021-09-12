@@ -1,3 +1,4 @@
+# :nodoc:
 class GoalsController < ApplicationController
   before_action :set_goal
   before_action :set_new_child_goal, only: [:adopt]

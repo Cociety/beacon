@@ -77,12 +77,22 @@ class Goal < ApplicationRecord
     end
   end
 
-  def adopt(new_child)
-    transaction do
-      new_child.parent_relationships.destroy_all
-      children << new_child
-      save!
-    end
+  # Adopts a child goal or unadopts if goal is already a child
+  def toggle_adoption(child_goal)
+    adopt child_goal
+  rescue ActiveRecord::RecordNotUnique
+    child_goal.reload
+    unadopt child_goal
+  end
+
+  # make this goal the parent of child_goal
+  def adopt(child_goal)
+    children << child_goal
+  end
+
+  # Unadopt a child goal as its parent. Prevents dangling goals and won't unadopt if child has no other parents
+  def unadopt(child_goal)
+    child_goal.parent_relationships.where(parent_id: id).destroy_all if child_goal.parent_relationships.many?
   end
 
   def assignee

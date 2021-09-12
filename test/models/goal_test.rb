@@ -6,16 +6,48 @@ class GoalTest < ActiveSupport::TestCase
     @tree = @parent.tree
     @justin = customers(:justin)
     @melissa = customers(:melissa)
+    @child_1 = goals(:child_1)
+    @child_2 = goals(:child_2)
     sign_in @justin
   end
 
-  test 'should move a goal to a new parent' do
-    c1 = goals(:child_1)
-    assert_equal @parent.id, c1.parents.first.id
-    c2 = goals(:child_2)
-    c2.adopt c1
-    assert_equal 1, c1.parents.count
-    assert_equal c2.id, c1.parents.first.id
+  test 'should adopt a child goal' do
+    assert_equal @parent.id, @child_1.parents.first.id
+    @child_2.adopt @child_1
+    assert_array_equal [@parent.id, @child_2.id], @child_1.parents.pluck(:id)
+  end
+
+  test 'raises exception when readopting a child' do
+    assert_raise ActiveRecord::RecordNotUnique do
+      @parent.adopt @child_1
+    end
+  end
+
+  test 'should unadopt a child goal' do
+    @child_2.adopt @child_1
+    assert_array_equal [@parent.id, @child_2.id], @child_1.parents.pluck(:id)
+    @child_2.unadopt @child_1
+    assert_array_equal [@parent.id], @child_1.parents.pluck(:id)
+  end
+
+  test 'should not unadopt a child without another parent' do
+    assert_array_equal [@parent.id], @child_1.parents.pluck(:id)
+    @parent.unadopt @child_1
+    assert_array_equal [@parent.id], @child_1.parents.pluck(:id)
+  end
+
+  test 'should toggle adoption' do
+    assert_array_equal [@parent.id], @child_1.parents.pluck(:id)
+    @child_2.toggle_adoption @child_1
+    assert_array_equal [@parent.id, @child_2.id], @child_1.parents.pluck(:id)
+    @child_2.toggle_adoption @child_1
+    assert_array_equal [@parent.id], @child_1.parents.pluck(:id)
+  end
+
+  test 'should not toggle adoption without another parent' do
+    assert_array_equal [@parent.id], @child_1.parents.pluck(:id)
+    @parent.toggle_adoption @child_1
+    assert_array_equal [@parent.id], @child_1.parents.pluck(:id)
   end
 
   test 'should save a goal' do

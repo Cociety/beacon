@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_11_222656) do
+ActiveRecord::Schema.define(version: 2021_09_12_042357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2021_09_11_222656) do
     t.uuid "parent_id", null: false
     t.uuid "child_id", null: false
     t.index ["child_id"], name: "index_goal_relationships_on_child_id"
+    t.index ["parent_id", "child_id"], name: "index_goal_relationships_on_parent_id_and_child_id", unique: true
     t.index ["parent_id"], name: "index_goal_relationships_on_parent_id"
   end
 

@@ -1,3 +1,4 @@
+# :nodoc:
 class Trees::GoalsController < ApplicationController
   before_action :set_tree
 
@@ -7,7 +8,7 @@ class Trees::GoalsController < ApplicationController
 
   def create
     @goal = Goal.new goal_params.merge(tree: @tree)
-    @goal.parents << @goal.tree.top_level_goal if @goal.tree.top_level_goal && @goal.parents.empty?
+    assign_parent_if_none_exist
     if @goal.save
       @goal.assign_to Current.customer
       redirect_to @goal.tree
@@ -24,5 +25,9 @@ class Trees::GoalsController < ApplicationController
 
   def goal_params
     params.require(:goal).permit :state, :spent, :duration, :name
+  end
+
+  def assign_parent_if_none_exist
+    @goal.parents << @goal.tree.top_level_goal if @goal.tree.top_level_goal && @goal.parents.empty?
   end
 end
