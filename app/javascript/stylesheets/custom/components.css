@@ -105,5 +105,10 @@ form {
 }
 
 .link {
-  @apply cursor-pointer hover:underline
+  @apply cursor-pointer hover:underline;
+}
+
+.avatar {
+  @apply inline-block h-8 w-8 flex-shrink-0 object-cover;
+  clip-path: circle(50%);
 }

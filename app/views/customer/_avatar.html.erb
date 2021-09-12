@@ -1,3 +1,3 @@
 <% customer ||= Current.customer %>
 
-<%= image_tag(avatar_url(customer), class: "inline-block h-8 w-8 rounded-full flex-shrink-0 object-cover", alt: customer.name) %> 
+<%= image_tag avatar_url(customer), class: "avatar", alt: customer.name %>

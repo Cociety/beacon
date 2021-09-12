@@ -10,7 +10,8 @@ export default class TreeController extends Controller {
     this.options = {
       height: 600,
       nodeRadius: 40,
-      width: null
+      width: null,
+      avatarRadius: 12
     }
     this.draw();
   }
@@ -28,13 +29,13 @@ export default class TreeController extends Controller {
     treeLayout.size([this.options.width, this.options.height]);
     treeLayout(this.root);
 
-    const {width, height, nodeRadius} = this.options;
+    const { width, height, nodeRadius, avatarRadius } = this.options;
 
-    const viewBoxPadding = nodeRadius * 2;
+    const viewBoxPadding = nodeRadius * 2 + avatarRadius;
     this.treeSvg = select('.tree')
       .attr('width', width + viewBoxPadding)
       .attr('height', height + viewBoxPadding)
-      .attr('viewBox', `0 0 ${width + viewBoxPadding} ${height}`);
+      .attr('viewBox', `0 0 ${width + viewBoxPadding} ${height}`)
 
     this.treeSvg.selectAll("g.node").remove();
     this.treeSvg.selectAll("path.link").remove();
@@ -45,6 +46,7 @@ export default class TreeController extends Controller {
 
   drawNodes() {
     const self = this;
+    const { nodeRadius, avatarRadius } = this.options;
     this.nodes = this.treeSvg
       .select("g.nodes")
       .selectAll("g")
@@ -56,14 +58,14 @@ export default class TreeController extends Controller {
         .each(function() {
           const node = select(this);
           node.datum().data.hasBlockedChildren = self.hasBlockedChildren(node.datum());
-        })
+        });
 
     this.nodes
       .append("foreignObject")
-      .attr("x", d => d.x - this.options.nodeRadius)
-      .attr("y", d => d.y - this.options.nodeRadius)
-      .attr('height', this.options.nodeRadius*2)
-      .attr('width', this.options.nodeRadius*2)
+      .attr("x", d => d.x - nodeRadius)
+      .attr("y", d => d.y - nodeRadius)
+      .attr('height', nodeRadius*2)
+      .attr('width', nodeRadius*2)
       .append('xhtml:a')
       .attr('href', d => `/goals/${encodeURIComponent(d.data.id)}`)
       .classed('goal', true)
@@ -76,6 +78,19 @@ export default class TreeController extends Controller {
       .append("xhtml:p")
       .classed("label", true)
       .text(d => d.data.name);
+
+    this.nodes.each(function() {
+      const node = select(this);
+      const data = node.datum().data;
+      if (data.assignee) {
+        node.append('svg:image')
+            .attr("x", d => d.x + nodeRadius - avatarRadius)
+            .attr("y", d => d.y - nodeRadius - avatarRadius/2)
+            .attr('xlink:href', data.assignee.avatar_url)
+            .classed("avatar", true)
+            .attr('style', `width: ${avatarRadius*2}px; height: ${avatarRadius*2}px`)
+      }
+    });
   }
 
   drawVertices() {
