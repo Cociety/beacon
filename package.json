@@ -2,25 +2,44 @@
   "name": "beacon",
   "private": true,
   "dependencies": {
-    "@hotwired/stimulus": "^3.0.0-beta.1",
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
+    "@hotwired/stimulus": "^3.0.0-beta.2",
+    "@rails/actioncable": "latest",
+    "@rails/activestorage": "latest",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "5.2.1",
-    "@tailwindcss/forms": "^0.2.1",
-    "autoprefixer": "^10.2.1",
+    "@rails/webpacker": "^6.0.0-rc.5",
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/line-clamp": "^0.2.1",
+    "autoprefixer": "^10.3.4",
+    "babel-plugin-macros": "^3.1.0",
+    "css-loader": "^6.2.0",
     "d3": "^6.3.1",
-    "postcss": "^8.2.3",
-    "postcss-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^2.3.0",
+    "postcss": "^8.3.6",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.0.2",
+    "postcss-loader": "^6.1.1",
     "postcss-nested": "^5.0.3",
+    "postcss-nesting": "^8.0.1",
     "stimulus": "^2.0.0",
-    "tailwindcss": "^2.0.2",
+    "style-loader": "^3.2.1",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^2.2.15",
     "tailwindcss-line-clamp": "^1.0.5",
-    "webpack": "^4.44.2"
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
   },
   "version": "0.1.0",
+  "babel": {
+    "presets": [
+      "./node_modules/@rails/webpacker/package/babel/preset.js"
+    ]
+  },
+  "browserslist": [
+    "defaults"
+  ],
   "devDependencies": {
+    "@webpack-cli/serve": "^1.5.2",
     "webpack-bundle-analyzer": "^4.3.0",
-    "webpack-dev-server": "^3.11.1"
+    "webpack-dev-server": "^4.2.0"
   }
 }

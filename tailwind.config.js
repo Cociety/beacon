@@ -6,7 +6,8 @@ module.exports = {
     ],
     enabled: true,
     safelist: [
-      'type', // [type='checkbox']
+      'type', // [type='checkbox'],
+      'form-label',
       // goal states dynamically assigned in tree_controller.js
       'assigned',
       'in_progress',
