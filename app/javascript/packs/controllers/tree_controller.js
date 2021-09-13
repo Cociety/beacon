@@ -11,7 +11,8 @@ export default class TreeController extends Controller {
       height: 600,
       nodeRadius: 40,
       width: null,
-      avatarRadius: 12
+      avatarRadius: 12,
+      avatarBorderWidth: 2
     }
     this.draw();
   }
@@ -29,9 +30,9 @@ export default class TreeController extends Controller {
     treeLayout.size([this.options.width, this.options.height]);
     treeLayout(this.root);
 
-    const { width, height, nodeRadius, avatarRadius } = this.options;
+    const { width, height, nodeRadius, avatarRadius, avatarBorderWidth } = this.options;
 
-    const viewBoxPadding = nodeRadius * 2 + avatarRadius;
+    const viewBoxPadding = nodeRadius * 2 + avatarRadius + avatarBorderWidth;
     this.treeSvg = select('.tree')
       .attr('width', width + viewBoxPadding)
       .attr('height', height + viewBoxPadding)
@@ -46,7 +47,7 @@ export default class TreeController extends Controller {
 
   drawNodes() {
     const self = this;
-    const { nodeRadius, avatarRadius } = this.options;
+    const { nodeRadius, avatarRadius, avatarBorderWidth } = this.options;
     this.nodes = this.treeSvg
       .select('g.nodes')
       .selectAll('g')
@@ -83,6 +84,14 @@ export default class TreeController extends Controller {
       const node = select(this);
       const data = node.datum().data;
       if (data.assignee) {
+        node.append('svg:circle')
+            .attr('cx', d => d.x + nodeRadius)
+            .attr('cy', d => d.y - nodeRadius + avatarRadius/2)
+            .attr('r', avatarRadius)
+            .attr('fill', 'none')
+            .attr('stroke', 'white')
+            .attr('stroke-width', avatarBorderWidth);
+
         node.append('svg:image')
             .attr('x', d => d.x + nodeRadius - avatarRadius)
             .attr('y', d => d.y - nodeRadius - avatarRadius/2)

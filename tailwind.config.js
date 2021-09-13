@@ -6,23 +6,11 @@ module.exports = {
     ],
     enabled: true,
     safelist: [
-      'type', // [type='checkbox'],
-      'form-label',
-      // goal states dynamically assigned in tree_controller.js
-      'assigned',
-      'in_progress',
-      'testing',
-      'done',
-      'blocked',
-      // classess assigned in tree_controller.js
-      'label',
-      'avatar',
-      'link',
-      'node'
+      'type', // [type='checkbox']
     ],
     preserveHtmlElements: true
   },
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
       fill: {
