@@ -1,0 +1,31 @@
+<% top_level ||= false %>
+
+<% if top_level %>
+<ul class="tree mx-2 md:hidden">
+<% end %>
+
+<li class="node mt-1">
+  <%= tag.a href: goal_path(goal), class: 'rounded' do %>
+    <%= tag.div class: %W{#{goal.state} rounded p-1 flex justify-between items-center} do %>
+      <span class="truncate"><%= goal.name %></span>
+      <div class="flex space-x-1 flex-shrink-0">
+        <%= render 'components/progress', percent: goal.percent, class: 'w-16' %>
+        <div class="w-8">
+          <% if goal.assignee %>
+            <%= render 'customer/avatar', customer: goal.assignee %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <ul class="pl-4">
+    <% children = @show_completed_goals ? goal.children : goal.children.incomplete %>
+    <% children.each do |child| %>
+      <%= render '/goals/goal_mobile', goal: child %>
+    <% end %>
+  </ul>
+</li>
+
+<% if top_level %>
+</ul>
+<% end %>

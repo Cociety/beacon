@@ -36,14 +36,7 @@
         <% end %>
       </div>
     </div>
-    <%= tag.div id: 'content', class: 'w-full h-full', data: { 'tree-target': :tree } do -%>
-        <svg class="tree"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          xmlns="http://www.w3.org/2000/svg"
-          version="1.1">
-            <g class="links"></g>
-            <g class="nodes"></g>
-        </svg>
-    <%- end -%>
+    <%= render '/goals/goal_desktop', goal: tree.top_level_goal %>
+    <%= render '/goals/goal_mobile', goal: tree.top_level_goal, top_level: true %>
   </div>
 <%- end -%>

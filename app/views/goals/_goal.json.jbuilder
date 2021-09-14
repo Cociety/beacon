@@ -12,11 +12,8 @@ if goal
     end
   end
   if @goal_id_map[goal.id]
-    if @show_completed_goals
-      json.children @goal_id_map[goal.id].children, partial: 'goals/goal', as: :goal
-    else
-      json.children @goal_id_map[goal.id].children.incomplete, partial: 'goals/goal', as: :goal
-    end
+    children = @show_completed_goals ? @goal_id_map[goal.id].children : @goal_id_map[goal.id].children.incomplete
+    json.children children, partial: 'goals/goal', as: :goal
   end
 else
   json.name I18n.t('goals.none')
