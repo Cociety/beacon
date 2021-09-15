@@ -87,6 +87,10 @@ class Goal < ApplicationRecord
 
   # make this goal the parent of child_goal
   def adopt(child_goal)
+    raise "Can't adopt self" if id == child_goal.id
+
+    raise "Can't adopt parent" if parents.pluck(:id).include? child_goal.id
+
     children << child_goal
   end
 

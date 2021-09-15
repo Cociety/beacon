@@ -17,6 +17,18 @@ class GoalTest < ActiveSupport::TestCase
     assert_array_equal [@parent.id, @child_2.id], @child_1.parents.pluck(:id)
   end
 
+  test 'should raise exception when adopting self' do
+    assert_raise Exception do
+      @parent.adopt @parent
+    end
+  end
+
+  test 'should raise exception when adopting parent' do
+    assert_raise Exception do
+      @child_1.adopt @parent;
+    end
+  end
+
   test 'raises exception when readopting a child' do
     assert_raise ActiveRecord::RecordNotUnique do
       @parent.adopt @child_1

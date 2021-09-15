@@ -1,12 +1,12 @@
 <% top_level ||= false %>
 
 <% if top_level %>
-<ul class="tree mx-2 md:hidden">
+<ul class="tree mx-2 md:hidden" data-controller="tree-mobile">
 <% end %>
 
-<li class="node mt-1">
-  <%= tag.a href: goal_path(goal), class: 'rounded' do %>
-    <%= tag.div class: %W{#{goal.state} rounded p-1 flex justify-between items-center} do %>
+<li class="node mt-1 js-draggable" draggable="true" data-goal-id="<%= goal.id %>">
+  <%= tag.a href: goal_path(goal), class: 'rounded', draggable: false do %>
+    <%= tag.div class: %W{#{goal.state} rounded p-1 flex justify-between items-center js-dropzone}, data: {goal_id: goal.id} do %>
       <span class="truncate"><%= goal.name %></span>
       <div class="flex space-x-1 flex-shrink-0">
         <%= render 'components/progress', percent: goal.percent, class: 'w-16' %>

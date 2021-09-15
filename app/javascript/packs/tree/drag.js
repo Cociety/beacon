@@ -1,9 +1,10 @@
 import { drag, select, selectAll } from "d3";
-import { ajax } from "@rails/ujs";
+import BeaconApi from "../beacon_api";
 
 let isDragging = false;
 let newParent = null;
 let nodesBeingDrug = null;
+const beaconApi = new BeaconApi();
 
 function dragStarted(event) {
   isDragging = true;
@@ -27,7 +28,7 @@ function dragEnd(_, g) {
   isDragging = false;
   if (newParent) {
     const svg = select(g);
-    adopt(newParent.datum().data.id, svg.datum().data.id);
+    beaconApi.adopt(newParent.datum().data.id, svg.datum().data.id);
   } else {
     nodesBeingDrug.forEach(n => {
       n.attr("transform", null);
@@ -65,14 +66,6 @@ function resetNewParent() {
       .attr("transform", 'scale(1)');
     newParent = null;
   }
-}
-
-function adopt(goalId, newChildId) {
-  ajax({
-    url: `/goals/${encodeURIComponent(goalId)}/adopt/${encodeURIComponent(newChildId)}`,
-    type: 'PUT',
-    success: () => { location.reload(); }
-  });
 }
 
 export function dragHandler(nodes) {
