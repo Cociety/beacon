@@ -7,6 +7,11 @@ export default class TreeMobileController extends Controller {
     this.beaconApi = new BeaconApi();
 
     this.element.querySelectorAll('.js-draggable').forEach(goal => {
+      // workaround for iOS10/iOS11 touchmove behaviour (https://github.com/timruffles/mobile-drag-drop/issues/77)
+      try {
+        window.addEventListener('touchmove', function () {
+        }, {passive: false})
+    } catch(e) {}
       goal.addEventListener('dragstart', this.dragStarted.bind(this), false);
       goal.addEventListener('dragend', this.dragEnd.bind(this), false);
     });
