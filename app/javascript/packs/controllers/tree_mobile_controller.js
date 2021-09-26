@@ -26,6 +26,7 @@ export default class TreeMobileController extends Controller {
 
   dragStarted(e) {
     e.stopPropagation();
+    event.dataTransfer.setData("text/plain", this.childGoalId);
     this.childGoalId = this.#goalId(e.currentTarget);
     e.dataTransfer.setData("text/plain", this.childGoalId);
   }
