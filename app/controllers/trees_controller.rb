@@ -1,3 +1,4 @@
+# :nodoc:
 class TreesController < ApplicationController
   def index
     @trees = policy_scope(Tree)
@@ -12,6 +13,7 @@ class TreesController < ApplicationController
   def create
     authorize Tree
     @tree = Tree.create
+    @tree.goals << Goal.new(name: 'New tree')
     Current.customer.add_role :writer, @tree
     redirect_to action: :show, id: @tree.id
   end

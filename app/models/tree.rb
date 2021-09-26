@@ -1,8 +1,9 @@
+# :nodoc:
 class Tree < ApplicationRecord
   include Resourcable
 
   default_scope { order(updated_at: :desc) }
-  has_many :goals, -> { includes(:children, :parents) }, dependent: :destroy
+  has_many :goals, -> { includes(:children, :parents) }, dependent: :destroy, autosave: true
 
   def top_level_goal
     goal = top_level_goal_without_tree_ref
