@@ -1,3 +1,7 @@
-<li>
-  <%= link_to tree.top_level_goal&.name || tree.id, tree %>
-</li>
+<div class="tree w-20 h-20">
+  <%= link_to tree, class:'node' do %>
+    <div class="goal <%= tree.top_level_goal&.state %>">
+      <p class="label "><%= tree.top_level_goal&.name || tree.id %></p>
+    </div>
+  <% end %>
+</div>

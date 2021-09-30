@@ -1,6 +1,6 @@
-<div class="w-full flex justify-between">
-  <ul>
+<%= render '/trees/form', tree: @tree %>
+<div class="w-full flex justify-center">
+  <div class="grid grid-cols-4 gap-4 shadow p-2 m-2 rounded">
     <%= render collection: @trees, partial: 'trees/preview', as: :tree %>
-  </ul>
-  <%= render '/trees/form', tree: @tree %>
+  </div>
 </div>

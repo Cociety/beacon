@@ -1,3 +1,6 @@
+<%= link_to root_path, class: 'btn secondary' do %>
+  <%= t 'back' %>
+<% end %>
 <%= tag.div id: dom_id(tree), data: {
   controller: 'tree',
   'tree-hierarchy-value': render(partial: '/goals/goal', locals: { goal: tree.top_level_goal }, formats: [:json])
