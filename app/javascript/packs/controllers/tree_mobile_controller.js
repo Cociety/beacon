@@ -1,77 +1,98 @@
 import { Controller } from 'stimulus';
 import BeaconApi from "../beacon_api";
 
+class Taps {
+  constructor($el) {
+    this.$el = $el;
+    this.timeout = null;
+    this.clickHandler = this.clicked.bind(this);
+    this.startListening();
+  }
+
+  clicked(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (this.isDouble) {
+      this.#endTap(new CustomEvent('doubletap', {detail: this}));
+    } else {
+      this.timeout = setTimeout(() => {
+        this.#endTap(new CustomEvent('tap', {detail: this}));
+      }, 300);
+    }
+  }
+
+  get isDouble() {
+    return this.timeout !== null;
+  }
+
+  startListening() {
+    this.$el.addEventListener('click', this.clickHandler, false);
+  }
+
+  stopListening() {
+    this.$el.removeEventListener('click', this.clickHandler, false);
+  }
+
+  #endTap(event) {
+    clearTimeout(this.timeout);
+    this.timeout = null;
+    this.$el.dispatchEvent(event);
+  }
+}
+
 export default class TreeMobileController extends Controller {
+  static targets = [ "goal", "double_tap_to_start_message", "tap_to_move_message" ];
   initialize() {
     this.childGoalId = null;
     this.beaconApi = new BeaconApi();
 
-    this.element.querySelectorAll('.js-draggable').forEach(goal => {
-      // workaround for iOS10/iOS11 touchmove behaviour (https://github.com/timruffles/mobile-drag-drop/issues/77)
-      try {
-        window.addEventListener('touchmove', function () {
-        }, {passive: false})
-    } catch(e) {}
-      goal.addEventListener('dragstart', this.dragStarted.bind(this), false);
-      goal.addEventListener('dragend', this.dragEnd.bind(this), false);
-    });
-
-    this.element.querySelectorAll('.js-dropzone').forEach(goal => {
-      goal.addEventListener('dragenter', this.dragEntered.bind(this), false);
-      goal.addEventListener('dragleave', this.dragLeave.bind(this), false);
-      goal.addEventListener('dragover', this.dragover);
-      goal.addEventListener('drop', this.drop.bind(this), false);
+    this.goalTargets.forEach(goal => {
+      new Taps(goal);
+      goal.addEventListener('doubletap', this.doubleTapped.bind(this), false);
+      goal.addEventListener('tap', this.tapped.bind(this), false);
     });
   }
 
-  dragStarted(e) {
-    e.stopPropagation();
-    event.dataTransfer.setData("text/plain", this.childGoalId);
-    this.childGoalId = this.#goalId(e.currentTarget);
-    e.dataTransfer.setData("text/plain", this.childGoalId);
-  }
-
-  dragEntered(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    if (this.#isDroppable(e)) {
-      e.target.style.transform = 'scale(1.05, 1.05)';
-    }
-  }
-
-  dragLeave(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    if (this.#isDroppable(e)) {
-      e.target.style.transform = '';
-    }
-  }
-
-  dragover(e) {
-    // required for 'drop' event to fire
-    e.stopPropagation();
-    e.preventDefault();
-  }
-
-  dragEnd(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.childGoalId = null;
-  }
-
-  drop(e){
-    e.preventDefault();
-    if (this.#isDroppable(e)) {
-      this.beaconApi.adopt(this.#goalId(e.target), this.childGoalId);
+  doubleTapped(event) {
+    const childGoalId = this.#goalId(event);
+    const sameGoal = this.childGoalId === childGoalId;
+    if (sameGoal) {
       this.childGoalId = null;
+      event.target.style.transform = '';
+      event.target.classList.remove(...['shadow-md', 'border-2', 'border-indigo-600']);
+      this.showStartMessage()
+    } else {
+      this.childGoalId = this.#goalId(event);
+      event.target.style.transform = 'scale(1.05, 1.05)';
+      event.target.classList.add(...['shadow-md', 'border-2', 'border-indigo-600']);
+      this.showMoveMessage();
     }
   }
 
-  #goalId(element){
-    return element.dataset['goal-id'];
+  tapped(event) {
+    const parentGoalId = this.#goalId(event);
+    if (this.childGoalId) {
+      if (parentGoalId !== this.childGoalId) {
+        this.beaconApi.adopt(parentGoalId, this.childGoalId);
+        this.showStartMessage();
+      }
+    } else {
+      event.detail.stopListening();
+      event.detail.$el.querySelector('a').click();
+    }
   }
 
-  #isDroppable(e) {
-    return this.childGoalId && e.target.classList.contains('js-dropzone') && this.#goalId(e.target) !== this.childGoalId;
+  showMoveMessage() {
+    this.tap_to_move_messageTarget.classList.remove('hidden');
+    this.double_tap_to_start_messageTarget.classList.add('hidden');
+  }
+
+  showStartMessage() {
+    this.double_tap_to_start_messageTarget.classList.remove('hidden');
+    this.tap_to_move_messageTarget.classList.add('hidden');
+  }
+
+  #goalId(event) {
+    return event.target.dataset['goal-id'];
   }
 }
