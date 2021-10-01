@@ -1,4 +1,4 @@
-<%= form_with url: tree_share_path(@tree, share), model: share, id: dom_id(share), class:'flex flex-col space-y-2 m-2 w-60' do |f| %>
+<%= form_with url: tree_share_path(@tree, share), model: share, id: dom_id(share), class:'flex flex-col space-y-2 m-2' do |f| %>
   <div>
     <%= f.label :with %>
     <%= f.email_field :sharee, autofocus: true, placeholder: 'someone@cociety.org' %>
@@ -10,7 +10,7 @@
   </div>
 
   <div class="flex justify-end">
-    <%= f.button type: :submit, class:'btn primary' do %>
+    <%= f.button type: :submit, class:'btn primary w-full md:w-fit' do %>
       <%= render '/svg/share', w: 'w-4', h: 'w-4' %>
       <span class="ml-1"><%= t('share')%></span>
     <% end %>

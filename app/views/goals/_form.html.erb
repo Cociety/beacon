@@ -1,4 +1,4 @@
-<%= form_with url: tree_goals_path(@tree, goal), model: goal, id: dom_id(goal), class:'flex flex-col space-y-2 m-2 w-60' do |f| %>
+<%= form_with url: tree_goals_path(@tree, goal), model: goal, id: dom_id(goal), class:'flex flex-col space-y-2 m-2' do |f| %>
   <div>
     <%= f.label :name %>
     <%= f.text_field :name, value: goal.name, autofocus: true %>
@@ -9,7 +9,7 @@
   </div>
 
   <div class="flex justify-end">
-    <%= f.button type: :submit, class:'btn primary' do %>
+    <%= f.button type: :submit, class:'btn primary w-full md:w-fit' do %>
       <%= render '/svg/save', w: 'w-4', h: 'w-4' %>
       <span class="ml-1"><%= t('goals.create')%></span>
     <% end %>

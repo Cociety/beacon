@@ -18,13 +18,16 @@ module.exports = {
         none: 'none'
       },
       stroke: theme => theme('colors'),
+      width: {
+        fit: 'fit-content'
+      },
       zIndex: {
         '-1': -1
       }
     },
     lineClamp: {
       4: 4
-    }
+    },
   },
   variants: {
     extend: {
