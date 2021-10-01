@@ -19,6 +19,7 @@ module.exports = {
       },
       stroke: theme => theme('colors'),
       width: {
+        120: '30rem',
         fit: 'fit-content'
       },
       zIndex: {

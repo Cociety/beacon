@@ -1,4 +1,8 @@
 <%= link_to @goal.tree, class: 'btn secondary flex-grow-0 self-start' do %>
   <%= t 'back' %>
 <% end %>
-<%= render @goal %>
+<div class="flex w-full justify-center">
+  <div class="md:shadow m-2 p-2 rounded w-full md:w-120">
+    <%= render @goal %>
+  </div>
+</div>
