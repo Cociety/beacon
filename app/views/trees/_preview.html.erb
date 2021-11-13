@@ -1,7 +1,1 @@
-<div class="tree w-20 h-20">
-  <%= link_to tree, class:'node' do %>
-    <div class="goal <%= tree.top_level_goal&.state %>">
-      <p class="label "><%= tree.top_level_goal&.name || tree.id %></p>
-    </div>
-  <% end %>
-</div>
+<%= render 'trees/goal', goal: tree.top_level_goal, render_children: false, render_tree_percent: true %>

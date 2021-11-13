@@ -24,7 +24,7 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
   test 'should move a goal to a new parent' do
     assert_equal @parent.id, @goal.parents.first.id
     put goal_adopt_url(@new_parent, @goal), as: :json
-    assert_response :ok
+    assert_redirected_to @new_parent
     assert_array_equal [@parent.id, @new_parent.id], @goal.parents.pluck(:id)
   end
 

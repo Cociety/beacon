@@ -1,4 +1,8 @@
 @layer base {
+  .clip-circle-half {
+    clip-path: circle(50%);
+  }
+
   .form-label {
     @apply block text-sm font-medium;
   }

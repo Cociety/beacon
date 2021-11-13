@@ -1,8 +1,21 @@
-<%= link_to @goal.tree, class: 'btn secondary flex-grow-0 self-start' do %>
-  <%= t 'back' %>
+<%= render 'actions' do %>
+  <%= link_to @goal.parents.first || root_path, class: 'btn secondary' do %>
+    <%= render '/svg/chevron-left', w: 'w-4', h: 'h-4' %>
+    <%= t 'back' %>
+  <% end %>
+  <% if policy(@goal.tree).edit? %>
+    <%= link_to new_tree_goal_goal_path(@goal.tree, @goal), class:"btn primary" do %>
+      <%= render '/svg/plus', w: 'w-4', h: 'h-4' %>
+      <%= t('goals.new')%>
+    <% end %>
+  <% end %>
+  <% if policy(@goal.tree).share? %>
+    <%= link_to new_tree_share_path(@goal.tree), class:"btn primary" do %>
+      <%= render '/svg/share', w: 'w-4', h: 'h-4' %>
+      <%= t('share')%>
+    <% end %>
+  <% end %>
 <% end %>
 <div class="flex w-full justify-center">
-  <div class="md:shadow m-2 p-2 rounded w-full md:w-120">
-    <%= render @goal %>
-  </div>
+  <%= render @goal %>
 </div>

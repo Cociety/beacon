@@ -1,6 +1,9 @@
-<%= render '/trees/form', tree: @tree %>
-<div class="w-full flex justify-center">
-  <div class="grid grid-cols-4 gap-4 shadow p-2 m-2 rounded">
+<%= render 'actions' do %>
+  <%= render '/trees/form', tree: @tree %>
+<% end %>
+<div class="w-full flex flex-col items-center">
+  <h1 class="text-2xl"><%= t('.header') %></h1>
+  <ul class="mx-2">
     <%= render collection: @trees, partial: 'trees/preview', as: :tree %>
-  </div>
+  </ul>
 </div>

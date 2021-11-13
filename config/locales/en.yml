@@ -64,6 +64,8 @@ en:
       comments: Comments
   rename: Rename
   trees:
+    index:
+      header: Your Goal Trees
     create: Create Tree
     shares:
       create:
@@ -71,7 +73,6 @@ en:
     tree:
       hide_completed: Hide completed goals
       show_completed: Show completed goals
-      progress: "%{spent} out of %{duration} points completed"
   share: Share
   blocked: Blocked
   assigned: Assigned

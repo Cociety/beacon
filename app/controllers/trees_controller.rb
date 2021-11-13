@@ -7,7 +7,7 @@ class TreesController < ApplicationController
 
   def show
     @tree = authorize Tree.find(params[:id])
-    @show_completed_goals = ActiveRecord::Type::Boolean.new.deserialize(params[:show_completed_goals])
+    redirect_to goal_url(@tree.top_level_goal)
   end
 
   def create

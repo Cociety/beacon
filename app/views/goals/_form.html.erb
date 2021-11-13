@@ -1,4 +1,6 @@
-<%= form_with url: tree_goals_path(@tree, goal), model: goal, id: dom_id(goal), class:'flex flex-col space-y-2 m-2' do |f| %>
+<% url = @parent_goal.present? ? tree_goal_goals_path(@tree, @parent_goal, goal) : tree_goals_path(@tree, goal) %>
+
+<%= form_with url: url, model: goal, id: dom_id(goal), class:'flex flex-col space-y-2 m-2' do |f| %>
   <div>
     <%= f.label :name %>
     <%= f.text_field :name, value: goal.name, autofocus: true %>

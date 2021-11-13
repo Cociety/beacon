@@ -18,10 +18,10 @@ module.exports = {
         none: 'none'
       },
       stroke: theme => theme('colors'),
-      width: {
-        120: '30rem',
-        fit: 'fit-content'
-      },
+      width: theme => { return {
+        fit: 'fit-content',
+        ...theme('maxWidth')
+      }},
       zIndex: {
         '-1': -1
       }

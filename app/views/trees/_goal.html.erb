@@ -1,0 +1,35 @@
+<% render_children = true if render_children.nil? %>
+<% render_tree_percent = false if render_tree_percent.nil? %>
+
+<li role="listitem" class="max-w-full">
+  <%= link_to goal_path(goal), class: 'block hover:bg-gray-50' do %>
+    <div class="grid grid-cols-12 px-4 py-4 sm:px-6 overflow-hidden sm:rounded-md my-2 bg-white items-center hover:bg-gray-200">
+      <div class="col-span-7 min-w-0 flex-1 flex items-center">
+        <div class="flex-shrink-0">
+          <%= render 'customer/avatar', size: :lg %>
+        </div>
+        <div class="min-w-0 flex-1 px-4 flex flex-col">
+          <p class="text-sm font-medium text-indigo-600 truncate max-w-xs"><%= goal.name %></p>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= goal.state %> w-fit">
+              <%= t goal.state %>
+          </span>
+        </div>
+      </div>
+      <div class="col-span-4 justify-self-end">
+        <% percent = render_tree_percent ? goal.tree.percent : goal.percent %>
+        <%= render 'components/progress', percent: percent, class: 'w-48' %>
+      </div>
+      <div class="text-gray-400 justify-self-end w-fit">
+        <%= render 'svg/chevron-right', w: 'w-5', h: 'w-5' %>
+      </div>
+    </div>
+  <% end %>
+  <% if render_children %>
+    <ul class="pl-8">
+      <% children = @show_completed_goals ? goal.children : goal.children.incomplete %>
+      <% children.each do |child| %>
+        <%= render 'trees/goal', goal: child %>
+      <% end %>
+    </ul>
+  <% end %>
+</li>

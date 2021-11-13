@@ -1,27 +1,38 @@
-<div class="p-2">
-  <div class="w-full flex justify-between">
-    <%= link_to goal_path(goal), class: 'link flex items-center' do %>
-      <h1 class="text-lg leading-6 font-medium break-all clamp-4 self-center">
+<div class="min-w-full lg:min-w-min flex flex-col px-2 lg:grid lg:grid-cols-2 lg:w-7xl lg:gap-4">
+  <div class="">
+    <div class="w-full flex justify-between">
+      <h1 class="text-2xl leading-6 font-medium break-all clamp-4 self-center">
         <%= goal.name %>
       </h1>
-    <% end %>
-    <% if policy(goal).edit? %>
-      <div>
-        <%= link_to edit_goal_path(goal), class: 'btn secondary flex-grow-0 self-start' do %>
-          <%= render '/svg/pencil', w: 'w-4', h: 'h-4' %>
-          <%= t('rename') %>
-        <% end %>
+      <% if policy(goal).edit? %>
+        <div>
+          <%= link_to edit_goal_path(goal), class: 'btn secondary flex-grow-0 self-start' do %>
+            <%= render '/svg/pencil', w: 'w-4', h: 'h-4' %>
+            <%= t('rename') %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="space-y-2 flex flex-col">
+      <%= render '/goals/assignee', goal: goal %>
+      <%= render '/goals/progress', goal: goal %>
+      <%= render '/goals/state', goal: goal %>
+      <%= render '/goals/comments', comments: goal.comments.limit(10).reverse, goal: goal %>
+      <%= render '/goals/attachments', goal: goal %>
+      <div class="flex justify-end">
+        <%= render '/goals/delete_form', goal: goal %>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
-<div class="p-2 space-y-2">
-  <%= render '/goals/assignee', goal: goal %>
-  <%= render '/goals/progress', goal: goal %>
-  <%= render '/goals/state', goal: goal %>
-  <%= render '/goals/comments', comments: goal.comments.limit(10).reverse, goal: goal %>
-  <%= render '/goals/attachments', goal: goal %>
-  <div class="flex justify-end">
-    <%= render '/goals/delete_form', goal: goal %>
-  </div>
+  <div>
+    <h2 class="text-lg"><%= t('.child_goals') %></h2>
+    <div class="flex justify-center w-full tree">
+      <ul class="my-2 w-full" role="list">
+        <% children = @show_completed_goals ? goal.children : goal.children.incomplete %>
+        <% children.each do |child| %>
+          <%= render 'trees/goal', goal: child %>
+        <% end %>
+      </ul>
+    </div>
+  <div>
 </div>

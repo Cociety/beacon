@@ -1,3 +1,12 @@
 <% customer ||= Current.customer %>
+<% size ||= :md %>
+<%
+case size
+when :md
+  size_classes = 'h-8 w-8'
+when :lg
+  size_classes = 'h-12 w-12'
+end
+%>
 
-<%= image_tag avatar_url(customer), class: "avatar", alt: customer.name, draggable: false %>
+<%= image_tag avatar_url(customer), class: "inline-block flex-shrink-0 object-cover clip-circle-half #{size_classes}", alt: customer.name, draggable: false %>

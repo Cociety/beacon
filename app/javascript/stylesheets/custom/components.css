@@ -59,11 +59,6 @@
     @apply cursor-pointer hover:underline;
   }
 
-  .avatar {
-    @apply inline-block h-8 w-8 flex-shrink-0 object-cover;
-    clip-path: circle(50%);
-  }
-
   /* applied by rails when a string translataion is missing */
   .translation_missing {
     @apply border-2 border-red-500;
