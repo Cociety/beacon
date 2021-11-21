@@ -7,10 +7,10 @@ class Trees::SharesController < ApplicationController
 
   def create
     @share = Share.new share_params
-    if @share.save
-      flash[:notice] = t '.shared', with: @share.sharee
-      redirect_to @share.role.resource
-    end
+    return unless @share.save
+
+    flash[:notice] = t '.shared', with: @share.sharee
+    redirect_to @share.role.resource
   end
 
   private

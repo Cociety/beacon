@@ -1,0 +1,30 @@
+<div class="flex justify-center" data-controller="flash">
+  <div class="<%= bg_color %> flex rounded-md p-4 max-w-sm">
+    <div class="flex-shrink-0 <%= icon_color %>">
+      <%= render icon, w: 'w-5', h: 'h-5' %>
+    </div>
+    <div class="ml-3 text-sm font-medium <%= text_color %>">
+      <% if message.kind_of?(Array) %>
+          <% if message.size == 1 %>
+            <p><%= message.first %></p>
+          <% else %>
+            <ul class="list-disc pl-5 space-y-1">
+              <% message.each do |m| %>
+                <li><%= m %></li>
+              <% end %>
+            </ul>
+          <% end %>
+      <% else %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+    <div class="ml-auto pl-3">
+      <div class="-mx-1.5 -my-1.5">
+        <button data-action="click->flash#hide" class="<%= close_classes %> inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 pointer-events-auto">
+          <span class="sr-only"><%= t '.dismiss' %></span>
+          <%= render 'svg/x', w: 'w-5', h: 'h-5' %>
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>

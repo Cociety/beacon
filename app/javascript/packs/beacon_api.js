@@ -9,8 +9,7 @@ export default class BeaconApi {
   adopt(goalId, childGoalId) {
     ajax({
       url: `/goals/${encodeURIComponent(goalId)}/adopt/${encodeURIComponent(childGoalId)}`,
-      type: 'PUT',
-      success: () => { location.reload(); }
+      type: 'PUT'
     });
   }
 }
