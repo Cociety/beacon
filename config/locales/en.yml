@@ -49,9 +49,8 @@ en:
     none: Click "New Goal" to the right
     goal:
       view: View
-    goal_mobile:
-      double_tap_to_start: Double tap a goal you want to move
-      tap_to_move: Tap the goal you want to move this under
+      double_tap_to_start: Double click a goal to move it
+      tap_to_move: Click the goal you want to move this under
     new: New Goal
     create: Create Goal
     progress:

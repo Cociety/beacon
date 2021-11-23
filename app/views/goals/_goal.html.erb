@@ -28,16 +28,15 @@
     <h2 class="text-lg"><%= t('.child_goals') %></h2>
     <div class="flex justify-center w-full tree">
       <ul class="my-2 w-full" role="list" data-controller="tree">
-        <div data-tree-target="double_tap_to_start_message">
-          <%= t '.double_tap_to_start' %>
+        <div class="bg-blue-300 border-2 border-blue-600 text-black my-2 p-2 rounded">
+          <div data-tree-target="double_tap_to_start_message">
+            <%= t '.double_tap_to_start' %>
+          </div>
+          <div class="hidden" data-tree-target="tap_to_move_message">
+            <%= t '.tap_to_move' %>
+          </div>
         </div>
-        <div class="hidden" data-tree-target="tap_to_move_message">
-          <%= t '.tap_to_move' %>
-        </div>
-        <% children = @show_completed_goals ? goal.children : goal.children.incomplete %>
-        <% children.each do |child| %>
-          <%= render 'trees/goal', goal: child, top_level: true %>
-        <% end %>
+        <%= render 'trees/goal', goal: goal, top_level: true %>
       </ul>
     </div>
   <div>
