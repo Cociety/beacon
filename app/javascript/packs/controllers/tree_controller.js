@@ -42,7 +42,7 @@ class Taps {
 
 export default class TreeController extends Controller {
   static targets = [ "goal", "double_tap_to_start_message", "tap_to_move_message", "form" ];
-  static SELECTED_CLASSES = ['shadow-lg', "scale-105", "-translate-x-20"];
+  static SELECTED_CLASSES = ['shadow-lg', "scale-110", "-translate-x-20", "z-10"];
   initialize() {
     this.paintParentsOfBlockedChildren();
     this.childGoal = null;
