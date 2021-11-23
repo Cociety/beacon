@@ -36,7 +36,7 @@
         </div>
         <% children = @show_completed_goals ? goal.children : goal.children.incomplete %>
         <% children.each do |child| %>
-          <%= render 'trees/goal', goal: child %>
+          <%= render 'trees/goal', goal: child, top_level: true %>
         <% end %>
       </ul>
     </div>

@@ -1,19 +1,94 @@
-.assigned {
-    @apply bg-indigo-600 text-gray-50;
-}
+.tree {
+  .state-bg {
+    &.assigned {
+      @apply bg-indigo-600 text-gray-50;
+    }
 
-.in_progress {
-  @apply bg-green-300 text-gray-800;
-}
+    &.in_progress {
+      @apply bg-green-300 text-gray-800;
+    }
 
-.testing {
-  @apply bg-yellow-300 text-gray-800;
-}
+    &.testing {
+      @apply bg-yellow-300 text-gray-800;
+    }
 
-.done {
-  @apply bg-gray-100 border-gray-400 text-gray-800;
-}
+    &.done {
+      @apply bg-gray-100 border-gray-400 text-gray-800;
+    }
 
-.blocked {
-  @apply bg-red-600 text-gray-50;
+    &.blocked {
+      @apply bg-red-600 text-gray-50;
+    }
+  }
+
+  /* DAG lines */
+  /* vertical lines */
+  & li::before {
+    @apply border-l-4 w-0 top-0 h-full;
+  }
+
+  /* horizontal lines */
+  & li::after {
+    @apply border-t-4 top-10 w-4 h-full;
+  }
+
+  & ul, & li {
+    @apply relative z-50;
+  }
+
+  & ul {
+    @apply pl-8;
+  }
+
+  & li {
+    @apply list-none m-0 pb-2 relative;
+  }
+
+  li:first-child {
+    @apply pt-2;
+  }
+
+  li:last-child {
+    @apply pb-0 !important;
+
+    &::before {
+      /* prevent rendering a branch with no children */
+      @apply h-10;
+    }
+  }
+
+  & li::before, & li::after {
+    @apply absolute -left-4 z-50 right-auto;
+    content: '';
+  }
+
+  & li.assigned {
+    &::before, &::after {
+      @apply border-indigo-600;
+    }
+  }
+
+  & li.in_progress {
+    &::before, &::after {
+      @apply border-green-300;
+    }
+  }
+
+  & li.testing {
+    &::before, &::after {
+      @apply border-yellow-300;
+    }
+  }
+
+  & li.done {
+    &::before, &::after {
+      @apply border-gray-300;
+    }
+  }
+
+  & li.blocked {
+    &::before, &::after {
+      @apply border-red-600 !important;
+    }
+  }
 }

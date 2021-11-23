@@ -44,6 +44,7 @@ export default class TreeController extends Controller {
   static targets = [ "goal", "double_tap_to_start_message", "tap_to_move_message", "form" ];
   static SELECTED_CLASSES = ['shadow-lg', 'border-2', 'border-indigo-600', "scale-105"];
   initialize() {
+    this.bubbleBlockedState();
     this.childGoalId = null;
     this.beaconApi = new BeaconApi();
 
@@ -51,6 +52,16 @@ export default class TreeController extends Controller {
       new Taps(goal);
       goal.addEventListener('doubletap', this.doubleTapped.bind(this), false);
       goal.addEventListener('tap', this.tapped.bind(this), false);
+    });
+  }
+
+  bubbleBlockedState() {
+    this.element.querySelectorAll('li.blocked').forEach(blockedGoal => {
+      let e = blockedGoal;
+      while(e !== this.element) {
+        e = e.parentNode;
+        e.classList.add('blocked');
+      }
     });
   }
 

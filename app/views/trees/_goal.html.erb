@@ -1,7 +1,8 @@
 <% render_children = true if render_children.nil? %>
 <% render_tree_percent = false if render_tree_percent.nil? %>
+<% top_level = false if top_level.nil? %>
 
-<li role="listitem" class="max-w-full my-2">
+<li role="listitem" class="max-w-full <%= goal.state %>">
   <%= link_to goal_path(goal), class: 'block hover:bg-gray-50' do %>
     <div class="grid grid-cols-12 p-4 overflow-hidden bg-white items-center hover:bg-gray-200 rounded shadow transition duration-300 transform" data-tree-target="goal" data-goal-id="<%= goal.id %>">
       <div class="col-span-7 min-w-0 flex-1 flex items-center">
@@ -10,7 +11,7 @@
         </div>
         <div class="min-w-0 flex-1 px-4 flex flex-col">
           <p class="text-sm font-medium text-indigo-600 truncate max-w-xs"><%= goal.name %></p>
-          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= goal.state %> w-fit">
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full state-bg <%= goal.state %> w-fit">
               <%= t goal.state %>
           </span>
         </div>
@@ -25,7 +26,7 @@
     </div>
   <% end %>
   <% if render_children %>
-    <ul class="pl-8">
+    <ul>
       <% children = @show_completed_goals ? goal.children : goal.children.incomplete %>
       <% children.each do |child| %>
         <%= render 'trees/goal', goal: child %>
