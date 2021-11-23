@@ -45,7 +45,7 @@ export default class TreeController extends Controller {
   static SELECTED_CLASSES = ['shadow-lg', "scale-105", "-translate-x-20"];
   initialize() {
     this.paintParentsOfBlockedChildren();
-    this.childGoalId = null;
+    this.childGoal = null;
     this.beaconApi = new BeaconApi();
 
     this.goalTargets.forEach(goal => {
@@ -66,24 +66,30 @@ export default class TreeController extends Controller {
   }
 
   selectGoalToMove(event) {
-    const childGoalId = this.#goalId(event);
-    const sameGoal = this.childGoalId === childGoalId;
+    const childGoal = this.#goal(event);
+    const childGoalId = this.#goalId(childGoal);
+    const sameGoal = this.#goalId(this.childGoal) === childGoalId;
     if (sameGoal) {
-      this.childGoalId = null;
-      event.target.classList.remove(...TreeController.SELECTED_CLASSES);
+      this.childGoal = null;
+      childGoal.classList.remove(...TreeController.SELECTED_CLASSES);
       this.showStartMessage()
     } else {
-      this.childGoalId = this.#goalId(event);
-      event.target.classList.add(...TreeController.SELECTED_CLASSES);
+      if (this.childGoal) {
+        this.childGoal.classList.remove(...TreeController.SELECTED_CLASSES);
+      }
+      this.childGoal = childGoal;
+      this.childGoal.classList.add(...TreeController.SELECTED_CLASSES);
       this.showMoveMessage();
     }
   }
 
   moveGoal(event) {
-    const parentGoalId = this.#goalId(event);
-    if (this.childGoalId) {
-      if (parentGoalId !== this.childGoalId) {
-        this.beaconApi.adopt(parentGoalId, this.childGoalId);
+    const parentGoal = this.#goal(event);
+    const parentGoalId = this.#goalId(parentGoal);
+    const childGoalId = this.#goalId(this.childGoal);
+    if (childGoalId) {
+      if (parentGoalId !== childGoalId) {
+        this.beaconApi.adopt(parentGoalId, childGoalId);
         this.showStartMessage();
       }
     } else {
@@ -102,7 +108,11 @@ export default class TreeController extends Controller {
     this.tap_to_move_messageTarget.classList.add('hidden');
   }
 
-  #goalId(event) {
-    return event.target.dataset['goal-id'];
+  #goalId(goal) {
+    return goal?.dataset?.goalId;
+  }
+
+  #goal(event) {
+    return event.target;
   }
 }
