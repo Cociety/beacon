@@ -4,13 +4,13 @@
 
 <li role="listitem" class="max-w-full <%= goal.state %>">
   <%= link_to goal_path(goal), class: 'block' do %>
-    <div class="grid grid-cols-12 p-4 overflow-hidden bg-white items-center hover:bg-gray-300 rounded shadow transition duration-300 transform" data-tree-target="goal" data-goal-id="<%= goal.id %>">
+    <div class="grid grid-cols-12 p-4 overflow-hidden bg-white dark:bg-gray-700 items-center hover:bg-gray-300 rounded shadow transition duration-300 transform" data-tree-target="goal" data-goal-id="<%= goal.id %>">
       <div class="col-span-7 min-w-0 flex-1 flex items-center">
         <div class="flex-shrink-0">
           <%= render 'customer/avatar', size: :lg %>
         </div>
         <div class="min-w-0 flex-1 px-4 flex flex-col">
-          <p class="text-sm font-medium text-indigo-600 truncate max-w-xs"><%= goal.name %></p>
+          <p class="text-sm font-medium text-black dark:text-white truncate max-w-xs"><%= goal.name %></p>
           <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full state-bg <%= goal.state %> w-fit">
               <%= t goal.state %>
           </span>
