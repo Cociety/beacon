@@ -42,20 +42,20 @@ class Taps {
 
 export default class TreeController extends Controller {
   static targets = [ "goal", "double_tap_to_start_message", "tap_to_move_message", "form" ];
-  static SELECTED_CLASSES = ['shadow-lg', 'border-2', 'border-indigo-600', "scale-105"];
+  static SELECTED_CLASSES = ['shadow-lg', "scale-105", "-translate-x-20"];
   initialize() {
-    this.bubbleBlockedState();
+    this.paintParentsOfBlockedChildren();
     this.childGoalId = null;
     this.beaconApi = new BeaconApi();
 
     this.goalTargets.forEach(goal => {
       new Taps(goal);
-      goal.addEventListener('doubletap', this.doubleTapped.bind(this), false);
-      goal.addEventListener('tap', this.tapped.bind(this), false);
+      goal.addEventListener('doubletap', this.selectGoalToMove.bind(this), false);
+      goal.addEventListener('tap', this.moveGoal.bind(this), false);
     });
   }
 
-  bubbleBlockedState() {
+  paintParentsOfBlockedChildren() {
     this.element.querySelectorAll('li.blocked').forEach(blockedGoal => {
       let e = blockedGoal;
       while(e !== this.element) {
@@ -65,7 +65,7 @@ export default class TreeController extends Controller {
     });
   }
 
-  doubleTapped(event) {
+  selectGoalToMove(event) {
     const childGoalId = this.#goalId(event);
     const sameGoal = this.childGoalId === childGoalId;
     if (sameGoal) {
@@ -79,7 +79,7 @@ export default class TreeController extends Controller {
     }
   }
 
-  tapped(event) {
+  moveGoal(event) {
     const parentGoalId = this.#goalId(event);
     if (this.childGoalId) {
       if (parentGoalId !== this.childGoalId) {
