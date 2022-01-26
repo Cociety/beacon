@@ -42,17 +42,6 @@ class Tree < ApplicationRecord
   private
 
   def top_level_goal_without_tree_ref
-    # edge case with zero or one goal since it won't have parents or children
-    return goals.first if goals.size <= 1
-
-    # goals without parents and with children
-    tlgs = goals.select { |g| g.parents.empty? and g.children.any? }
-
-    raise 'Found multiple top level parents' if tlgs.size > 1
-
-    raise 'Possible infinite loop detected' if tlgs.empty?
-
-    # only one at this point
-    tlgs.first
+    return goals.top_level.first
   end
 end

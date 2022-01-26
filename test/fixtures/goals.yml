@@ -1,6 +1,7 @@
 parent_1:
   name: parent_1
   tree: one
+  top_level: true
 
 child_1:
   name: child_1
@@ -25,11 +26,4 @@ subchild_2.1:
 only_one:
   name: only_one
   tree: with_one_goal
-
-parent_3:
-  name: parent_3
-  tree: multiple_top_level_parents
-
-parent_4:
-  name: parent_4
-  tree: multiple_top_level_parents
+  top_level: true

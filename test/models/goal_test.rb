@@ -176,7 +176,7 @@ class GoalTest < ActiveSupport::TestCase
 
   test 'deletes comments when destroyed' do
     assert_difference -> { Comment.count }, -1 do
-      @parent.destroy
+      @child_1.destroy
     end
   end
 
@@ -213,6 +213,12 @@ class GoalTest < ActiveSupport::TestCase
   test 'should version changes' do
     assert_changes -> { @parent.versions.count } do
       @parent.update! name: "#{@parent.name}!"
+    end
+  end
+
+  test 'refuses to delete top level goal' do
+    assert_raise ActiveRecord::RecordNotDestroyed do
+      @parent.destroy!
     end
   end
 

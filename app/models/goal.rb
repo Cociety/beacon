@@ -9,6 +9,13 @@ class Goal < ApplicationRecord
 
   before_save :set_spent_based_on_done_state
   before_save :set_state_based_on_spent_and_duration
+
+  # prevent deleting if this is a top level goal
+  # allows top level goal deletion if being deleted by associated tree
+  before_destroy prepend: true, unless: :destroyed_by_association do
+    errors.add(:top_level, "Can't delete top level goal") if top_level?
+    throw(:abort) if errors.present?
+  end
   before_destroy :prepare_for_reparenting
   after_destroy :reparent_children
 
@@ -34,6 +41,7 @@ class Goal < ApplicationRecord
                  .select('DISTINCT ON (item_id) item_id, *')                   # don't show duplicate goal deletions
                  .order(item_id: :desc, created_at: :desc)                     # show the latest deletion if deleted multiple times
   }
+  scope :top_level, -> { where top_level: true }
 
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 

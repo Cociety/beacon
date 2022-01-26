@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_024447) do
+ActiveRecord::Schema.define(version: 2022_01_26_035122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -70,7 +70,9 @@ ActiveRecord::Schema.define(version: 2022_01_19_024447) do
     t.uuid "tree_id", null: false
     t.integer "duration", default: 1
     t.integer "spent", default: 0
+    t.boolean "top_level", default: false
     t.index ["name"], name: "index_goals_on_name", opclass: :gin_trgm_ops, using: :gin
+    t.index ["tree_id", "top_level"], name: "index_goals_on_tree_id_and_top_level", unique: true, where: "top_level"
     t.index ["tree_id"], name: "index_goals_on_tree_id"
   end
 
@@ -113,9 +115,9 @@ ActiveRecord::Schema.define(version: 2022_01_19_024447) do
     t.uuid "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.text "object"
     t.datetime "created_at"
-    t.text "object_changes"
+    t.jsonb "object"
+    t.jsonb "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 

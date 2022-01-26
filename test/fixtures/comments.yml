@@ -2,3 +2,8 @@ hello:
   text: hello
   commentable: parent_1 (Goal) 
   customer: justin
+
+hi:
+  text: hi
+  commentable: child_1 (Goal)
+  customer: justin
