@@ -1,31 +1,39 @@
 <div class="min-w-full lg:min-w-min flex flex-col px-2 lg:grid lg:grid-cols-2 lg:w-7xl lg:gap-4">
-  <div class="">
-    <div class="w-full flex justify-between">
-      <h1 class="text-2xl leading-6 font-medium break-all clamp-4 self-center">
-        <%= goal.name %>
-      </h1>
-      <% if policy(goal).edit? %>
-        <div>
-          <%= link_to edit_goal_path(goal), class: 'btn secondary flex-grow-0 self-start' do %>
-            <%= render '/svg/pencil', w: 'w-4', h: 'h-4' %>
-            <%= t('rename') %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="space-y-2 flex flex-col">
-      <%= render '/goals/assignee', goal: goal %>
-      <%= render '/goals/progress', goal: goal %>
-      <%= render '/goals/state', goal: goal %>
-      <%= render '/goals/comments', comments: goal.comments.limit(10).reverse, goal: goal %>
-      <%= render '/goals/attachments', goal: goal %>
-      <div class="flex justify-end">
-        <%= render '/goals/delete_form', goal: goal %>
+  <div class="flex flex-col">
+    <div>
+      <div class="w-full flex justify-between">
+        <h1 class="text-2xl leading-6 font-medium break-all clamp-4 self-center">
+          <%= goal.name %>
+        </h1>
+        <% if policy(goal).edit? %>
+          <div>
+            <%= link_to edit_goal_path(goal), class: 'btn secondary flex-grow-0 self-start' do %>
+              <%= render '/svg/pencil', w: 'w-4', h: 'h-4' %>
+              <%= t('rename') %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
+      <div class="space-y-2 flex flex-col">
+        <%= render '/goals/assignee', goal: goal %>
+        <%= render '/goals/progress', goal: goal %>
+        <%= render '/goals/state', goal: goal %>
+        <%= render '/goals/comments', comments: goal.comments.limit(10).reverse, goal: goal %>
+        <%= render '/goals/attachments', goal: goal %>
+        <div class="flex justify-end">
+          <%= render '/goals/delete_form', goal: goal %>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 class="text-2xl">Similar Goals</h3>
+      <ul class="mx-2 space-y-2">
+        <%= render collection: goal.similar, partial: 'trees/goal', locals: {render_children: false} %>
+      </ul>
     </div>
   </div>
   <div>
-    <h2 class="text-lg"><%= t('.child_goals') %></h2>
+    <h2 class="text-2xl"><%= t('.child_goals') %></h2>
     <div class="flex justify-center w-full tree">
       <ul class="my-2 w-full" role="list" data-controller="tree">
         <div class="bg-blue-300 border-2 border-blue-600 text-black my-2 p-2 rounded">

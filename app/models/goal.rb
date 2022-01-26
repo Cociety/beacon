@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Goal < ApplicationRecord
   include Attachable, Commentable, Resourcable
   has_paper_trail
@@ -18,6 +19,9 @@ class Goal < ApplicationRecord
   scope :children, -> { left_outer_joins(:parent_relationships).merge(Relationship.where.not(child_id: nil)) }
   has_many :child_relationships, foreign_key: :parent_id, class_name: :Relationship, inverse_of: :parent
   has_many :children, through: :child_relationships, inverse_of: :parents, dependent: :destroy
+
+  scope :similar_name, ->(name) { where('name % :name', name: name) }
+  scope :similar_name_excluding_id, ->(name, id) { similar_name(name).where.not(id: id) }
 
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 
@@ -116,6 +120,12 @@ class Goal < ApplicationRecord
       customer.add_role :assignee, self
     end
     true
+  end
+
+  # Find goals similar to this one
+  def similar
+    # todo authorize goals
+    Goal.similar_name_excluding_id(name, id)
   end
 
   private

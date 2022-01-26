@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_12_042357) do
+ActiveRecord::Schema.define(version: 2022_01_19_024447) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(version: 2021_09_12_042357) do
     t.uuid "tree_id", null: false
     t.integer "duration", default: 1
     t.integer "spent", default: 0
+    t.index ["name"], name: "index_goals_on_name", opclass: :gin_trgm_ops, using: :gin
     t.index ["tree_id"], name: "index_goals_on_tree_id"
   end
 

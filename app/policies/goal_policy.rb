@@ -20,4 +20,10 @@ class GoalPolicy < ApplicationPolicy
   def destroy?
     update?
   end
+
+  class Scope < Scope
+    def resolve
+      Tree.for_customer.joins(:goals).map(&:goals).flatten
+    end
+  end
 end
