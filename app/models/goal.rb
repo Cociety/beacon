@@ -22,6 +22,18 @@ class Goal < ApplicationRecord
 
   scope :similar_name, ->(name) { where('name % :name', name: name) }
   scope :similar_name_excluding_id, ->(name, id) { similar_name(name).where.not(id: id) }
+  scope :deleted, ->(tree_id = nil) {
+     # find deleted goals
+    deleted_goals = PaperTrail::Version.where(event: 'destroy', item_type: self.class.to_s.deconstantize)
+
+    # optionally in the same tree
+    deleted_goals = tree_id ? deleted_goals.where("object->>'tree_id' = ?", tree_id) : deleted_goals
+
+    deleted_goals.joins("LEFT JOIN #{table_name} ON item_id=#{table_name}.id")
+                 .where(goals: { id: nil })                                    # that haven't been restored
+                 .select('DISTINCT ON (item_id) item_id, *')                   # don't show duplicate goal deletions
+                 .order(item_id: :desc, created_at: :desc)                     # show the latest deletion if deleted multiple times
+  }
 
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 

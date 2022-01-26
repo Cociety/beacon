@@ -21,5 +21,7 @@ Style/ClassAndModuleChildren:
   EnforcedStyle: compact
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+Style/Lambda:
+  EnforcedStyle: never
 Style/MixinGrouping:
   EnforcedStyle: grouped

@@ -215,4 +215,10 @@ class GoalTest < ActiveSupport::TestCase
       @parent.update! name: "#{@parent.name}!"
     end
   end
+
+  test 'gets deleted goals' do
+    assert_changes -> { Goal.deleted.size }, 1 do
+      @child_1.destroy!
+    end
+  end
 end
