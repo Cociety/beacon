@@ -51,6 +51,8 @@ en:
       view: View
       double_tap_to_start: Double click a goal to move it
       tap_to_move: Click the goal you want to move this under
+      similar_goals: Similar Goals
+      recently_deleted: Recently Deleted
     new: New Goal
     create: Create Goal
     progress:

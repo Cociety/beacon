@@ -6,7 +6,7 @@ class Tree < ApplicationRecord
   has_many :goals, -> { includes(:children, :parents) }, dependent: :destroy, autosave: true
 
   def top_level_goal
-    goal = top_level_goal_without_tree_ref
+    goal = goals.top_level.first
 
     return goal if goal.nil?
 
@@ -37,11 +37,5 @@ class Tree < ApplicationRecord
 
   def readers_and_writers
     Customer.with_role %i[reader writer], self
-  end
-
-  private
-
-  def top_level_goal_without_tree_ref
-    return goals.top_level.first
   end
 end

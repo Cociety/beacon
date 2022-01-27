@@ -34,6 +34,9 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create], module: :goals
     resources :adopt, only: %i[update], module: :goals
   end
+  namespace :goals do
+    resources :restore, only: %i[update]
+  end
   resources :comments, only: %i[show edit update destroy] do
     resource :actions, module: :comments, only: %i[show]
   end
