@@ -2,20 +2,13 @@
 class Goals::RestoreController < ApplicationController
   def update
     @goal = authorize Goal.deleted(goal_id: params[:id])
+    @goal.parents << @goal.tree.top_level_goal
     @goal.save!
-    render_js 'reload'
   rescue
     flash[:alert] = 'Failed to restore goal'
-    render_js 'reload'
-  end
-
-  private
-
-  def render_js(view)
+  ensure
     respond_to do |format|
-      format.js { render view }
-      format.html { redirect_to @goal }
-      format.json { redirect_to @goal }
+      format.html { redirect_to @goal.tree.top_level_goal }
     end
   end
 end

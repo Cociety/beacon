@@ -1,6 +1,5 @@
 <% render_children = true if render_children.nil? %>
 <% render_tree_percent = false if render_tree_percent.nil? %>
-<% top_level = false if top_level.nil? %>
 
 <li role="listitem" class="max-w-full <%= goal.state %>">
   <%= link_to goal_path(goal), class: 'block' do %>

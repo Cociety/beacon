@@ -46,6 +46,16 @@ class Goal < ApplicationRecord
                  .map &:reify
   }
   scope :top_level, -> { where top_level: true }
+  scope :dangling, ->(tree_id = nil) {
+    goals = Goal.includes(:parents, :children)
+        .where(
+          parents_goals: {id: nil},
+          children_goals: {id: nil},
+          top_level: false
+        )
+
+    goals = tree_id ? goals.where(tree_id: tree_id) : goals
+  }
 
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 

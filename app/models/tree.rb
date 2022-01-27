@@ -38,4 +38,8 @@ class Tree < ApplicationRecord
   def readers_and_writers
     Customer.with_role %i[reader writer], self
   end
+
+  def dangling
+    goals.dangling(id)
+  end
 end
