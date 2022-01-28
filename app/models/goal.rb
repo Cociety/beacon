@@ -39,9 +39,9 @@ class Goal < ApplicationRecord
     # optionally specific goal id
     deleted_goals = goal_id ? deleted_goals.where(item_id: goal_id) : deleted_goals
 
-    deleted_goals.joins("LEFT JOIN #{table_name} ON item_id=#{table_name}.id")
+    deleted_goals.select('DISTINCT ON ("versions"."item_id") item_id, *')      # don't show duplicate goal deletions
+                 .joins("LEFT JOIN #{table_name} ON item_id=#{table_name}.id") # find existing goals
                  .where(goals: { id: nil })                                    # that haven't been restored
-                 .select('DISTINCT ON (item_id) item_id, *')                   # don't show duplicate goal deletions
                  .order(item_id: :desc, created_at: :desc)                     # show the latest deletion if deleted multiple times
                  .map &:reify
   }
