@@ -52,5 +52,5 @@ production:
   cociety:
     <<: *default
     database: cociety_prod
-    url: <%= ENV['HEROKU_POSTGRESQL_BLACK_URL'] %>
+    url: <%= ENV['HEROKU_POSTGRESQL_GRAY_URL'] %>
     migrations_paths: 'db/migrations/cociety'
