@@ -19,7 +19,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 gem "hiredis", "~> 0.6.3"
 gem "redis", "~> 4.2", require: %w(redis redis/connection/hiredis)
-gem "redis-session-store", github: 'hex-event-solutions/redis-session-store', branch: :master
+gem "redis-session-store", "~> 0.11.4"
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
