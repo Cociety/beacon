@@ -2,7 +2,6 @@
 module Rolable
   extend ActiveSupport::Concern
 
-  # rubocop:disable Metrics/BlockLength
   included do
     has_many :roles do
       # dedupes before saving to prevent unique exceptions
@@ -24,13 +23,9 @@ module Rolable
     end
 
     def self.with_role(roles, resource)
-      ids = resource.roles
-                    .where(name: roles )
-                    .pluck(:customer_id)
-
-      # Customers are in another db so we can't do a join to get these
-      where id: ids
+      Role.where(name: roles, resource: resource)
+          .includes(:customer)
+          .map &:customer
     end
   end
-  # rubocop:enable Metrics/BlockLength
 end
