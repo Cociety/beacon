@@ -18,6 +18,8 @@ class Share < ApplicationRecord
 
   def assign_role_to_customer_if_exist
     customer = Customer.find_by(email: sharee)
-    ModelRole.find_or_create_by!(model: customer, role: role) if customer
+    return unless customer
+
+    customer.add_role role.name, role.resource
   end
 end

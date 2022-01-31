@@ -5,11 +5,10 @@ module Resourcable
 
   included do
     has_many :roles, as: :resource, dependent: :destroy
-    has_many :model_roles, through: :roles
 
     scope :for_customer, lambda { |customer = Current.customer|
-      joins(:model_roles)
-        .where(roles: { name: %i[reader writer] }, model_roles: { model: customer })
+        joins(:roles)
+        .where(roles: { name: %i[reader writer], customer: customer })
         .distinct
     }
 

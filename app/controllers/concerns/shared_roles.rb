@@ -23,8 +23,11 @@ module SharedRoles
   end
 
   def add_roles(role_ids)
-    roles = Role.find_by(id: role_ids)
-    Current.customer.roles << roles if roles
+    role_ids = [role_ids].flatten
+    roles = Role.where(id: role_ids)
+    roles.each do |role|
+      Current.customer.add_role role.name, role.resource
+    end
   end
 
   def share

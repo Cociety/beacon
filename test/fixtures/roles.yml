@@ -1,6 +1,4 @@
 writer_tree_one:
   name: writer
   resource: one (Tree)
-reader_tree_one:
-  name: reader
-  resource: one (Tree)
+  customer: justin

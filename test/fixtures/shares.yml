@@ -9,7 +9,7 @@ writer_tree_one_with_non_customer:
   customer: justin
   sharee: non_customer@cociety.org
 
-reader_tree_one:
-  role: reader_tree_one
+writer_tree_one:
+  role: writer_tree_one
   customer: justin
   sharee: melissa@cociety.org
