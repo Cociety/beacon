@@ -53,7 +53,7 @@ en:
       tap_to_move: Click the goal you want to move this under
       similar_goals: Similar Goals
       recently_deleted: Recently Deleted
-    new: New Goal
+    new_child: New Child Goal
     create: Create Goal
     progress:
       effort_spent: Spent
