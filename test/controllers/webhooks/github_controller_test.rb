@@ -1,24 +1,28 @@
 require "test_helper"
 
 class Webhooks::GithubControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @api_key = api_keys :justin_key_1
+  end
+
   test "responds to push events" do
-    post webhooks_github_url, **{ params: github_params, headers: {'X-GitHub-Event': 'push'} }
+    post webhooks_github_url, **{ params: github_params(@api_key.id), headers: {'X-GitHub-Event': 'push', 'HTTP_X_HUB_SIGNATURE_256': 'sha256=54d8dcdfbf16194b615e2c60795bcb2ac551d12da43138e8041b5acb3a2b1a47'} }
     assert_response :ok
   end
 
   test "responds 404 to non push events" do
-    post webhooks_github_url, **{ params: github_params, headers: {'X-GitHub-Event': 'ping'} }
+    post webhooks_github_url, **{ params: github_params(@api_key.id), headers: {'X-GitHub-Event': 'ping'} }
     assert_response :not_found
   end
 
-  test "responds 500 without a payload" do
+  test "responds 400 without a payload" do
     post webhooks_github_url, headers: {'X-GitHub-Event': 'push'}
-    assert_response :ok
+    assert_response :bad_request
   end
 
   private
 
-  def github_params
+  def github_params(api_key_id)
     payload = {
       "ref": "refs/heads/main",
       "before": "b21c585fa36bcbd90b09e4831a15fc06f7f1cbd4",
@@ -229,6 +233,6 @@ class Webhooks::GithubControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    { payload: payload.to_json }
+    { payload: payload.to_json, id: api_key_id }
   end
 end

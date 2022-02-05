@@ -1,6 +1,6 @@
 class ApiKey < ApplicationRecord
   belongs_to :customer
-  # avoid loading keys into memory by default
+  # avoid loading keys into memory by default. If you need the key use ApiKey.unscoped.find
   default_scope { select(ApiKey.column_names.map(&:to_sym) - [:key]) }
 
   def initialize(*args, **kwargs)
