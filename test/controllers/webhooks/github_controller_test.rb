@@ -6,9 +6,20 @@ class Webhooks::GithubControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "sets goals to done that are in the commit message" do
-    params = github_params(@api_key.id, message: 'test goal: 4a02ae80-24dd-47a4-b156-e34089547540')
-    assert_changes -> { Goal.find('4a02ae80-24dd-47a4-b156-e34089547540').state }, to: 'done' do
-      post webhooks_github_url, **{ params: params, headers: {'X-GitHub-Event': 'push', 'HTTP_X_HUB_SIGNATURE_256': 'sha256=fc6f4bae444126a1c12d6f7c256cade472c776fdc469b8ded307b805dcac6f0b'} }
+    goal = Goal.find('4a02ae80-24dd-47a4-b156-e34089547540')
+    params = github_params(@api_key.id, message: "test goal: #{goal.id}")
+    assert_changes -> { goal.reload.state }, to: 'done' do
+      assert_changes -> { goal.reload.comments.count } do
+        post webhooks_github_url, **{ params: params, headers: {'X-GitHub-Event': 'push', 'HTTP_X_HUB_SIGNATURE_256': 'sha256=fc6f4bae444126a1c12d6f7c256cade472c776fdc469b8ded307b805dcac6f0b'} }
+        assert_response :ok
+      end
+    end
+  end
+
+  test "ignores goals that don't exist" do
+    params = github_params(@api_key.id, message: "test goal: id-does-not-exist")
+    assert_no_changes -> { Comment.count } do
+      post webhooks_github_url, **{ params: params, headers: {'X-GitHub-Event': 'push', 'HTTP_X_HUB_SIGNATURE_256': 'sha256=e04453198c0f271b1690065531f2c4758d0802a930847e4f3be07b6c5eaf59f7'} }
       assert_response :ok
     end
   end

@@ -24,11 +24,11 @@ class Webhooks::GithubController < WebhooksController
     Rails.logger.info "signature verified for github delivery #{request.headers['X-GitHub-Delivery']}"
     Current.customer = api_key.customer
 
-    goals = Goal.find(goal_ids)
-    skip_authorization unless goals.any?
-    goals.each do |goal|
-      authorize goal
-      goal.update! state: Goal.states[:done]
+    commits = commits_with_goals_to_mark_done
+    skip_authorization unless commits.any?
+    commits.each do |commit|
+      commit['goal'].update! state: Goal.states[:done]
+      commit['goal'].comments.new(text: "[bot] Done! #{commit['url']}", customer: Current.customer).save!
     end
     render json: {status: 200}
   rescue => e
@@ -53,6 +53,14 @@ class Webhooks::GithubController < WebhooksController
   def verify_signature(payload, key)
     signature = 'sha256=' + OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), key, payload)
     Rack::Utils.secure_compare(signature, request.headers['HTTP_X_HUB_SIGNATURE_256'])
+  end
+
+  def commits_with_goals_to_mark_done
+    payload['commits'].each { |commit| commit['goal_id'] = /goal\:\s*(?<goal_id>[\w-]*)/.match(commit['message'])&.[](:goal_id) }
+                      .select { |commit| commit['goal_id'].present? }
+                      .each { |commit| commit['goal'] = Goal.find_by(id: commit['goal_id'])  }
+                      .select { |commit| commit['goal'].present? }
+                      .each { |commit| authorize commit['goal'] }
   end
 
   def goal_ids
