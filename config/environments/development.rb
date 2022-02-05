@@ -25,6 +25,8 @@ Rails.application.configure do
   }
   config.hosts << config.host
 
+  config.host_authorization = { exclude: ->(request) { request.path =~ /webhooks/ } }
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?

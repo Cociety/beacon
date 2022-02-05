@@ -41,4 +41,7 @@ Rails.application.routes.draw do
     resource :actions, module: :comments, only: %i[show]
   end
   resources :attachments, only: %i[destroy]
+  namespace :webhooks do
+    post :github, to: 'github#create'
+  end
 end
