@@ -5,14 +5,22 @@ class Webhooks::GithubControllerTest < ActionDispatch::IntegrationTest
     @api_key = api_keys :justin_key_1
   end
 
-  test "responds to push events" do
+  test "sets goals to done that are in the commit message" do
+    params = github_params(@api_key.id, message: 'test goal: 4a02ae80-24dd-47a4-b156-e34089547540')
+    assert_changes -> { Goal.find('4a02ae80-24dd-47a4-b156-e34089547540').state }, to: 'done' do
+      post webhooks_github_url, **{ params: params, headers: {'X-GitHub-Event': 'push', 'HTTP_X_HUB_SIGNATURE_256': 'sha256=fc6f4bae444126a1c12d6f7c256cade472c776fdc469b8ded307b805dcac6f0b'} }
+      assert_response :ok
+    end
+  end
+
+  test "responds to push events without a goal id in commit message" do
     post webhooks_github_url, **{ params: github_params(@api_key.id), headers: {'X-GitHub-Event': 'push', 'HTTP_X_HUB_SIGNATURE_256': 'sha256=54d8dcdfbf16194b615e2c60795bcb2ac551d12da43138e8041b5acb3a2b1a47'} }
     assert_response :ok
   end
 
   test "responds 404 to non push events" do
     post webhooks_github_url, **{ params: github_params(@api_key.id), headers: {'X-GitHub-Event': 'ping'} }
-    assert_response :not_found
+    assert_response :bad_request
   end
 
   test "responds 400 without a payload" do
@@ -22,7 +30,7 @@ class Webhooks::GithubControllerTest < ActionDispatch::IntegrationTest
 
   private
 
-  def github_params(api_key_id)
+  def github_params(api_key_id, message: 'testing github hooks')
     payload = {
       "ref": "refs/heads/main",
       "before": "b21c585fa36bcbd90b09e4831a15fc06f7f1cbd4",
@@ -180,7 +188,7 @@ class Webhooks::GithubControllerTest < ActionDispatch::IntegrationTest
           "id": "e7571c7b3e0856e527c8b826a253d3604459722f",
           "tree_id": "5c64bf3c42bbba0e32172b206d0da25af114ec4f",
           "distinct": true,
-          "message": "testing github hooks",
+          "message": message,
           "timestamp": "2022-02-04T22:33:02-05:00",
           "url": "https://github.com/Cociety/beacon/commit/e7571c7b3e0856e527c8b826a253d3604459722f",
           "author": {
@@ -208,7 +216,7 @@ class Webhooks::GithubControllerTest < ActionDispatch::IntegrationTest
         "id": "e7571c7b3e0856e527c8b826a253d3604459722f",
         "tree_id": "5c64bf3c42bbba0e32172b206d0da25af114ec4f",
         "distinct": true,
-        "message": "testing github hooks",
+        "message": message,
         "timestamp": "2022-02-04T22:33:02-05:00",
         "url": "https://github.com/Cociety/beacon/commit/e7571c7b3e0856e527c8b826a253d3604459722f",
         "author": {

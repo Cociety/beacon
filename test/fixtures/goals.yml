@@ -27,3 +27,8 @@ only_one:
   name: only_one
   tree: with_one_goal
   top_level: true
+
+hardcoded_id:
+  id: 4a02ae80-24dd-47a4-b156-e34089547540
+  name: hardcoded
+  tree: one
