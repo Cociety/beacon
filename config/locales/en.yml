@@ -30,6 +30,11 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  api_keys:
+    index:
+      api_keys: API Keys
+      create_api_key: Create API Key
+      new_api_key_warning_html: New Api key created. Note this <span class="font-bold">ID</span> and <span class="font-bold">Key</span>. The key will not be shown again.
   auth:
     sign_out: Sign out
     sign_in: Sign in
@@ -37,8 +42,11 @@ en:
   attachment:
     create: Say something words can't
   cancel: Nevermind
+  created_at: Created At
   delete: Delete
   edit: Edit
+  id: ID
+  key: Key
   comment:
     create: Post Comment
     update: Update Comment
@@ -48,6 +56,7 @@ en:
       assigned_to: Assigned to
     none: Click "New Goal" to the right
     goal:
+      child_goals: Child Goals
       view: View
       double_tap_to_start: Double click a goal to move it
       tap_to_move: Click the goal you want to move this under

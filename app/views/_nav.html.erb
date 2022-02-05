@@ -2,10 +2,12 @@
   <%= link_to 'Beacon', root_path, class: 'ml-2'%>
   <div class="flex items-center space-x-1 mr-2">
     <% if customer_signed_in? %>
-      <span>
-        <%= Current.customer.name.first %>
-      </span>
-      <%= render 'customer/avatar' %>
+      <%= link_to customer_index_path do %>
+        <span>
+          <%= Current.customer.name.first %>
+        </span>
+        <%= render 'customer/avatar' %>
+      <% end %>
       <%= form_with url: sign_out_url, method: :delete do |f| %>
         <%= f.button type: :submit, class: 'btn secondary' do %>
           <%= t('auth.sign_out') %>

@@ -1,0 +1,51 @@
+<div class="lg:w-1/2 m-2">
+  <div class="flex justify-between m-2">
+    <h2 class="text-xl"><%= t '.api_keys' %></h2>
+    <%= link_to api_keys_path, method: :post, class: 'btn primary' do %>
+      <%= render '/svg/plus', w: 'w-4', h: 'h-4' %>
+      <%= t '.create_api_key' %>
+    <% end %>
+  </div>
+  <% if @new_api_key %>
+    <div class="m-2">
+      <p><%= t '.new_api_key_warning_html' %></p>
+      <div class="flex flex-col">
+        <span><%= t 'id' %>: <span class="font-bold"><%= @new_api_key.id %></span></span>
+        <span><%= t 'key' %>: <span class="font-bold api_key-key"> <%= @new_api_key.key %></span></span>
+      </div>
+    </div>
+  <% end %>
+  <div class="flex flex-col">
+    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t 'id' %></th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t 'created_at' %></th>
+                <th scope="col" class="relative px-6 py-3">
+                  <span class="sr-only"><%= t 'delete' %></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @api_keys.each_with_index do |api_key, i| %>
+                <tr class="<%= i.even? ? 'bg-white' : 'bg-gray-100' %>">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= api_key.id %></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= api_key.created_at.to_formatted_s(:iso8601) %></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= form_for api_key, method: :delete do |f| %>
+                        <%= f.button type: :submit, class: 'btn sm danger' do %>
+                          <%= render '/svg/trash', w: 'w-4', h: 'h-4' %>
+                        <% end %>
+                      <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

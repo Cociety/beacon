@@ -44,4 +44,7 @@ Rails.application.routes.draw do
   namespace :webhooks do
     post :github, to: 'github#create'
   end
+
+  resources :customer, only: %i[index]
+  resources :api_keys, only: %i[index create destroy]
 end

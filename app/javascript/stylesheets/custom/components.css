@@ -58,8 +58,9 @@
   .link {
     @apply cursor-pointer hover:underline;
   }
+}
 
-  /* applied by rails when a string translataion is missing */
+/* applied by rails when a string translataion is missing */
   .translation_missing {
     @apply border-2 border-red-500;
   }
@@ -67,4 +68,3 @@
     content: 'Translation missing';
     @apply bg-red-500 text-white;
   }
-}
