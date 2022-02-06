@@ -1,7 +1,8 @@
 module.exports = {
   content: [
     './app/views/**/*.html.erb',
-    './app/javascript/packs/**/*.js'
+    './app/helpers/**/*.rb',
+    './app/javascript/**/*.js'
   ],
   theme: {
     extend: {

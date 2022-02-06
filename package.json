@@ -42,5 +42,8 @@
     "@webpack-cli/serve": "^1.5.2",
     "webpack-bundle-analyzer": "^4.3.0",
     "webpack-dev-server": "^4.2.0"
+  },
+  "scripts": {
+    "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
   }
 }

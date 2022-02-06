@@ -9,10 +9,12 @@ gem 'rails', '~> 7.0.1'
 gem "pg", "~> 1.2"
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
-# Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem "sprockets-rails"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker", '~> 6.0.0.rc.5'
+# Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem "cssbundling-rails"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
