@@ -3,7 +3,7 @@
     <div class="flex space-x-1">
       <% if policy(goal).edit? %>
         <div class="flex flex-col items-center">
-          <div class="form-label flex-grow-0"><%= t('.effort_spent') %></div>
+          <div class="form-label grow-0"><%= t('.effort_spent') %></div>
           <span class="btn-pill-group">
             <%= form_with model: goal, method: :put do |f| %>
               <%= f.hidden_field :spent, value: goal.spent-1 %>
@@ -20,7 +20,7 @@
           </span>
         </div>
       <% end %>
-      <div class="flex-grow flex flex-col items-center">
+      <div class="grow flex flex-col items-center">
         <span class="form-label"><%= t '.progress', spent: goal.spent, duration: goal.duration %></span>
         <%= render 'components/progress', percent: goal.percent %>
       </div>

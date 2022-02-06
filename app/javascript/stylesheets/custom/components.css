@@ -27,10 +27,10 @@
     }
 
     &-pill-group {
-    @apply relative z-0 inline-flex shadow flex-shrink-0 rounded overflow-hidden;
+    @apply relative z-0 inline-flex shadow shrink-0 rounded overflow-hidden;
 
       & .pill {
-        @apply bg-white text-sm font-medium text-black hover:bg-gray-200 p-2 cursor-pointer focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-8 h-8 flex-shrink-0 border-l border-gray-300;
+        @apply bg-white text-sm font-medium text-black hover:bg-gray-200 p-2 cursor-pointer focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-8 h-8 shrink-0 border-l border-gray-300;
 
         &.first {
           @apply border-l-0;

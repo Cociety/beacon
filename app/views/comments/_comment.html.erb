@@ -8,7 +8,7 @@
       </div>
       <div class="flex justify-between items-start max-w-full">
         <p class="text-sm font-medium max-w-sm break-words"><%= urls_to_hrefs(comment.text).html_safe %></p>
-        <div class="flex-shrink-0">
+        <div class="shrink-0">
           <%= render 'comments/comment/actions', comment: comment %>
         </div>
       </div>

@@ -1,17 +1,8 @@
 module.exports = {
-  mode: 'jit',
-  purge: {
-    content: [
-      './app/views/**/*.html.erb',
-      './app/javascript/packs/**/*.js'
-    ],
-    enabled: true,
-    safelist: [
-      'type', // [type='checkbox']
-    ],
-    preserveHtmlElements: true
-  },
-  darkMode: 'media', // or 'media' or 'class'
+  content: [
+    './app/views/**/*.html.erb',
+    './app/javascript/packs/**/*.js'
+  ],
   theme: {
     extend: {
       fill: {
@@ -28,12 +19,6 @@ module.exports = {
     },
     lineClamp: {
       4: 4
-    },
-  },
-  variants: {
-    extend: {
-      borderRadius: ['first', 'last'],
-      borderWidth: ['last']
     },
   },
   plugins: [

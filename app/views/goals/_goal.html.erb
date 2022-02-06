@@ -7,7 +7,7 @@
         </h1>
         <% if policy(goal).edit? %>
           <div>
-            <%= link_to edit_goal_path(goal), class: 'btn secondary flex-grow-0 self-start' do %>
+            <%= link_to edit_goal_path(goal), class: 'btn secondary grow-0 self-start' do %>
               <%= render '/svg/pencil', w: 'w-4', h: 'h-4' %>
               <%= t('rename') %>
             <% end %>
