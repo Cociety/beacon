@@ -29,6 +29,10 @@
     }
   }
 
+  a {
+    @apply text-indigo-600 hover:text-indigo-700 hover:underline;
+  }
+
   .select {
     @apply form-input-text pl-3 pr-10 py-2 text-base focus:outline-none;
   }

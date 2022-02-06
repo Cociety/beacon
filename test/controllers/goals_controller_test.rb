@@ -34,4 +34,23 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
       @goal.reload
     end
   end
+
+  test 'should render goal comments with links' do
+    get goal_url(@goal)
+    assert_select 'p', **{text: 'cociety.org'} do
+      assert_select 'a[href="cociety.org"]'
+    end
+
+    assert_select 'p', **{text: 'example.com'} do
+      assert_select 'a[href="example.com"]'
+    end
+
+    assert_select 'p', **{text: 'https://example.net'} do
+      assert_select 'a[href="https://example.net"]'
+    end
+
+    assert_select 'p', **{text: 'https://example.edu'} do
+      assert_select 'a[href="https://example.edu"]'
+    end
+  end
 end
