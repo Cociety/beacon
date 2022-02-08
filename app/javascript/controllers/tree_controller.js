@@ -1,5 +1,5 @@
-import { Controller } from 'stimulus';
-import BeaconApi from "../beacon_api";
+import { Controller } from '@hotwired/stimulus';
+import BeaconApi from "beacon/api";
 
 class Taps {
   constructor($el) {

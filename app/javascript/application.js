@@ -1,28 +1,19 @@
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
-
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+import "@hotwired/turbo-rails"
+import "controllers"
 import Rails from "@rails/ujs"
+
 import * as ActiveStorage from "@rails/activestorage"
-import "channels"
-import { Application } from "stimulus"
-import { definitionsFromContext } from "stimulus/webpack-helpers"
+import MobileDragDrop from "mobile-drag-drop";
 
-import {polyfill} from "mobile-drag-drop";
+// // optional import of scroll behaviour
+import ScrollBehavior from "mobile-drag-drop/scroll-behaviour";
 
-// optional import of scroll behaviour
-import {scrollBehaviourDragImageTranslateOverride} from "mobile-drag-drop/scroll-behaviour";
-
-// options are optional ;)
-polyfill({
+// // options are optional ;)
+MobileDragDrop.polyfill({
     // use this to make use of the scroll behaviour
-    dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride
+    dragImageTranslateOverride: ScrollBehavior.scrollBehaviourDragImageTranslateOverride
 });
-
-const application = Application.start()
-const context = require.context("./controllers", true, /\.js$/)
-application.load(definitionsFromContext(context))
 
 Rails.start()
 ActiveStorage.start()

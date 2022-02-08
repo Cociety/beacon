@@ -1,13 +1,13 @@
-import { ajax } from "@rails/ujs";
+import Rails from "@rails/ujs";
 
-export default class BeaconApi {
+export default class {
   /**
    * Adds goal as a parent of childGoal
    * @param {*} goalId 
    * @param {*} childGoalId 
    */
   adopt(goalId, childGoalId) {
-    ajax({
+    Rails.ajax({
       url: `/goals/${encodeURIComponent(goalId)}/adopt/${encodeURIComponent(childGoalId)}`,
       type: 'PUT'
     });

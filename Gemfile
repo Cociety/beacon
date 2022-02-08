@@ -11,8 +11,12 @@ gem "pg", "~> 1.2"
 gem 'puma', '~> 5.0'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker", '~> 6.0.0.rc.5'
+# import JavaScript modules directly from the browser https://github.com/rails/importmap-rails
+gem "importmap-rails"
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem "turbo-rails"
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
 
@@ -74,10 +78,6 @@ gem "image_processing", "~> 1.12"
 gem "pundit", "~> 2.1"
 
 gem "sidekiq", "~> 6.1"
-
-gem "importmap-rails", "~> 0.5.1"
-
-gem "stimulus-rails", "~> 0.4.2"
 
 gem "paper_trail", "~> 12.1"
 
