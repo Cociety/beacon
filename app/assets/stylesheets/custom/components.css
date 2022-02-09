@@ -46,6 +46,10 @@
   .progress-bar {
     @apply rounded relative block bg-gray-400 overflow-hidden;
 
+    &.square {
+      @apply rounded-none;
+    }
+
     & > .inner {
       @apply bg-green-600 block h-full;
     }
