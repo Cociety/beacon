@@ -55,6 +55,30 @@
     }
   }
 
+  .state-slider {
+    @apply appearance-none w-full h-4 bg-gray-400 outline-none rounded-full shadow-inner;
+
+    /* The slider handle */
+    &::-webkit-slider-thumb {
+      @apply appearance-none w-6 h-6 rounded-full cursor-pointer shadow bg-indigo-600;
+    }
+    &::-moz-range-thumb {
+      @apply appearance-none w-6 h-6 rounded-full cursor-pointer shadow bg-indigo-600;
+    }
+
+    &:disabled {
+      @apply opacity-50;
+
+      &::-webkit-slider-thumb {
+        @apply bg-gray-100 cursor-not-allowed !important;
+      }
+      &::-moz-range-thumb:disabled {
+        @apply bg-gray-100 cursor-not-allowed !important;
+      }
+    }
+
+  }
+
   #popover {
     @apply fixed z-50 bg-gray-100 rounded-md shadow-md overflow-hidden;
   }

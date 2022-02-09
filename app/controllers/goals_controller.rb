@@ -11,7 +11,7 @@ class GoalsController < ApplicationController
 
   def update
     @goal.assign_to goal_assignee
-    @goal.update! goal_params
+    @goal.update! goal_params_casted
     redirect_to goal_url @goal
   end
 
@@ -27,7 +27,15 @@ class GoalsController < ApplicationController
   end
 
   def goal_params
-    params.require(:goal).permit :state, :spent, :duration, :name, :tree_id, attachments: []
+    params.require(:goal).permit(:state, :spent, :duration, :name, :tree_id, attachments: [])
+  end
+
+  def goal_params_casted
+    raw_params = goal_params
+    if Goal.states.values.map(&:to_s).include? raw_params[:state]
+      raw_params[:state] = raw_params[:state].to_i
+    end
+    raw_params
   end
 
   def goal_assignee

@@ -14,9 +14,7 @@
         </div>
         <div class="min-w-0 flex-1 px-4 flex flex-col">
           <p class="text-sm font-medium text-black dark:text-white truncate max-w-full"><%= goal.name %></p>
-          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full state-bg <%= goal.state %> w-fit">
-              <%= t goal.state %>
-          </span>
+          <%= render 'goals/state_label', state: goal.state %>
         </div>
       </div>
       <div class="text-gray-400 justify-self-end w-fit">

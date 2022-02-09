@@ -1,12 +1,11 @@
-<% if policy(goal).edit? %>
-  <%= form_with model: goal, method: :put, data: { controller: 'form-submitter' } do |f| %>
-    <%= f.label :state, t('.status') %>
-    <%= f.collection_select :state, goal_states, :value, :text,
-      { selected: -> (state) { goal.state == state.value }},
-      { class: 'select', data: { action: 'change->form-submitter#submit' }}
-    %>
-  <% end %>
-<% else %>
-  <span class="form-label"><%= t('.status') %></span>
-  <p><%= t(goal.state) %></p>
+<%= form_with model: goal, method: :put, data: { controller: 'form-submitter' } do |f| %>
+  <div class="w-full">
+    <div class="flex w-full justify-between align-center my-2 ">
+      <% Goal.states.keys.each do |state| %>
+        <%= render 'goals/state_label', state: state %>
+      <% end %>
+    </div>
+    <%# Using a range field assumes the goal state field is a continuous range with no gaps %>
+    <%= f.range_field :state, value: goal.state_for_database, in: Goal.states.values.min..Goal.states.values.max, class: 'state-slider', data: { action: 'change->form-submitter#submit' }, disabled: !policy(goal).edit? %>
+  </div>
 <% end %>

@@ -57,6 +57,8 @@ class Goal < ApplicationRecord
     goals = tree_id ? goals.where(tree_id: tree_id) : goals
   }
 
+  # these must be in increments of 1 with no gaps
+  # because of the range input field used here app/views/goals/_state.html.erb
   enum state: { blocked: -1, assigned: 0, in_progress: 1, testing: 2, done: 3 }
 
   DURATION_MIN = 1
