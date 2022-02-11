@@ -51,7 +51,7 @@ export default class TreeController extends Controller {
     this.goalTargets.forEach(goal => {
       new Taps(goal);
       goal.addEventListener('doubletap', this.selectGoalToMove.bind(this), false);
-      goal.addEventListener('tap', this.moveGoal.bind(this), false);
+      goal.addEventListener('tap', this.moveOrPropogateEvent.bind(this), false);
     });
   }
 
@@ -83,19 +83,28 @@ export default class TreeController extends Controller {
     }
   }
 
-  moveGoal(event) {
+  moveOrPropogateEvent(event) {
     const parentGoal = this.#goal(event);
     const parentGoalId = this.#goalId(parentGoal);
     const childGoalId = this.#goalId(this.childGoal);
     if (childGoalId) {
-      if (parentGoalId !== childGoalId) {
-        this.beaconApi.adopt(parentGoalId, childGoalId);
-        this.showStartMessage();
-      }
+      this.move(parentGoalId, childGoalId);
     } else {
-      event.detail.stopListening();
-      event.detail.$el.querySelector('a').click();
+      this.propogateClick(event);
     }
+  }
+
+  move(parentGoalId, childGoalId) {
+    if (parentGoalId !== childGoalId) {
+      this.beaconApi.adopt(parentGoalId, childGoalId);
+      this.showStartMessage();
+    }
+  }
+
+  propogateClick(event) {
+    event.detail.stopListening();
+    // this assumes the goal is wrapped in an anchor tag
+    event.detail.$el.parentElement.click();
   }
 
   showMoveMessage() {

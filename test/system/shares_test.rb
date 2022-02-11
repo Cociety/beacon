@@ -10,7 +10,7 @@ class SharesTest < ApplicationSystemTestCase
   test 'accessing a shared tree grants access' do
     assert_not_permit @melissa, @tree, :show?, TreePolicy
     sign_in @melissa
-    share = shares(:reader_tree_one)
+    share = shares(:writer_tree_one)
     visit tree_url(share.resource, params: { share: share.id })
     assert_permit @melissa, @tree, :show?, TreePolicy
   end
