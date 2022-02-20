@@ -7,7 +7,7 @@ class GoalsController < ApplicationController
     @readers_and_writers = @goal.tree.readers_and_writers
     @show_completed_goals = show_completed_goals?
     @goals_to_parallelize = @goal.tree.largest_subtree @goal
-    @goals_to_parallelize = [] if @goals_to_parallelize&.size < 3
+    @goals_to_parallelize = [] if @goals_to_parallelize&.sum(&:remaining) < 3
   end
 
   def edit; end

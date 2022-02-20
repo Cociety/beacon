@@ -61,10 +61,10 @@ class Tree < ApplicationRecord
 
     if subgoals.empty? # leaf
       [goal]
-    elsif root
-      subgoals.map(&:flatten).map(&:to_set).max_by &:size
-    else
-      subgoals << goal
+    elsif !root # branch
+      subgoals
+    else # root
+      subgoals.map(&:flatten).max_by{ |set| set.sum &:remaining }
     end
   end
 end
