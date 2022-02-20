@@ -45,12 +45,25 @@
   <div>
     <div class="flex justify-between">
       <h2 class="text-2xl"><%= t('.child_goals') %></h2>
-      <% if policy(@goal.tree).edit? %>
-        <%= link_to new_tree_goal_goal_path(@goal.tree, @goal), class:"btn primary" do %>
-          <%= render '/svg/plus', w: 'w-4', h: 'h-4' %>
-          <%= t('goals.new_child')%>
+      <div>
+        <% if @show_completed_goals %>
+          <%= link_to goal_url(@goal, request.query_parameters.merge(show_completed_goals: 0)), class:'btn secondary' do %>
+            <%= render '/svg/eye_closed', w: 'w-4', h: 'h-4' %>
+            <%= t '.hide_completed' %>
+          <% end %>
+        <% else %>
+          <%= link_to goal_url(@goal, request.query_parameters.merge(show_completed_goals: 1)), class:'btn secondary' do %>
+            <%= render '/svg/eye', w: 'w-4', h: 'h-4' %>
+            <%= t '.show_completed' %>
+          <% end %>
         <% end %>
-      <% end %>
+        <% if policy(@goal.tree).edit? %>
+          <%= link_to new_tree_goal_goal_path(@goal.tree, @goal), class:"btn primary" do %>
+            <%= render '/svg/plus', w: 'w-4', h: 'h-4' %>
+            <%= t('goals.new_child')%>
+          <% end %>
+        <% end %>
+      </div>
     </div>
     <div class="flex justify-center w-full tree">
       <ul class="my-2 w-full" role="list" data-controller="tree">

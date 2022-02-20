@@ -5,6 +5,7 @@ class GoalsController < ApplicationController
 
   def show
     @readers_and_writers = @goal.tree.readers_and_writers
+    @show_completed_goals = show_completed_goals?
   end
 
   def edit; end
@@ -41,5 +42,9 @@ class GoalsController < ApplicationController
   def goal_assignee
     customer_id = params.require(:goal).permit(:assignee_id)[:assignee_id]
     return Customer.find customer_id if customer_id
+  end
+
+  def show_completed_goals?
+    ActiveRecord::Type::Boolean.new.deserialize params[:show_completed_goals]
   end
 end
