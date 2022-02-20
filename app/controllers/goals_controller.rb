@@ -6,7 +6,7 @@ class GoalsController < ApplicationController
   def show
     @readers_and_writers = @goal.tree.readers_and_writers
     @show_completed_goals = show_completed_goals?
-    @goals_to_parallelize = @goal.tree.deepest_path @goal
+    @goals_to_parallelize = @goal.tree.largest_subtree @goal
     @goals_to_parallelize = [] if @goals_to_parallelize&.size < 3
   end
 

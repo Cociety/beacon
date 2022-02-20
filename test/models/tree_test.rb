@@ -27,6 +27,6 @@ class TreeTest < ActiveSupport::TestCase
   end
 
   test 'finds the deepest path' do
-    assert_equal [goals(:parent_1), goals(:child_2), goals('subchild_2.1')], @one.deepest_path
+    assert_equal Set[goals('subchild_2.1'), goals(:child_2), goals(:parent_1)], @one.largest_subtree
   end
 end
