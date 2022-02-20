@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="flex w-full justify-between align-center my-2 ">
       <% Goal.states.keys.each do |state| %>
-        <%= render 'goals/state_label', state: state %>
+        <%= render 'goals/text_pill', class: state, text: t(state) %>
       <% end %>
     </div>
     <%# Using a range field assumes the goal state field is a continuous range with no gaps %>

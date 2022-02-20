@@ -76,6 +76,8 @@ en:
       comments: Comments
   rename: Rename
   trees:
+    goal:
+      parallelize: Parallelizable
     index:
       header: Your Goal Trees
     create: Create Tree

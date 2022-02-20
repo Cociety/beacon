@@ -57,9 +57,7 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
   test 'should hide completed goals' do
     get goal_url(@parent)
 
-    assert_select '.tree' do
-      assert_select "a:match('href', ?)", /\/goals\/.+/, count: 5
-    end
+    assert_select ".tree a:match('href', ?)", /\/goals\/.+/, count: 5
   end
 
   test 'should show completed goals if enabled' do
@@ -68,5 +66,11 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     assert_select '.tree' do
       assert_select "a:match('href', ?)", /\/goals\/.+/, count: 6
     end
+  end
+
+  test 'should show goals to parallelize' do
+    get goal_url(@parent)
+
+    assert_select 'span', {count: 3, text: 'Parallelizable'}
   end
 end

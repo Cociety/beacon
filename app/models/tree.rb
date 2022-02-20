@@ -53,12 +53,18 @@ class Tree < ApplicationRecord
   #   |_ child 1.1
   # |_ child 2
   # |_ child 3
-  def deepest_path(goal=top_level_goal)
+  def deepest_path(goal=top_level_goal, top_level=true)
+    return nil unless goal
+
     deepest = goal.children.incomplete
-                           .map { |g| send(__callee__, g).prepend(goal) }
-                           .max_by &:size
+                           .map { |g| send(__callee__, g, false).prepend(goal) }
+                           .max_by { |gs| gs.longest_continuous_range_by(&:assignee).size }
     return [goal] unless deepest
 
-    deepest
+    if top_level
+      deepest.longest_continuous_range_by &:assignee
+    else
+      deepest
+    end
   end
 end

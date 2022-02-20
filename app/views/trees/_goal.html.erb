@@ -10,11 +10,19 @@
     <div class="flex p-4 overflow-hidden bg-white dark:bg-gray-700 items-center hover:bg-gray-300 shadow-sm transition duration-300" data-tree-target="goal" data-goal-id="<%= goal.id %>">
       <div class="min-w-0 flex-1 flex items-center">
         <div class="shrink-0">
-          <%= render 'customer/avatar', size: :lg %>
+          <%= render 'customer/avatar', customer: goal.assignee, size: :lg %>
         </div>
         <div class="min-w-0 flex-1 px-4 flex flex-col">
           <p class="text-sm font-medium text-black dark:text-white truncate max-w-full"><%= goal.name %></p>
-          <%= render 'goals/state_label', state: goal.state %>
+          <div class="flex gap-1">
+            <%= render 'goals/text_pill', text: t(goal.state), class: goal.state %>
+            <% if parallelizable?(goal) %>
+              <div class="relative">
+                <%# render 'goals/text_pill', text: t('.parallelize'), class: 'absolute text-sky-400 bg-sky-400 animate-pulse' %>
+                <%= render 'goals/text_pill', text: t('.parallelize'), class: 'absolute bg-sky-500 animate-pulse' %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="text-gray-400 justify-self-end w-fit">
