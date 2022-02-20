@@ -308,7 +308,7 @@ DEPENDENCIES
   cssbundling-rails
   devise (~> 4.7)
   hiredis (~> 0.6.3)
-  image_processing (~> 1.12)
+  image_processing
   importmap-rails
   jbuilder (~> 2.7)
   listen (~> 3.3)
@@ -324,6 +324,7 @@ DEPENDENCIES
   rexml (~> 3.2)
   rubocop (~> 1.8)
   rubocop-rails (~> 2.9)
+  ruby-vips
   selenium-webdriver
   sidekiq (~> 6.1)
   spring

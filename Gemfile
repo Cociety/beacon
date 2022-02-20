@@ -30,7 +30,8 @@ gem "redis-session-store", "~> 0.11.4"
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing'
+gem 'ruby-vips'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -72,8 +73,6 @@ gem "rexml", "~> 3.2"
 gem "name_of_person", "~> 1.1"
 
 gem "aws-sdk-s3", "~> 1.88"
-
-gem "image_processing", "~> 1.12"
 
 gem "pundit", "~> 2.1"
 
