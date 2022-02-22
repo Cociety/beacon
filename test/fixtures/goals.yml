@@ -23,6 +23,11 @@ subchild_2.1:
   tree: one
   parents: [child_2]
 
+subchild_2.2:
+  name: subchild_2.2
+  tree: one
+  parents: [child_2]
+
 completed:
   name: completed
   tree: one

@@ -27,12 +27,12 @@ class TreeTest < ActiveSupport::TestCase
   end
 
   test 'finds the largest subtree' do
-    assert_equal [goals('subchild_2.1'), goals(:child_2), goals(:parent_1)], @one.largest_subtree
+    assert_equal Set[goals('subchild_2.2'), goals('subchild_2.1'), goals(:child_2)], @one.largest_subtree
   end
 
   test 'weights subtrees by goal duration' do
-    long_goal = @one.goals.create! name: 'long goal', duration: 1_000_000
-    @one.top_level_goal.children << long_goal
-    assert_equal [long_goal, @one.top_level_goal], @one.largest_subtree
+    time_consuming_goal = @one.goals.create! name: 'long goal', duration: 1_000_000
+    @one.top_level_goal.children << time_consuming_goal
+    assert_equal Set[time_consuming_goal], @one.largest_subtree
   end
 end

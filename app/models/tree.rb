@@ -45,26 +45,50 @@ class Tree < ApplicationRecord
     goals.dangling(id)
   end
 
-  # finds the deepest path in the tree and returns an array of goals in order from head to leaf goal.
+  # finds the largest subtree weighted by goal duration in the tree and returns a set of goals in the subtree.
   # This is used to recommend which goals can be assigned to someone else (parallelized)
-  # Ex: would return [parent, child 1, child 1.1] since it has a depth of 2 and other children have depth 1
+  # Ex: would return [parent, child 1, child 1.1] since it has a weight of 3 and other children have weight of 2
   # parent
   # |_ child 1
   #   |_ child 1.1
   # |_ child 2
   # |_ child 3
-  def largest_subtree(goal=top_level_goal, root=true)
-    return nil unless goal
+  def largest_subtree(root=top_level_goal)
+    goals_to_search = root&.children&.incomplete&.to_a
 
-    subgoals = goal.children.incomplete.to_set
-                            .map { |g| send(__callee__, g, false) << goal }
+    largest_subtree = []
+    largest_subtree_size = 0
+    current_assignee = nil
+    current_subtree = []
+    current_subtree_size = 0
 
-    if subgoals.empty? # leaf
-      [goal]
-    elsif !root # branch
-      subgoals
-    else # root
-      subgoals.map(&:flatten).max_by{ |set| set.sum &:remaining }
+    while !goals_to_search.empty?
+      g = goals_to_search.pop
+      g.children.incomplete.each { |child| goals_to_search << child }
+
+      end_of_branch = (current_assignee != g.assignee) || g.parents.include?(root)
+
+      current_subtree << g unless end_of_branch
+
+      if end_of_branch
+        current_subtree_size = current_subtree.sum(&:remaining)
+        larger = current_subtree_size > largest_subtree_size
+        if larger
+          largest_subtree = current_subtree
+          largest_subtree_size = current_subtree_size
+        end
+        current_assignee = g.assignee
+        current_subtree = Set[g]
+      end
     end
+
+    current_subtree_size = current_subtree.sum(&:remaining)
+    larger = current_subtree_size > largest_subtree_size
+    if larger
+      largest_subtree = current_subtree
+      largest_subtree_size = current_subtree_size
+    end
+
+    largest_subtree
   end
 end

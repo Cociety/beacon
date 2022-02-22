@@ -57,14 +57,14 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
   test 'should hide completed goals' do
     get goal_url(@parent)
 
-    assert_select ".tree a:match('href', ?)", /\/goals\/.+/, count: 5
+    assert_select ".tree a:match('href', ?)", /\/goals\/.+/, count: 6
   end
 
   test 'should show completed goals if enabled' do
     get goal_url(@parent), **{params: {show_completed_goals: 1}}
 
     assert_select '.tree' do
-      assert_select "a:match('href', ?)", /\/goals\/.+/, count: 6
+      assert_select "a:match('href', ?)", /\/goals\/.+/, count: 7
     end
   end
 
