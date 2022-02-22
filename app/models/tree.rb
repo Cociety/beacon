@@ -5,6 +5,8 @@ class Tree < ApplicationRecord
   default_scope { order(updated_at: :desc) }
   has_many :goals, -> { includes(:children, :parents) }, dependent: :destroy, autosave: true
 
+  validates :slack_webhook_url, secure_url: true, allow_nil: true
+
   def top_level_goal
     goal = goals.top_level.first
 

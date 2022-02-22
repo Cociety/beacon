@@ -47,6 +47,7 @@ en:
   edit: Edit
   id: ID
   key: Key
+  integrations: Integrations
   comment:
     create: Post Comment
     update: Update Comment
@@ -81,9 +82,13 @@ en:
     index:
       header: Your Goal Trees
     create: Create Tree
+    update: Update Tree
     shares:
       create:
         shared: Shared with %{with}
+    slack:
+      placeholder: https://hooks.slack.com/services/something/something/something
+      learn_webhook: Learn to create your Slack webhook
   share: Share
   blocked: Blocked
   assigned: Assigned

@@ -1,0 +1,2 @@
+module Trees::SettingsHelper
+end

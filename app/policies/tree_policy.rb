@@ -17,6 +17,14 @@ class TreePolicy < ApplicationPolicy
     tree.ruled_by_any? %i[reader writer], customer
   end
 
+  def update?
+    edit?
+  end
+
+  def show_settings?
+    show?
+  end
+
   def share?
     customer.present? && edit?
   end

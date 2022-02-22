@@ -23,7 +23,8 @@ Rails.application.routes.draw do
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'home#index'
-  resources :trees, only: %i[index show create] do
+  resources :trees, only: %i[index show create update] do
+    get :settings, action: :show_settings, on: :member
     resources :goals, module: :trees do
       resources :goals, only: %i[new create]
     end
