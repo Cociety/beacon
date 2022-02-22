@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://hooks.slack.com/services/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
+    uri: https://hooks.slack.com/services/tree/one/webhook
     body:
       encoding: UTF-8
       string: '{"text":"test"}'
@@ -63,10 +63,14 @@ http_interactions:
   recorded_at: Tue, 22 Feb 2022 08:07:12 GMT
 - request:
     method: post
-    uri: https://hooks.slack.com/services/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
+    uri: https://hooks.slack.com/services/tree/one/webhook
     body:
       encoding: UTF-8
-      string: '{"text":"hello"}'
+      string: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"\u003e
+        *hello*"}},{"type":"context","elements":[{"type":"mrkdwn","text":"New comment
+        on Goal \u003chttp://beacon.cociety.test/goals/d931083b-d41c-5a0d-9fbb-16f0ca5c5d72|parent_1\u003e
+        by"},{"type":"image","image_url":"http://cociety.test:3000/customer/258e2698-2a7d-5d82-a896-a2c9ee26786d/avatar","alt_text":"Justin
+        Robinson"},{"type":"plain_text","text":"Justin Robinson"}]}]}'
     headers:
       Content-Type:
       - application/json
@@ -122,4 +126,3 @@ http_interactions:
       encoding: ASCII-8BIT
       string: ok
   recorded_at: Tue, 22 Feb 2022 08:33:45 GMT
-recorded_with: VCR 6.0.0

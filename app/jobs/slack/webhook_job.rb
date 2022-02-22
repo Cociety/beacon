@@ -4,11 +4,12 @@ require 'net/http'
 class Slack::WebhookJob < ApplicationJob
   queue_as :default
 
-  def perform(text)
-    uri = URI('https://hooks.slack.com/services/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')
-    payload = {text: text}.to_json
+  # https://api.slack.com/messaging/composing/layouts
+  def perform(payload, url)
+    uri = URI(url)
+    payload = {text: payload} if payload.is_a?(String)
     Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-      http.send_request 'POST', uri.request_uri, payload, {'Content-type': 'application/json'}
+      http.send_request 'POST', uri.request_uri, payload.to_json, {'Content-type': 'application/json'}
     end
   end
 end

@@ -1,3 +1,4 @@
-one: {}
+one:
+  slack_webhook_url: https://hooks.slack.com/services/tree/one/webhook
 with_one_goal: {}
 no_parents: {}
