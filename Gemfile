@@ -61,6 +61,8 @@ group :test do
   gem 'spring'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem "vcr", "~> 6.0"
+  gem "webmock", "~> 3.14"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -76,7 +78,7 @@ gem "aws-sdk-s3", "~> 1.88"
 
 gem "pundit", "~> 2.1"
 
-gem "sidekiq", "~> 6.1"
+gem "sidekiq", "~> 6.4"
 
 gem "paper_trail", "~> 12.1"
 
