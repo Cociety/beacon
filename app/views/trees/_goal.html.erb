@@ -9,9 +9,11 @@
     </div>
     <div class="flex p-4 overflow-hidden bg-white dark:bg-gray-700 items-center hover:bg-gray-300 shadow-sm transition duration-300" data-tree-target="goal" data-goal-id="<%= goal.id %>">
       <div class="min-w-0 flex-1 flex items-center">
-        <div class="shrink-0">
-          <%= render 'customer/avatar', customer: goal.assignee, size: :lg %>
-        </div>
+        <% if goal.assignee %>
+          <div class="shrink-0">
+            <%= render 'customer/avatar', customer: goal.assignee, size: :lg %>
+          </div>
+        <% end %>
         <div class="min-w-0 flex-1 px-4 flex flex-col">
           <p class="text-sm font-medium text-black dark:text-white truncate max-w-full"><%= goal.name %></p>
           <div class="flex gap-1">

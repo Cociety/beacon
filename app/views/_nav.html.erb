@@ -6,7 +6,7 @@
         <span>
           <%= Current.customer.name.first %>
         </span>
-        <%= render 'customer/avatar' %>
+        <%= render 'customer/avatar', customer: Current.customer %>
       <% end %>
       <%= form_with url: sign_out_url, method: :delete do |f| %>
         <%= f.button type: :submit, class: 'btn secondary' do %>

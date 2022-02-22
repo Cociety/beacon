@@ -54,6 +54,7 @@ class Tree < ApplicationRecord
   # |_ child 2
   # |_ child 3
   def largest_subtree(root=top_level_goal)
+    subtree_roots = root&.children&.incomplete&.to_set
     goals_to_search = root&.children&.incomplete&.to_a
 
     largest_subtree = []
@@ -66,8 +67,7 @@ class Tree < ApplicationRecord
       g = goals_to_search.pop
       g.children.incomplete.each { |child| goals_to_search << child }
 
-      end_of_branch = (current_assignee != g.assignee) || g.parents.include?(root)
-
+      end_of_branch = (current_assignee != g.assignee) || subtree_roots.include?(g)
       current_subtree << g unless end_of_branch
 
       if end_of_branch
