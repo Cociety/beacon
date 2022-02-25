@@ -24,7 +24,10 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    redirect_to root_path
+    respond_to do |format|
+      format.json { render json: { status: 401, body: :unauthorized }, status: :unauthorized}
+      format.html { redirect_to root_path }
+    end
   end
 
   def verify_authorized_or_scoped
