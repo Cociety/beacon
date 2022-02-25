@@ -13,7 +13,7 @@ class Goal::CommentJob < Slack::WebhookJob
           type: :section,
           text: {
             type: :mrkdwn,
-            text: "> *#{comment.text}*"
+            text: ">*#{comment.text}*"
           }
         },
         {
