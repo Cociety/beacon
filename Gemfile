@@ -83,3 +83,5 @@ gem "sidekiq", "~> 6.4"
 gem "paper_trail", "~> 12.1"
 
 gem "paper_trail-globalid", "~> 0.2.0"
+
+gem "slack-ruby-client"

@@ -9,6 +9,9 @@ require 'vcr'
 VCR.configure do |config|
   config.cassette_library_dir = 'test/vcr_cassettes'
   config.hook_into :webmock
+  config.filter_sensitive_data('<TOKEN>') do |interaction|
+    Slack.config.token
+  end
 end
 
 unless Gem.loaded_specs["vcr"].version == Gem::Version.create("6.0.0")

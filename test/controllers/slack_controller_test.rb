@@ -2,16 +2,33 @@ require "test_helper"
 
 class SlackControllerTest < ActionDispatch::IntegrationTest
   test 'responds to slack url verifications' do
-    post slack_event_request_url, params: {type: :url_verification, challenge: 123456, token: Rails.application.credentials.dig(:slack, :deprecated_verification_token)}, as: :json
+    body = {type: :url_verification, challenge: 123456}
+    post slack_event_request_url, **{ params: body, headers: headers(body)}, as: :json
     assert_response :ok
     assert_equal "123456", @response.body
   end
 
   test 'requires verifications for event requests' do
-    post slack_event_request_url, params: {type: :url_verification, challenge: 123456, token: nil}, as: :json
+    body = {type: :url_verification, challenge: 123456}
+    post slack_event_request_url, params: body, as: :json
     assert_response :unauthorized
+  end
 
-    post slack_event_request_url, params: {type: :url_verification, challenge: 123456}, as: :json
-    assert_response :unauthorized
+  private
+
+  def headers(body)
+    timestamp = Time.now.to_i
+    {
+      HTTP_X_SLACK_REQUEST_TIMESTAMP: timestamp,
+      HTTP_X_SLACK_SIGNATURE: slack_signature(body, timestamp)
+    }
+  end
+
+  # copied-ish from slack ruby client https://github.com/slack-ruby/slack-ruby-client/blob/master/lib/slack/events/request.rb#L53
+  def slack_signature(body, timestamp)
+    digest = OpenSSL::Digest.new('SHA256')
+    signature_basestring = ['v0', timestamp, body.to_json].join(':')
+    hex_hash = OpenSSL::HMAC.hexdigest(digest, Slack::Events.config.signing_secret, signature_basestring)
+    ['v0', hex_hash].join('=')
   end
 end

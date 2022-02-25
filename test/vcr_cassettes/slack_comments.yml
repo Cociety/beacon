@@ -2,36 +2,32 @@
 http_interactions:
 - request:
     method: post
-    uri: https://hooks.slack.com/services/tree/one/webhook
+    uri: https://slack.com/api/users.lookupByEmail
     body:
       encoding: UTF-8
-      string: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"\u003e
-        *hello*"}},{"type":"context","elements":[{"type":"mrkdwn","text":"New comment
-        on Goal \u003chttp://beacon.cociety.test/goals/d931083b-d41c-5a0d-9fbb-16f0ca5c5d72|parent_1\u003e
-        by"},{"type":"image","image_url":"http://cociety.test:3000/customer/258e2698-2a7d-5d82-a896-a2c9ee26786d/avatar","alt_text":"Justin
-        Robinson"},{"type":"plain_text","text":"Justin Robinson"}]}]}'
+      string: email=justin%40cociety.org
     headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <TOKEN>
       Content-Type:
-      - application/json
+      - application/x-www-form-urlencoded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Tue, 22 Feb 2022 08:33:45 GMT
+      - Fri, 25 Feb 2022 05:08:57 GMT
       Server:
       - Apache
       X-Powered-By:
       - HHVM/4.128.0
-      X-Frame-Options:
-      - SAMEORIGIN
       Access-Control-Allow-Origin:
       - "*"
       Referrer-Policy:
@@ -40,28 +36,137 @@ http_interactions:
       - r
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - incoming-webhook,links:read,im:write,chat:write,channels:read,chat:write.public,chat:write.customize,app_mentions:read,users:read.email,users:read
+      X-Accepted-Oauth-Scopes:
+      - users:read.email
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 29d3582235c8d3692a0b05f8b811b3eb
       Vary:
       - Accept-Encoding
       Content-Length:
-      - '22'
+      - '619'
       Content-Type:
-      - text/html
+      - application/json; charset=utf-8
       X-Envoy-Upstream-Service-Time:
-      - '31'
+      - '20'
       X-Backend:
       - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
         main_control_with_overflow main_bedrock_control_with_overflow
       X-Server:
-      - slack-www-hhvm-main-iad-zxlr
+      - slack-www-hhvm-main-iad-u7n0
       X-Slack-Shared-Secret-Outcome:
       - no-match
       Via:
-      - envoy-www-iad-nz6f, envoy-edge-iad-qu88
+      - envoy-www-iad-1kja, envoy-edge-iad-vmnm
       X-Edge-Backend:
       - envoy-www
       X-Slack-Edge-Shared-Secret-Outcome:
       - no-match
     body:
       encoding: ASCII-8BIT
-      string: ok
-  recorded_at: Tue, 22 Feb 2022 08:33:45 GMT
+      string: '{"ok":true,"user":{"id":"<USER_ID>","team_id":"<TEAM_ID>","name":"justin","deleted":false,"color":"9f69e7","real_name":"justin","tz":"America\/New_York","tz_label":"Eastern
+        Standard Time","tz_offset":-18000,"profile":{"title":"","phone":"","skype":"","real_name":"justin","real_name_normalized":"justin","display_name":"","display_name_normalized":"","fields":null,"status_text":"","status_emoji":"","status_emoji_display_info":[],"status_expiration":0,"avatar_hash":"g331dc43d92d","email":"justin@cociety.org","first_name":"justin","last_name":"","image_24":"https:\/\/secure.gravatar.com\/avatar\/331dc43d92d3649bd6ee00b745cc206f.jpg?s=24&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-24.png","image_32":"https:\/\/secure.gravatar.com\/avatar\/331dc43d92d3649bd6ee00b745cc206f.jpg?s=32&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-32.png","image_48":"https:\/\/secure.gravatar.com\/avatar\/331dc43d92d3649bd6ee00b745cc206f.jpg?s=48&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-48.png","image_72":"https:\/\/secure.gravatar.com\/avatar\/331dc43d92d3649bd6ee00b745cc206f.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-72.png","image_192":"https:\/\/secure.gravatar.com\/avatar\/331dc43d92d3649bd6ee00b745cc206f.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-192.png","image_512":"https:\/\/secure.gravatar.com\/avatar\/331dc43d92d3649bd6ee00b745cc206f.jpg?s=512&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0010-512.png","status_text_canonical":"","team":"<TEAM_ID>"},"is_admin":true,"is_owner":true,"is_primary_owner":true,"is_restricted":false,"is_ultra_restricted":false,"is_bot":false,"is_app_user":false,"updated":1645512965,"is_email_confirmed":true,"who_can_share_contact_card":"EVERYONE"}}'
+  recorded_at: Fri, 25 Feb 2022 05:08:57 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/chat.postMessage
+    body:
+      encoding: UTF-8
+      string: blocks=%5B%7B%22type%22%3A%22section%22%2C%22text%22%3A%7B%22type%22%3A%22mrkdwn%22%2C%22text%22%3A%22%3E%2Ahello%2A%22%7D%7D%2C%7B%22type%22%3A%22context%22%2C%22elements%22%3A%5B%7B%22type%22%3A%22mrkdwn%22%2C%22text%22%3A%22New+comment+on+Goal+%3Chttp%3A%2F%2Fbeacon.cociety.test%2Fgoals%2Fd931083b-d41c-5a0d-9fbb-16f0ca5c5d72%7Cparent_1%3E+by%22%7D%2C%7B%22type%22%3A%22image%22%2C%22image_url%22%3A%22http%3A%2F%2Fcociety.test%3A3000%2Fcustomer%2F258e2698-2a7d-5d82-a896-a2c9ee26786d%2Favatar%22%2C%22alt_text%22%3A%22Justin+Robinson%22%7D%2C%7B%22type%22%3A%22plain_text%22%2C%22text%22%3A%22Justin%22%7D%5D%7D%5D&channel=U03403DSF0V
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Feb 2022 05:08:58 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.128.0
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - incoming-webhook,links:read,im:write,chat:write,channels:read,chat:write.public,chat:write.customize,app_mentions:read,users:read.email,users:read
+      X-Accepted-Oauth-Scopes:
+      - chat:write
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 4d2504fdbff239525b6cf1939d59ef40
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '599'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '53'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-2sd1
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-j8zz, envoy-edge-iad-eee9
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channel":"<CHANNEL>","ts":"1645765738.096089","message":{"bot_id":"<BOT_ID>","type":"message","text":"This
+        content can''t be displayed.","user":"<USER_ID>","ts":"1645765738.096089","team":"<TEAM_ID>","bot_profile":{"id":"<BOT_ID>","app_id":"<APP_ID>","name":"Beacon","icons":{"image_36":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/bot_36.png","image_48":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/bot_48.png","image_72":"https:\/\/a.slack-edge.com\/80588\/img\/plugins\/app\/service_72.png"},"deleted":false,"updated":1645513863,"team_id":"<TEAM_ID>"},"blocks":[{"type":"section","block_id":"Hg2SG","text":{"type":"mrkdwn","text":"&gt;*hello*","verbatim":false}},{"type":"context","block_id":"zzU41","elements":[{"type":"mrkdwn","text":"New
+        comment on Goal <http:\/\/beacon.cociety.test\/goals\/d931083b-d41c-5a0d-9fbb-16f0ca5c5d72|parent_1>
+        by","verbatim":false},{"type":"image","image_url":"http:\/\/cociety.test:3000\/customer\/258e2698-2a7d-5d82-a896-a2c9ee26786d\/avatar","alt_text":"Justin
+        Robinson"},{"type":"plain_text","text":"Justin","emoji":true}]}]}}'
+  recorded_at: Fri, 25 Feb 2022 05:08:58 GMT
+recorded_with: VCR 6.0.0
