@@ -1,5 +1,8 @@
 <div class="w-full bg-indigo-300 flex justify-between h-12 items-center text-black">
-  <%= link_to 'Beacon', root_path, class: 'ml-2'%>
+  <%= link_to root_path, class: 'ml-2 flex items-center gap-1' do %>
+    <%= image_tag 'logo.png', class: 'w-10 h-10 rounded-sm' %>
+    <span class="text-2xl">Beacon</span>
+  <% end %>
   <div class="flex items-center space-x-1 mr-2">
     <% if customer_signed_in? %>
       <%= link_to customer_index_path do %>
