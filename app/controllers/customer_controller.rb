@@ -1,6 +1,7 @@
 class CustomerController < ApplicationController
 
   def index
-    @api_keys = policy_scope(ApiKey)
+    skip_authorization
+    @slack_client_id = Rails.application.credentials.dig(:slack, :client_id)
   end
 end

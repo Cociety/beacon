@@ -1,6 +1,6 @@
 # :nodoc:
 class TreesController < ApplicationController
-  before_action :set_tree, only: [:show, :update, :show_settings]
+  before_action :set_tree, only: [:show]
 
   def index
     @trees = policy_scope(Tree)
@@ -9,9 +9,6 @@ class TreesController < ApplicationController
 
   def show
     redirect_to goal_url(@tree.top_level_goal)
-  end
-
-  def show_settings
   end
 
   def create
@@ -26,22 +23,9 @@ class TreesController < ApplicationController
     redirect_to :trees
   end
 
-  def update
-    @tree.update! tree_params
-    flash[:notice] = 'Saved!'
-    redirect_to @tree.top_level_goal
-  rescue => e
-    Rails.logger.info e
-    render :show_settings
-  end
-
   private
 
   def set_tree
     @tree = authorize Tree.find(params[:id])
-  end
-
-  def tree_params
-    params.require(:tree).permit(:slack_webhook_url)
   end
 end

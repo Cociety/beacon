@@ -31,8 +31,8 @@
 
 en:
   api_keys:
+    header: API Keys
     index:
-      api_keys: API Keys
       create_api_key: Create API Key
       new_api_key_warning_html: New Api key created. Note this <span class="font-bold">ID</span> and <span class="font-bold">Key</span>. The key will not be shown again.
   auth:

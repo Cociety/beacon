@@ -1,6 +1,6 @@
 <div class="lg:w-1/2 m-2">
   <div class="flex justify-between m-2">
-    <h2 class="text-xl"><%= t '.api_keys' %></h2>
+    <h2 class="text-xl"><%= t 'api_keys.header' %></h2>
     <%= link_to api_keys_path, method: :post, class: 'btn primary' do %>
       <%= render '/svg/plus', w: 'w-4', h: 'h-4' %>
       <%= t '.create_api_key' %>

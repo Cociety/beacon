@@ -1,1 +1,8 @@
-<%= link_to 'API Keys', api_keys_path, class: :link %>
+
+<div class="flex justify-center">
+  <div class="md:max-w-3xl grow flex flex-col gap-2 m-2">
+    <%= button_to t('api_keys.header'), api_keys_path, class: 'btn primary', method: :get %>
+    <a href="https://slack.com/oauth/v2/authorize?client_id=<%= @slack_client_id %>&scope=app_mentions:read,channels:read,chat:write,chat:write.customize,chat:write.public,im:write,incoming-webhook,links:read,users:read.email,users:read&user_scope="><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+  </div>
+</div>
+

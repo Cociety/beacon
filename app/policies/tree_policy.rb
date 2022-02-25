@@ -21,10 +21,6 @@ class TreePolicy < ApplicationPolicy
     edit?
   end
 
-  def show_settings?
-    show?
-  end
-
   def share?
     customer.present? && edit?
   end

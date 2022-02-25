@@ -9,13 +9,6 @@
       <%= t('share')%>
     <% end %>
   <% end %>
-  <% if policy(@goal.tree).edit? %>
-    <%= link_to settings_tree_path(@goal.tree), class:"btn secondary" do %>
-      <%= render '/svg/cloud', w: 'w-4', h: 'h-4' %>
-      <%= t('integrations')%>
-    <% end %>
-  <% end %>
-
 <% end %>
 <div class="flex w-full justify-center">
 <%= render @goal %>
