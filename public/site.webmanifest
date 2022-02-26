@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Beacon",
+    "short_name": "Beacon",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
