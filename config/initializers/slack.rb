@@ -1,6 +1,5 @@
 Slack.configure do |config|
   config.token = Rails.application.credentials.dig(:slack, :bot_user_oauth_token)
-  config.logger = Rails.logger
 end
 
 Slack::Events.configure do |config|

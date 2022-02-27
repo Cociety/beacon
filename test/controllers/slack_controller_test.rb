@@ -1,6 +1,26 @@
 require "test_helper"
 
 class SlackControllerTest < ActionDispatch::IntegrationTest
+  test 'responds to link shares' do
+    body = {
+      type: :event_callback,
+      event: {
+        type: :link_shared,
+        channel: 'channel',
+        event_ts: '123456621.1855',
+        links: [
+          {
+            domain: 'cociety.org',
+            url: 'https://beacon.cociety.org/'
+          }
+        ]
+      }
+    }
+    post slack_event_request_url, **{ params: body, headers: headers(body) }, as: :json
+    assert_enqueued_with(job: Slack::ChatUnfurlJob)
+    assert_response :ok
+  end
+
   test 'responds to slack url verifications' do
     body = {type: :url_verification, challenge: 123456}
     post slack_event_request_url, **{ params: body, headers: headers(body) }, as: :json

@@ -1,5 +1,4 @@
 class Goal::CommentJob < Slack::ApiJob
-
   def perform(comment_id)
     comment = Comment.find(comment_id)
     goal = comment.commentable

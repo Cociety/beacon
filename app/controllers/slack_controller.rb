@@ -25,10 +25,18 @@ class SlackController < WebhooksController
   end
 
   def event_type
-    params[:type]
+    params[:type] == 'event_callback' ? params[:event][:type] : params[:type]
   end
 
   def url_verification
     render plain: params[:challenge]
+  end
+
+  def link_shared
+    channel = params[:event][:channel]
+    ts = params[:event][:message_ts]
+    links = params[:event][:links].map {|l| l[:url]}
+    Slack::ChatUnfurlJob.perform_later channel, ts, links
+    render json: {message: "ok"}
   end
 end
