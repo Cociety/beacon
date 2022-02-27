@@ -16,7 +16,16 @@ class SlackController < WebhooksController
   end
 
   def process_event
-    self.send params[:type]
+    if respond_to? event_type, true
+      send event_type
+    else
+      Rails.logger.info "Unknown Slack event type \"#{event_type}\""
+      render json: {message: "Unknown event type"}, status: :bad_request
+    end
+  end
+
+  def event_type
+    params[:type]
   end
 
   def url_verification

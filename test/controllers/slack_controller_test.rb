@@ -3,7 +3,7 @@ require "test_helper"
 class SlackControllerTest < ActionDispatch::IntegrationTest
   test 'responds to slack url verifications' do
     body = {type: :url_verification, challenge: 123456}
-    post slack_event_request_url, **{ params: body, headers: headers(body)}, as: :json
+    post slack_event_request_url, **{ params: body, headers: headers(body) }, as: :json
     assert_response :ok
     assert_equal "123456", @response.body
   end
@@ -12,6 +12,13 @@ class SlackControllerTest < ActionDispatch::IntegrationTest
     body = {type: :url_verification, challenge: 123456}
     post slack_event_request_url, params: body, as: :json
     assert_response :unauthorized
+  end
+
+  test 'rejects unknown event types' do
+    body = {type: :unknown_random}
+    post slack_event_request_url, **{ params: body, headers: headers(body) }, as: :json
+    assert_response :bad_request
+    assert_equal "{\"message\":\"Unknown event type\"}", @response.body
   end
 
   private
