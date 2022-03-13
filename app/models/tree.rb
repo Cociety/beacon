@@ -3,7 +3,7 @@ class Tree < ApplicationRecord
   include Resourcable
 
   default_scope { order(updated_at: :desc) }
-  has_many :goals, -> { includes(:children, :parents) }, dependent: :destroy, autosave: true
+  has_many :goals, dependent: :destroy, autosave: true
 
   def top_level_goal
     goal = goals.top_level.first
