@@ -1,10 +1,22 @@
 <% url = @parent_goal.present? ? tree_goal_goals_path(@tree, @parent_goal, goal) : tree_goals_path(@tree, goal) %>
 
 <%= form_with url: url, model: goal, id: dom_id(goal), class:'flex flex-col space-y-2 m-2' do |f| %>
+  <%= f.hidden_field :tree_id, value: @goal.tree.id %>
+
   <div>
     <%= f.label :name %>
     <%= f.text_field :name, value: goal.name, autofocus: true %>
   </div>
+  <%= f.fields_for :comments do |comments_form| %>
+    <div>
+      <%= comments_form.label :text, "Comment" %>
+      <%= comments_form.hidden_field :customer_id, value: Current.customer.id %>
+      <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+        <%= comments_form.text_area :text, class: 'block w-full border-0 resize-none focus:ring-0 sm:text-sm', value: goal.comments.first.text %>
+      </div>
+    </div>
+  <% end %>
+
   <div>
     <%= f.label :duration %>
     <%= f.number_field :duration, value: goal.duration, min: Goal::DURATION_MIN %>

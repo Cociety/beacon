@@ -9,7 +9,7 @@ class Tree::GoalsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should assign new goals to the logged in customer' do
     assert_changes -> { Goal.count } do
-      post tree_goals_path(@tree), params: { goal: { state: :assigned, spent: 0, duration: 1, name: 'a' } }
+      post tree_goals_path(@tree), params: { goal: { state: :assigned, spent: 0, duration: 1, name: 'a', tree_id: @tree.id } }
       assert_equal @justin.id, Goal.last.assignee.id
     end
   end
