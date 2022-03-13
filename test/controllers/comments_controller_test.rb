@@ -23,4 +23,10 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       assert_redirected_to root_path
     end
   end
+
+  test "updating redirects to commentable" do
+    sign_in @comment.by
+    put comment_path(@comment), params: {comment: { text: "#{@comment.text} updated" }}
+    assert_redirected_to @commentable
+  end
 end

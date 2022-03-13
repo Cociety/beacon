@@ -1,8 +1,32 @@
-<%= form_with url: commentable_comment_path(on), model: comment, id: dom_id(comment), class:'flex flex-col' do |f| %>
-  <%= f.text_field :text, value: comment.text, autofocus: true, placeholder: t('comment.placeholder') %>
+<div class="flex items-start space-x-2">
+  <div class="flex-shrink-0">
+    <%= render 'customer/avatar', customer: Current.customer %>
+  </div>
+  <div class="min-w-0 flex-1">
+    <% url = commentable_comment_path(on) if local_assigns[:on] %>
+    <%= form_with url: url, model: comment, id: dom_id(comment), class:'flex flex-col relative' do |f| %>
 
-  <%= f.button type: :submit, class:'btn primary center mt-2' do %>
-    <%= render '/svg/comment', w: 'w-4', h: 'w-4' %>
-    <span class="ml-1"><%= t('comment.create')%></span>
-  <% end %>
-<% end %>
+      <div class="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+        <%= f.label :text, t('comment.placeholder'), class: "sr-only"%>
+        <%= f.text_area :text, rows: 3, class: "block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm", placeholder: t('comment.placeholder') %>
+
+        <!-- Spacer element to match the height of the toolbar -->
+        <div class="py-2" aria-hidden="true">
+          <!-- Matches height of button in toolbar (1px border + 36px content height) -->
+          <div class="py-px">
+            <div class="h-9"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-0 inset-x-0 pl-3 pr-2 py-2 flex justify-end">
+        <div class="flex-shrink-0">
+          <%= f.button class:'btn primary' do %>
+            <%= render '/svg/comment', w: 'w-4', h: 'w-4' %>
+            <span class="ml-1"><%= button_text %></span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

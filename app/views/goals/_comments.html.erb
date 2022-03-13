@@ -5,6 +5,6 @@
   </ul>
   <% comment = Comment.new %>
   <% if policy(goal).edit? && policy(comment).create? %>
-    <%= render 'comments/form', comment: comment, on: goal %>
+    <%= render 'comments/form', comment: comment, on: goal, button_text: t('comment.create')%>
   <% end %>
 </div>

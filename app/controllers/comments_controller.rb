@@ -12,6 +12,7 @@ class CommentsController < ApplicationController
 
   def update
     @comment.update! comment_params
+    redirect_to @comment.commentable
   end
 
   private
