@@ -51,7 +51,7 @@ en:
   comment:
     create: Post Comment
     update: Update Comment
-    placeholder: Say something
+    placeholder: Say something...
   goals:
     assignee:
       assigned_to: Assigned to
