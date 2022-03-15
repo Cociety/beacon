@@ -1,0 +1,23 @@
+one:
+  parent_id: 3a02ae80-24dd-47a4-b156-e34089547540
+  child_id: 3a02ae80-24dd-47a4-b156-e34089547541
+
+two:
+  parent_id: 3a02ae80-24dd-47a4-b156-e34089547540
+  child_id: 3a02ae80-24dd-47a4-b156-e34089547542
+
+three:
+  parent_id: 3a02ae80-24dd-47a4-b156-e34089547540
+  child_id: 3a02ae80-24dd-47a4-b156-e34089547543
+
+four:
+  parent_id: 3a02ae80-24dd-47a4-b156-e34089547542
+  child_id: 3a02ae80-24dd-47a4-b156-e34089547544
+
+five:
+  parent_id: 3a02ae80-24dd-47a4-b156-e34089547542
+  child_id: 3a02ae80-24dd-47a4-b156-e34089547545
+
+six:
+  parent_id: 3a02ae80-24dd-47a4-b156-e34089547540
+  child_id: 3a02ae80-24dd-47a4-b156-e34089547546

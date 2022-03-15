@@ -6,9 +6,10 @@ justin:
   confirmed_at: <%= Time.zone.now %>
   confirmation_sent_at: <%= Time.zone.now %>
 melissa:
+  id: 2a02ae80-24dd-47a4-b156-e34089547541
   encrypted_password: <%= Devise::Encryptor.digest(Customer, 'password') %>
   first_name: Melissa
   last_name: Galush
-  email: melissa@cociety.org
+  email: galushmn@gmail.com
   confirmed_at: <%= Time.zone.now %>
   confirmation_sent_at: <%= Time.zone.now %>

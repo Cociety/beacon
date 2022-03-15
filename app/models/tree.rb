@@ -39,6 +39,14 @@ class Tree < ApplicationRecord
     Customer.with_role %i[reader writer], self
   end
 
+  def writers
+    Customer.with_role %i[writer], self
+  end
+
+  def readers
+    Customer.with_role %i[reader], self
+  end
+
   # TODO convert this. use the goal's scope
   # https://apidock.com/rails/ActiveRecord/SpawnMethods/merge
   def dangling

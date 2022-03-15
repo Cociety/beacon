@@ -1,40 +1,42 @@
 parent_1:
+  id: 3a02ae80-24dd-47a4-b156-e34089547540
   name: parent_1
   tree: one
   top_level: true
 
 child_1:
+  id: 3a02ae80-24dd-47a4-b156-e34089547541
   name: child_1
   tree: one
-  parents: [parent_1]
 
 child_2:
+  id: 3a02ae80-24dd-47a4-b156-e34089547542
   name: child_2
   tree: one
-  parents: [parent_1]
   
 child_3:
+  id: 3a02ae80-24dd-47a4-b156-e34089547543
   name: child_3
   tree: one
-  parents: [parent_1]
 
 subchild_2.1:
+  id: 3a02ae80-24dd-47a4-b156-e34089547544
   name: subchild_2.1
   tree: one
-  parents: [child_2]
 
 subchild_2.2:
+  id: 3a02ae80-24dd-47a4-b156-e34089547545
   name: subchild_2.2
   tree: one
-  parents: [child_2]
 
 completed:
+  id: 3a02ae80-24dd-47a4-b156-e34089547546
   name: completed
   tree: one
   state: done
-  parents: [parent_1]
 
 only_one:
+  id: 3a02ae80-24dd-47a4-b156-e34089547547
   name: only_one
   tree: with_one_goal
   top_level: true

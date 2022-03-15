@@ -16,7 +16,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "can not delete someone else's comment" do
-    sign_in customers(:melissa)
+    sign_in customers(:justin)
 
     assert_no_changes -> { Comment.count } do
       delete comment_path comments(:hello)

@@ -37,22 +37,16 @@ class CustomerTest < ActiveSupport::TestCase
     end
   end
 
-  test 'detects roles' do
-    assert_not @justin.role? :reader, @tree
+  test 'adds and removes roles' do
     assert_not @justin.role? :non_existent_role, @tree
-    @justin.add_role :reader, @tree
-    assert @justin.role? :reader, @tree
-    assert_not @justin.role? :non_existent_role, @tree
-  end
-
-  test 'removes roles' do
-    assert_not @justin.role? :reader, @tree
-    @justin.add_role :reader, @tree
-    assert @justin.role? :reader, @tree
     assert_changes -> { Role.count } do
-      @justin.remove_role :reader, @tree
+      @justin.add_role :non_existent_role, @tree
     end
-    assert_not @justin.role? :reader, @tree
+    assert @justin.role? :non_existent_role, @tree
+    assert_changes -> { Role.count } do
+      @justin.remove_role :non_existent_role, @tree
+    end
+    assert_not @justin.role? :non_existent_role, @tree
   end
 
   test 'silently fails to remove non existent roles' do

@@ -1,29 +1,35 @@
 hello:
   text: hello
-  commentable: parent_1 (Goal) 
-  customer: justin
+  commentable_type: Goal
+  commentable_id: 3a02ae80-24dd-47a4-b156-e34089547540
+  customer_id: 2a02ae80-24dd-47a4-b156-e34089547541
 
 hi:
   text: hi
-  commentable: child_1 (Goal)
+  commentable_type: Goal
+  commentable_id: 3a02ae80-24dd-47a4-b156-e34089547541
   customer: justin
 
 cociety.org:
   text: cociety.org
-  commentable: child_2 (Goal)
+  commentable_type: Goal
+  commentable_id: 3a02ae80-24dd-47a4-b156-e34089547542
   customer: justin
 
 example.com:
   text: example.com
-  commentable: child_2 (Goal)
+  commentable_type: Goal
+  commentable_id: 3a02ae80-24dd-47a4-b156-e34089547542
   customer: justin
 
 https://example.net:
   text: https://example.net
-  commentable: child_2 (Goal)
+  commentable_type: Goal
+  commentable_id: 3a02ae80-24dd-47a4-b156-e34089547542
   customer: justin
 
 https://example.edu_html:
   text: <a href="https://example.edu">https://example.edu</a>
-  commentable: child_2 (Goal)
+  commentable_type: Goal
+  commentable_id: 3a02ae80-24dd-47a4-b156-e34089547542
   customer: justin
