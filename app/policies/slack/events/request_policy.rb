@@ -1,5 +1,5 @@
 class Slack::Events::RequestPolicy < ApplicationPolicy
-  def event_request?
+  def create?
     record.verify!
   end
 end

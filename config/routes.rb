@@ -58,6 +58,6 @@ Rails.application.routes.draw do
   resources :customer, only: %i[index]
   resources :api_keys, only: %i[index create destroy]
   namespace :slack do
-    post :event_request
+    resources :event_request, only: %i[create]
   end
 end

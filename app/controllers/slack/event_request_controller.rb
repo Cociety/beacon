@@ -1,5 +1,7 @@
-class SlackController < WebhooksController
-  def event_request
+# Handles events from Slack. Events can be from any organization, not just Cociety.
+# https://api.slack.com/apis/connections/events-api
+class Slack::EventRequestController < WebhooksController
+  def create
     authorize slack_request
     process_event
   rescue Slack::Events::Request::MissingSigningSecret,
