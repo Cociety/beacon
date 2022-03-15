@@ -10,6 +10,6 @@ melissa:
   encrypted_password: <%= Devise::Encryptor.digest(Customer, 'password') %>
   first_name: Melissa
   last_name: Galush
-  email: galushmn@gmail.com
+  email: melissa@cociety.org
   confirmed_at: <%= Time.zone.now %>
   confirmation_sent_at: <%= Time.zone.now %>
