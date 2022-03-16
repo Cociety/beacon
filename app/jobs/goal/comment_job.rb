@@ -5,6 +5,8 @@ class Goal::CommentJob < Slack::ApiJob
     commenter = comment.customer
     writers = comment.commentable.tree.writers.difference [commenter]
     readers = comment.commentable.tree.readers.difference(writers + [commenter] )
+    Rails.logger.info "Slacking writers for new comment #{comment.id} #{writers.map &:id}"
+    Rails.logger.info "Slacking readers for new comment #{comment.id} #{readers.map &:id}"
     send_slack_messages(writers, comment, goal, replyable: true) + send_slack_messages(readers, comment, goal)
   end
 
@@ -13,13 +15,18 @@ class Goal::CommentJob < Slack::ApiJob
     customers.each do |customer|
       begin
         slack_user = @client.users_lookupByEmail email: customer.email
-        next unless slack_user
+      rescue Faraday::Error => e
+        Rails.logger.error "Failed to get slack user: #{e}"
+        next
+      end
 
+      begin
         message = @client.chat_postMessage channel: slack_user["user"]["id"], blocks: blocks(comment, goal, replyable: replyable)
         messages_sent_count += 1 if message.ok?
         Rails.logger.info "Slacked #{customer.email} for comment #{comment.id}"
       rescue => e
         logger.error e
+        logger.error e.backtrace
         next
       end
     end

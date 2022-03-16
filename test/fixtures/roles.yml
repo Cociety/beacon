@@ -12,3 +12,13 @@ reader_tree_one_melissa:
   name: reader
   resource: one (Tree)
   customer_id: 2a02ae80-24dd-47a4-b156-e34089547541
+
+reader_tree_one_bob:
+  name: reader
+  resource: one (Tree)
+  customer: bob
+
+reader_tree_one_alice:
+  name: reader
+  resource: one (Tree)
+  customer: alice

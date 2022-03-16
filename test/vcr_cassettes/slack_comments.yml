@@ -341,4 +341,168 @@ http_interactions:
         Galush"},{"type":"plain_text","text":"Melissa","emoji":true}]},{"type":"divider","block_id":"8q1ug"},{"type":"input","block_id":"3a02ae80-24dd-47a4-b156-e34089547540","label":{"type":"plain_text","text":"Reply","emoji":true},"optional":false,"dispatch_action":true,"element":{"type":"plain_text_input","action_id":"respond_to_comment","placeholder":{"type":"plain_text","text":"Reply
         here...","emoji":true},"dispatch_action_config":{"trigger_actions_on":["on_enter_pressed"]}}}]}}'
   recorded_at: Tue, 15 Mar 2022 05:07:46 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/users.lookupByEmail
+    body:
+      encoding: UTF-8
+      string: email=bob%40cociety.org
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 16 Mar 2022 01:04:21 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.128.0
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - incoming-webhook,links:read,im:write,chat:write,channels:read,chat:write.public,chat:write.customize,app_mentions:read,users:read.email,users:read,links:write,commands
+      X-Accepted-Oauth-Scopes:
+      - users:read.email
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 954eb958bb9807e89fa95a4b9eebbdb1
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '58'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '27'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-canary-main-iad-uzaa
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-7d6z, envoy-edge-iad-gb6l
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":false,"error":"users_not_found"}'
+  recorded_at: Wed, 16 Mar 2022 01:04:21 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/users.lookupByEmail
+    body:
+      encoding: UTF-8
+      string: email=alice%40cociety.org
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 16 Mar 2022 01:04:21 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.128.0
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - incoming-webhook,links:read,im:write,chat:write,channels:read,chat:write.public,chat:write.customize,app_mentions:read,users:read.email,users:read,links:write,commands
+      X-Accepted-Oauth-Scopes:
+      - users:read.email
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 631ede4adec5cb2fd60a598cdf2022b7
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '58'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '20'
+      X-Backend:
+      - main_normal main_bedrock_normal_with_overflow main_canary_with_overflow main_bedrock_canary_with_overflow
+        main_control_with_overflow main_bedrock_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-huhs
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-gf88, envoy-edge-iad-i8k6
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":false,"error":"users_not_found"}'
+  recorded_at: Wed, 16 Mar 2022 01:04:21 GMT
 recorded_with: VCR 6.0.0

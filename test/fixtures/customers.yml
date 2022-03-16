@@ -13,3 +13,17 @@ melissa:
   email: melissa@cociety.org
   confirmed_at: <%= Time.zone.now %>
   confirmation_sent_at: <%= Time.zone.now %>
+bob:
+  encrypted_password: <%= Devise::Encryptor.digest(Customer, 'password') %>
+  first_name: Bob
+  last_name: Bob
+  email: bob@cociety.org
+  confirmed_at: <%= Time.zone.now %>
+  confirmation_sent_at: <%= Time.zone.now %>
+alice:
+  encrypted_password: <%= Devise::Encryptor.digest(Customer, 'password') %>
+  first_name: Alice
+  last_name: Alice
+  email: alice@cociety.org
+  confirmed_at: <%= Time.zone.now %>
+  confirmation_sent_at: <%= Time.zone.now %>
