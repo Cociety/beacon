@@ -4,7 +4,8 @@ class GoalsController < ApplicationController
   before_action :set_new_child_goal, only: [:adopt]
 
   def show
-    @readers_and_writers = @goal.tree.readers_and_writers
+    @tree_readers = @goal.tree.readers
+    @tree_writers = @goal.tree.writers
     @show_completed_goals = show_completed_goals?
     @goals_to_parallelize = @goal.tree.largest_subtree @goal
     @goals_to_parallelize = [] if @goals_to_parallelize&.sum(&:remaining) < 3
@@ -13,6 +14,10 @@ class GoalsController < ApplicationController
   def edit; end
 
   def update
+    assignee = goal_assignee
+
+    customer_can_be_assigned?(assignee)
+
     @goal.assign_to goal_assignee
     @goal.update! goal_params_casted
     redirect_to goal_url @goal
@@ -48,5 +53,11 @@ class GoalsController < ApplicationController
 
   def show_completed_goals?
     ActiveRecord::Type::Boolean.new.deserialize params[:show_completed_goals]
+  end
+
+  def customer_can_be_assigned?(customer)
+    @pundit_customer = customer
+    authorize @goal.tree
+    @pundit_customer = nil
   end
 end

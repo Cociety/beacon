@@ -1,6 +1,6 @@
 <%= form_with model: goal, method: :put, data: { controller: 'form-submitter' } do |f| %>
   <%= f.label :assignee, t('.assigned_to') %>
-  <%= f.collection_select :assignee_id, @readers_and_writers, :id, :name,
+  <%= f.collection_select :assignee_id, @tree_writers, :id, :name,
     { prompt: true },
     { class: 'select', data: { action: 'change->form-submitter#submit' }}
   %>

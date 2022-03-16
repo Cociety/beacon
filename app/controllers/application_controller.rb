@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pundit_user
-    Current.customer
+    @pundit_customer || Current.customer
   end
 
   def user_for_paper_trail

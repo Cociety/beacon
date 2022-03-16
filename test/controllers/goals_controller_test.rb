@@ -5,6 +5,7 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     @goal = goals(:child_2)
     @new_parent = goals(:child_1)
     @justin = customers(:justin)
+    @melissa = customers(:melissa)
     sign_in @justin
   end
 
@@ -29,9 +30,8 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update a goal' do
-    assert_changes -> { @goal.state }, from: 'assigned', to: 'blocked' do
+    assert_changes -> { @goal.reload.state }, from: 'assigned', to: 'blocked' do
       put goal_url(@goal), params: { goal: { state: :blocked } }
-      @goal.reload
     end
   end
 
@@ -72,5 +72,25 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     get goal_url(@parent)
 
     assert_select 'span', {count: 3, text: 'Parallelizable'}
+  end
+
+  test 'should show only writers to be assigned' do
+    get goal_url(@parent)
+
+    assert_select '#goal_assignee_id option', {count: 2} do |options|
+      options.each do |option|
+        value = option.attr 'value'
+        next if option.text == 'Please select' && value.blank?
+
+        assert Customer.find(value).role? :writer, @parent.tree
+      end
+    end
+  end
+
+  test 'should only allow writers to be assigned' do
+    assert_no_changes -> { @parent.reload.assignee } do
+      put goal_url(@parent), params: { goal: { assignee_id: @melissa.id } }
+      assert_redirected_to root_url
+    end
   end
 end
