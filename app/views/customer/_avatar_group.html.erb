@@ -1,0 +1,15 @@
+<% size ||= :md %>
+<%
+case size
+when :md
+  size_classes = 'h-8 w-8'
+when :lg
+  size_classes = 'h-12 w-12'
+end
+%>
+
+<div class="flex -space-x-1 overflow-hidden">
+  <% customers.each do |customer| %>
+    <%= image_tag avatar_url(customer), class: " #{size_classes}", alt: customer.name %>
+  <% end %>
+</div>

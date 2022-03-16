@@ -15,6 +15,7 @@
         <% end %>
       </div>
       <div class="space-y-2 flex flex-col">
+        <%= render '/customer/avatar_group', customers: @tree_readers_and_writers %>
         <%= render '/goals/assignee', goal: goal %>
         <%= render '/goals/progress', goal: goal %>
         <%= render '/goals/state', goal: goal %>
