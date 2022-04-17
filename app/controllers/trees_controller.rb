@@ -3,8 +3,8 @@ class TreesController < ApplicationController
   before_action :set_tree, only: [:show]
 
   def index
+    @tree = authorize Tree.new, :create?
     @trees = policy_scope(Tree)
-    @tree = Tree.new
   end
 
   def show
